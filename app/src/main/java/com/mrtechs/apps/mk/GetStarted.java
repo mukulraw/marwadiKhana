@@ -1,5 +1,6 @@
 package com.mrtechs.apps.mk;
 
+import android.content.Intent;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -37,6 +38,17 @@ public class GetStarted extends AppCompatActivity {
 
 
 
+
+        getStarted.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent intent = new Intent(getApplicationContext() , MainActivity.class);
+                startActivity(intent);
+                finish();
+
+            }
+        });
 
 
     }
