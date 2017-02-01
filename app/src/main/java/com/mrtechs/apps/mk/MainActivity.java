@@ -1,6 +1,7 @@
 package com.mrtechs.apps.mk;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.support.annotation.Nullable;
@@ -19,6 +20,9 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
@@ -69,6 +73,36 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_main , menu);
+
+
+
+
+
+        return true;
+    }
+
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+
+        if (item.getItemId() == R.id.cart)
+        {
+            Intent intent = new Intent(getApplicationContext() , Cart.class);
+            startActivity(intent);
+        }
+
+
+        return super.onOptionsItemSelected(item);
+
+
+
+    }
 
     public static class CategoryFragment extends Fragment {
 
