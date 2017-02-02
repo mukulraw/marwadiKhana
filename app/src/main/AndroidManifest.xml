@@ -17,7 +17,8 @@
         </activity>
         <activity android:name=".GetStarted" />
         <activity android:name=".MainActivity" />
-        <activity android:name=".Cart"/>
+        <activity android:name=".Cart" />
+        <activity android:name=".Order"></activity>
     </application>
 
 </manifest>

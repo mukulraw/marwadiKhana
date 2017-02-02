@@ -24,7 +24,7 @@
                 android:layout_width="35dp"
                 android:layout_height="35dp"
                 android:layout_gravity="center"
-                android:src="@drawable/logo"
+                android:src="@drawable/icon"
                 />
 
 

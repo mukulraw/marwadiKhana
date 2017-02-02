@@ -258,10 +258,10 @@ public class MainActivity extends AppCompatActivity {
             pager = (ViewPager)view.findViewById(R.id.pager);
 
 
-            tabs.addTab(tabs.newTab().setText("CATEGORY"));
-            tabs.addTab(tabs.newTab().setText("CATEGORY"));
-            tabs.addTab(tabs.newTab().setText("CATEGORY"));
-            tabs.addTab(tabs.newTab().setText("CATEGORY"));
+            tabs.addTab(tabs.newTab().setText("SUB-CATEGORY"));
+            tabs.addTab(tabs.newTab().setText("SUB-CATEGORY"));
+            tabs.addTab(tabs.newTab().setText("SUB-CATEGORY"));
+            tabs.addTab(tabs.newTab().setText("SUB-CATEGORY"));
 
 
 
@@ -298,10 +298,10 @@ public class MainActivity extends AppCompatActivity {
 
             tabs.setupWithViewPager(pager);
 
-            tabs.getTabAt(0).setText("CATEGORY");
-            tabs.getTabAt(1).setText("CATEGORY");
-            tabs.getTabAt(2).setText("CATEGORY");
-            tabs.getTabAt(3).setText("CATEGORY");
+            tabs.getTabAt(0).setText("SUB-CATEGORY");
+            tabs.getTabAt(1).setText("SUB-CATEGORY");
+            tabs.getTabAt(2).setText("SUB-CATEGORY");
+            tabs.getTabAt(3).setText("SUB-CATEGORY");
 
 
 
