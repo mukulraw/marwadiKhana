@@ -424,7 +424,7 @@ public class Order extends AppCompatActivity {
                     icon1.setTextColor(Color.GRAY);
                     icon1.setBackground(getResources().getDrawable(R.drawable.circle_gray));
 
-                    text1.setText("Shipping");
+                    text1.setText("Payment");
                     text1.setTextColor(Color.GRAY);
 
 
@@ -440,7 +440,7 @@ public class Order extends AppCompatActivity {
                     icon2.setBackground(getResources().getDrawable(R.drawable.circle_accent));
 
 
-                    text2.setText("Billing");
+                    text2.setText("Shipping");
                     text2.setTextColor(Color.RED);
 
                     TabLayout.Tab tab = tabs.getTabAt(1);
@@ -482,7 +482,7 @@ public class Order extends AppCompatActivity {
                     icon1.setTextColor(Color.GRAY);
                     icon1.setBackground(getResources().getDrawable(R.drawable.circle_gray));
 
-                    text1.setText("Payment");
+                    text1.setText("Done");
                     text1.setTextColor(Color.GRAY);
 
 
@@ -498,7 +498,7 @@ public class Order extends AppCompatActivity {
                     icon2.setBackground(getResources().getDrawable(R.drawable.circle_accent));
 
 
-                    text2.setText("Shipping");
+                    text2.setText("Payment");
                     text2.setTextColor(Color.RED);
 
                     TabLayout.Tab tab = tabs.getTabAt(2);
