@@ -1,6 +1,8 @@
 package com.mrtechs.apps.mk;
 
 import android.graphics.Color;
+import android.graphics.Paint;
+import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -10,20 +12,21 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 public class Order extends AppCompatActivity {
 
-    TabLayout tabs;
-    ViewPager pager;
+    static TabLayout tabs;
+    static MyViewPager pager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_order);
 
-        pager = (ViewPager) findViewById(R.id.pager);
+        pager = (MyViewPager) findViewById(R.id.pager);
 
         tabs = (TabLayout) findViewById(R.id.tabs);
 
@@ -133,6 +136,8 @@ public class Order extends AppCompatActivity {
 
 
 
+
+
         LinearLayout tabStrip = ((LinearLayout)tabs.getChildAt(0));
         tabStrip.setEnabled(false);
         for(int i = 0; i < tabStrip.getChildCount(); i++) {
@@ -143,6 +148,8 @@ public class Order extends AppCompatActivity {
         FragAdapter adapter = new FragAdapter(getSupportFragmentManager());
         pager.setAdapter(adapter);
 
+
+        pager.setSwipeable(false);
 
 
     }
@@ -187,28 +194,323 @@ public class Order extends AppCompatActivity {
 
     public static class Billing extends Fragment{
 
+        TextView name , contin;
+
+        @Nullable
+        @Override
+        public View onCreateView(final LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+            View view = inflater.inflate(R.layout.billing_layout , container , false);
+
+            name = (TextView)view.findViewById(R.id.name);
+            name.setPaintFlags(Paint.UNDERLINE_TEXT_FLAG);
+
+            contin = (TextView)view.findViewById(R.id.contin);
+
+            contin.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
 
 
+                    View tab1 = tabs.getTabAt(0).getCustomView();
+
+                    TextView icon1 = (TextView)tab1.findViewById(R.id.icon);
+                    TextView text1 = (TextView)tab1.findViewById(R.id.text);
+
+                    icon1.setText("1");
+                    icon1.setTextColor(Color.GRAY);
+                    icon1.setBackground(getResources().getDrawable(R.drawable.circle_gray));
+
+                    text1.setText("Billing");
+                    text1.setTextColor(Color.GRAY);
+
+
+
+
+                    View tab2 = tabs.getTabAt(1).getCustomView();
+
+                    TextView icon2 = (TextView)tab2.findViewById(R.id.icon);
+                    TextView text2 = (TextView)tab2.findViewById(R.id.text);
+
+                    icon2.setText("2");
+                    icon2.setTextColor(Color.WHITE);
+                    icon2.setBackground(getResources().getDrawable(R.drawable.circle_accent));
+
+
+                    text2.setText("Shipping");
+                    text2.setTextColor(Color.RED);
+
+                    TabLayout.Tab tab = tabs.getTabAt(1);
+                    tab.select();
+
+                    pager.setCurrentItem(1);
+
+                }
+            });
+
+            return view;
+        }
     }
 
     public static class Shipping extends Fragment{
 
+        TextView billing;
+
+        TextView contin , back;
+
+        @Nullable
+        @Override
+        public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+            View view = inflater.inflate(R.layout.shipping_layout , container , false);
 
 
+            billing = (TextView)view.findViewById(R.id.billing);
+            billing.setPaintFlags(Paint.UNDERLINE_TEXT_FLAG);
+
+            contin = (TextView)view.findViewById(R.id.contin);
+            back = (TextView)view.findViewById(R.id.back);
+
+            contin.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    View tab1 = tabs.getTabAt(1).getCustomView();
+
+                    TextView icon1 = (TextView)tab1.findViewById(R.id.icon);
+                    TextView text1 = (TextView)tab1.findViewById(R.id.text);
+
+                    icon1.setText("2");
+                    icon1.setTextColor(Color.GRAY);
+                    icon1.setBackground(getResources().getDrawable(R.drawable.circle_gray));
+
+                    text1.setText("Shipping");
+                    text1.setTextColor(Color.GRAY);
+
+
+
+
+                    View tab2 = tabs.getTabAt(2).getCustomView();
+
+                    TextView icon2 = (TextView)tab2.findViewById(R.id.icon);
+                    TextView text2 = (TextView)tab2.findViewById(R.id.text);
+
+                    icon2.setText("3");
+                    icon2.setTextColor(Color.WHITE);
+                    icon2.setBackground(getResources().getDrawable(R.drawable.circle_accent));
+
+
+                    text2.setText("Payment");
+                    text2.setTextColor(Color.RED);
+
+                    TabLayout.Tab tab = tabs.getTabAt(2);
+                    tab.select();
+
+                    pager.setCurrentItem(2);
+
+                }
+            });
+
+
+            back.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    View tab1 = tabs.getTabAt(1).getCustomView();
+
+                    TextView icon1 = (TextView)tab1.findViewById(R.id.icon);
+                    TextView text1 = (TextView)tab1.findViewById(R.id.text);
+
+                    icon1.setText("2");
+                    icon1.setTextColor(Color.GRAY);
+                    icon1.setBackground(getResources().getDrawable(R.drawable.circle_gray));
+
+                    text1.setText("Shipping");
+                    text1.setTextColor(Color.GRAY);
+
+
+
+
+                    View tab2 = tabs.getTabAt(0).getCustomView();
+
+                    TextView icon2 = (TextView)tab2.findViewById(R.id.icon);
+                    TextView text2 = (TextView)tab2.findViewById(R.id.text);
+
+                    icon2.setText("1");
+                    icon2.setTextColor(Color.WHITE);
+                    icon2.setBackground(getResources().getDrawable(R.drawable.circle_accent));
+
+
+                    text2.setText("Billing");
+                    text2.setTextColor(Color.RED);
+
+                    TabLayout.Tab tab = tabs.getTabAt(0);
+                    tab.select();
+
+                    pager.setCurrentItem(0);
+
+                }
+            });
+
+
+            return view;
+        }
     }
 
 
     public static class Payment extends Fragment{
 
+        TextView contin , back;
+
+        @Nullable
+        @Override
+        public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+            View view = inflater.inflate(R.layout.payment_layout , container , false);
 
 
+            contin = (TextView)view.findViewById(R.id.contin);
+            back = (TextView)view.findViewById(R.id.back);
+
+
+            contin.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    View tab1 = tabs.getTabAt(2).getCustomView();
+
+                    TextView icon1 = (TextView)tab1.findViewById(R.id.icon);
+                    TextView text1 = (TextView)tab1.findViewById(R.id.text);
+
+                    icon1.setText("3");
+                    icon1.setTextColor(Color.GRAY);
+                    icon1.setBackground(getResources().getDrawable(R.drawable.circle_gray));
+
+                    text1.setText("Payment");
+                    text1.setTextColor(Color.GRAY);
+
+
+
+
+                    View tab2 = tabs.getTabAt(3).getCustomView();
+
+                    TextView icon2 = (TextView)tab2.findViewById(R.id.icon);
+                    TextView text2 = (TextView)tab2.findViewById(R.id.text);
+
+                    icon2.setText("4");
+                    icon2.setTextColor(Color.WHITE);
+                    icon2.setBackground(getResources().getDrawable(R.drawable.circle_accent));
+
+
+                    text2.setText("Done");
+                    text2.setTextColor(Color.RED);
+
+                    TabLayout.Tab tab = tabs.getTabAt(3);
+                    tab.select();
+
+                    pager.setCurrentItem(3);
+
+                }
+            });
+
+
+            back.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    View tab1 = tabs.getTabAt(2).getCustomView();
+
+                    TextView icon1 = (TextView)tab1.findViewById(R.id.icon);
+                    TextView text1 = (TextView)tab1.findViewById(R.id.text);
+
+                    icon1.setText("3");
+                    icon1.setTextColor(Color.GRAY);
+                    icon1.setBackground(getResources().getDrawable(R.drawable.circle_gray));
+
+                    text1.setText("Shipping");
+                    text1.setTextColor(Color.GRAY);
+
+
+
+
+                    View tab2 = tabs.getTabAt(1).getCustomView();
+
+                    TextView icon2 = (TextView)tab2.findViewById(R.id.icon);
+                    TextView text2 = (TextView)tab2.findViewById(R.id.text);
+
+                    icon2.setText("2");
+                    icon2.setTextColor(Color.WHITE);
+                    icon2.setBackground(getResources().getDrawable(R.drawable.circle_accent));
+
+
+                    text2.setText("Billing");
+                    text2.setTextColor(Color.RED);
+
+                    TabLayout.Tab tab = tabs.getTabAt(1);
+                    tab.select();
+
+                    pager.setCurrentItem(1);
+
+                }
+            });
+
+
+            return view;
+        }
     }
 
 
     public static class Done extends Fragment{
 
 
+        TextView back;
 
+        @Nullable
+        @Override
+        public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+            View view = inflater.inflate(R.layout.done_layout , container , false);
+
+            back = (TextView)view.findViewById(R.id.back);
+
+            back.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    View tab1 = tabs.getTabAt(3).getCustomView();
+
+                    TextView icon1 = (TextView)tab1.findViewById(R.id.icon);
+                    TextView text1 = (TextView)tab1.findViewById(R.id.text);
+
+                    icon1.setText("4");
+                    icon1.setTextColor(Color.GRAY);
+                    icon1.setBackground(getResources().getDrawable(R.drawable.circle_gray));
+
+                    text1.setText("Payment");
+                    text1.setTextColor(Color.GRAY);
+
+
+
+
+                    View tab2 = tabs.getTabAt(2).getCustomView();
+
+                    TextView icon2 = (TextView)tab2.findViewById(R.id.icon);
+                    TextView text2 = (TextView)tab2.findViewById(R.id.text);
+
+                    icon2.setText("3");
+                    icon2.setTextColor(Color.WHITE);
+                    icon2.setBackground(getResources().getDrawable(R.drawable.circle_accent));
+
+
+                    text2.setText("Shipping");
+                    text2.setTextColor(Color.RED);
+
+                    TabLayout.Tab tab = tabs.getTabAt(2);
+                    tab.select();
+
+                    pager.setCurrentItem(2);
+
+                }
+            });
+
+            return view;
+        }
     }
 
 

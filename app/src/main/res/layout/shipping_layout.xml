@@ -1,0 +1,331 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        >
+
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Shipping Address"
+            android:padding="18dp"
+            android:background="@color/colorAccent"
+            android:textColor="#fff"
+            android:gravity="center_vertical"
+            />
+
+
+
+        <com.github.florent37.materialtextfield.MaterialTextField
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:mtf_image="@drawable/name"
+            android:paddingStart="18dp"
+            android:paddingTop="10dp"
+            android:paddingEnd="18dp"
+            app:mtf_labelColor="#000"
+            app:mtf_cardCollapsedHeight="4dp"
+            app:mtf_openKeyboardOnFocus="true"
+            >
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="#333"
+                android:hint="First name"
+                android:textColorHint="#000"
+                />
+
+        </com.github.florent37.materialtextfield.MaterialTextField>
+
+        <com.github.florent37.materialtextfield.MaterialTextField
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:mtf_image="@drawable/name"
+            android:paddingStart="18dp"
+            android:paddingTop="10dp"
+            android:paddingEnd="18dp"
+            app:mtf_labelColor="#000"
+            app:mtf_cardCollapsedHeight="4dp"
+            app:mtf_openKeyboardOnFocus="true"
+            >
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="#333"
+                android:hint="Last name"
+                android:textColorHint="#000"
+                />
+
+        </com.github.florent37.materialtextfield.MaterialTextField>
+
+        <com.github.florent37.materialtextfield.MaterialTextField
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:mtf_image="@drawable/contact"
+            android:paddingStart="18dp"
+            android:paddingTop="10dp"
+            android:paddingEnd="18dp"
+            app:mtf_labelColor="#000"
+            app:mtf_cardCollapsedHeight="4dp"
+            app:mtf_openKeyboardOnFocus="true"
+            >
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="#333"
+                android:hint="Contact no."
+                android:textColorHint="#000"
+                />
+
+        </com.github.florent37.materialtextfield.MaterialTextField>
+
+        <com.github.florent37.materialtextfield.MaterialTextField
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:mtf_image="@drawable/address"
+            android:paddingStart="18dp"
+            android:paddingTop="10dp"
+            android:paddingEnd="18dp"
+            app:mtf_labelColor="#000"
+            app:mtf_cardCollapsedHeight="4dp"
+            app:mtf_openKeyboardOnFocus="true"
+            >
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="#333"
+                android:hint="Address"
+                android:textColorHint="#000"
+                />
+
+        </com.github.florent37.materialtextfield.MaterialTextField>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="2"
+            >
+
+
+            <com.github.florent37.materialtextfield.MaterialTextField
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:paddingStart="18dp"
+                android:paddingTop="10dp"
+                android:paddingEnd="18dp"
+                app:mtf_image="@drawable/city"
+                app:mtf_labelColor="#000"
+                app:mtf_cardCollapsedHeight="4dp"
+                app:mtf_openKeyboardOnFocus="true"
+                >
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="#333"
+                    android:hint="City"
+                    android:textColorHint="#000"
+                    />
+
+            </com.github.florent37.materialtextfield.MaterialTextField>
+
+
+
+            <com.github.florent37.materialtextfield.MaterialTextField
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:paddingStart="18dp"
+                app:mtf_image="@drawable/city"
+                android:paddingTop="10dp"
+                android:paddingEnd="18dp"
+                app:mtf_labelColor="#000"
+                app:mtf_cardCollapsedHeight="4dp"
+                app:mtf_openKeyboardOnFocus="true"
+                >
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="#333"
+                    android:hint="State"
+                    android:textColorHint="#000"
+                    />
+
+            </com.github.florent37.materialtextfield.MaterialTextField>
+
+
+        </LinearLayout>
+
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="2"
+            >
+
+
+            <com.github.florent37.materialtextfield.MaterialTextField
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:paddingStart="18dp"
+                app:mtf_image="@drawable/pincode"
+                android:paddingTop="10dp"
+                android:paddingEnd="18dp"
+                app:mtf_labelColor="#000"
+                app:mtf_cardCollapsedHeight="4dp"
+                app:mtf_openKeyboardOnFocus="true"
+                >
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="#333"
+                    android:hint="Pincode"
+                    android:textColorHint="#000"
+                    />
+
+            </com.github.florent37.materialtextfield.MaterialTextField>
+
+
+
+            <com.github.florent37.materialtextfield.MaterialTextField
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:paddingStart="18dp"
+                android:paddingTop="10dp"
+                app:mtf_image="@drawable/country"
+                android:paddingEnd="18dp"
+                app:mtf_labelColor="#000"
+                app:mtf_cardCollapsedHeight="4dp"
+                app:mtf_openKeyboardOnFocus="true"
+                >
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="#333"
+                    android:hint="Country"
+                    android:textColorHint="#000"
+                    />
+
+            </com.github.florent37.materialtextfield.MaterialTextField>
+
+
+        </LinearLayout>
+
+
+
+
+        <TextView
+            android:layout_marginTop="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Use billing address"
+            android:textStyle="bold"
+            android:id="@+id/billing"
+            android:gravity="center_vertical"
+            android:padding="18dp"
+            android:textColor="@color/colorAccent"
+            />
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:orientation="horizontal"
+                android:weightSum="2"
+                android:gravity="end"
+                >
+
+
+                <RelativeLayout
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content">
+
+
+
+
+                    <TextView
+                        android:layout_width="wrap_content"
+
+                        android:padding="18dp"
+                        android:text="back"
+                        android:layout_centerHorizontal="true"
+                        android:textAllCaps="true"
+                        android:drawablePadding="10dp"
+                        android:drawableStart="@drawable/backward"
+                        android:gravity="center_vertical"
+                        android:textStyle="bold"
+                        android:id="@+id/back"
+                        android:textColor="@color/colorAccent"
+                        android:layout_height="wrap_content" />
+
+
+                </RelativeLayout>
+
+
+                <RelativeLayout
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content">
+
+
+
+
+                    <TextView
+                        android:layout_width="wrap_content"
+
+                        android:padding="18dp"
+                        android:text="continue"
+                        android:layout_centerHorizontal="true"
+                        android:textAllCaps="true"
+                        android:drawablePadding="10dp"
+                        android:drawableEnd="@drawable/contin"
+                        android:gravity="center_vertical"
+                        android:textStyle="bold"
+                        android:id="@+id/contin"
+                        android:textColor="@color/colorAccent"
+                        android:layout_height="wrap_content" />
+
+
+                </RelativeLayout>
+
+
+
+            </LinearLayout>
+
+
+        </RelativeLayout>
+
+
+    </LinearLayout>
+
+
+</ScrollView>
