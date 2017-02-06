@@ -10,14 +10,37 @@
         android:orientation="vertical"
         >
 
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="200dp">
 
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="200dp"
         android:src="@drawable/splash"
+        android:id="@+id/image"
         android:scaleType="centerCrop"
         />
 
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@drawable/dark_shade"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/name"
+                android:padding="10dp"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentStart="true"
+                android:textColor="#fff"
+                />
+
+
+        </RelativeLayout>
 
     <TextView
         android:layout_width="match_parent"
@@ -34,6 +57,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
             android:padding="10dp"
+            android:id="@+id/price"
             android:text="Rs. 000.00"
             android:textColor="@color/colorAccent"
             />
@@ -82,6 +106,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:padding="10dp"
+            android:id="@+id/category"
             android:layout_weight="2"
             android:text="Category name"
             />
@@ -125,6 +150,7 @@
             android:layout_height="wrap_content"
             android:padding="10dp"
             android:layout_weight="2"
+            android:id="@+id/description"
             android:text="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book."
             />
 
@@ -154,248 +180,14 @@
         />
 
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:weightSum="3"
-        >
 
-
-        <RelativeLayout
-            android:layout_width="0dp"
+        <android.support.v7.widget.RecyclerView
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            >
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                >
-
-
-            <ImageView
-                android:layout_width="80dp"
-                android:layout_height="80dp"
-                android:layout_gravity="center_horizontal"
-                android:src="@drawable/splash"
-                />
-
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:text="Product name"
-                    android:textAllCaps="true"
-                    android:textSize="8sp"
-                    android:padding="2dp"
-                    android:textStyle="bold"
-                    />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:text="1 kg"
-                    android:textAllCaps="true"
-                    android:textSize="8sp"
-                    android:padding="2dp"
-
-                    />
-
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:text="Price 000.00"
-                    android:textAllCaps="true"
-                    android:textSize="8sp"
-                    android:padding="2dp"
-                    android:textStyle="bold"
-                    />
-
-
-            </LinearLayout>
-
-
-
-            <ImageView
-                android:layout_width="10dp"
-                android:layout_height="10dp"
-                android:src="@drawable/plus"
-                android:layout_margin="3dp"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentTop="true"
-                />
-
-        </RelativeLayout>
-
-        <TextView
-            android:layout_width="1dp"
-            android:layout_height="match_parent"
-            android:background="#cdcdcd"
+            android:id="@+id/grid"
             />
 
 
-        <RelativeLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            >
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                >
-
-
-                <ImageView
-                    android:layout_width="80dp"
-                    android:layout_height="80dp"
-                    android:layout_gravity="center_horizontal"
-                    android:src="@drawable/splash"
-                    />
-
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:text="Product name"
-                    android:textAllCaps="true"
-                    android:textSize="8sp"
-                    android:padding="2dp"
-                    android:textStyle="bold"
-                    />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:text="1 kg"
-                    android:textAllCaps="true"
-                    android:textSize="8sp"
-                    android:padding="2dp"
-
-                    />
-
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:text="Price 000.00"
-                    android:textAllCaps="true"
-                    android:textSize="8sp"
-                    android:padding="2dp"
-                    android:textStyle="bold"
-                    />
-
-
-            </LinearLayout>
-
-
-
-            <ImageView
-                android:layout_width="10dp"
-                android:layout_height="10dp"
-                android:src="@drawable/plus"
-                android:layout_margin="3dp"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentTop="true"
-                />
-
-        </RelativeLayout>
-
-
-        <TextView
-            android:layout_width="1dp"
-            android:layout_height="match_parent"
-            android:background="#cdcdcd"
-            />
-
-
-
-        <RelativeLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            >
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                >
-
-
-                <ImageView
-                    android:layout_width="80dp"
-                    android:layout_height="80dp"
-                    android:layout_gravity="center_horizontal"
-                    android:src="@drawable/splash"
-                    />
-
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:text="Product name"
-                    android:textAllCaps="true"
-                    android:textSize="8sp"
-                    android:padding="2dp"
-                    android:textStyle="bold"
-                    />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:text="1 kg"
-                    android:textAllCaps="true"
-                    android:textSize="8sp"
-                    android:padding="2dp"
-
-                    />
-
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:text="Price 000.00"
-                    android:textAllCaps="true"
-                    android:textSize="8sp"
-                    android:padding="2dp"
-                    android:textStyle="bold"
-                    />
-
-
-            </LinearLayout>
-
-
-            <ImageView
-                android:layout_width="10dp"
-                android:layout_height="10dp"
-                android:src="@drawable/plus"
-                android:layout_margin="3dp"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentTop="true"
-                />
-
-
-        </RelativeLayout>
-
-
-
-
-
-    </LinearLayout>
 
     </LinearLayout>
 

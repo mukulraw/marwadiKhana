@@ -104,7 +104,8 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    public static class CategoryFragment extends Fragment {
+    /*public static class CategoryFragment extends Fragment
+    {
 
         ViewPager pager;
         CircleIndicator indicator;
@@ -239,6 +240,8 @@ public class MainActivity extends AppCompatActivity {
 
 
     }
+
+    */
 
 
 

@@ -16,8 +16,8 @@
     <ImageView
         android:layout_width="100dp"
         android:layout_height="100dp"
+        android:id="@+id/image"
         android:layout_margin="10dp"
-        android:src="@drawable/splash"
         />
 
     <RelativeLayout
@@ -30,7 +30,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
-            android:text="product name"
+            android:id="@+id/name"
             android:textAllCaps="true"
             android:layout_marginTop="10dp"
             android:textStyle="bold"
@@ -43,7 +43,7 @@
             android:layout_alignParentTop="true"
             android:layout_alignParentEnd="true"
             android:layout_margin="10dp"
-            android:rating="3.5"
+            android:id="@+id/rating"
             />
 
         <TextView
@@ -51,7 +51,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_alignParentStart="true"
-            android:text="Price : 000.00"
+            android:id="@+id/price"
             android:layout_marginBottom="10dp"
             />
 
@@ -70,7 +70,7 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_alignParentStart="true"
-            android:text="2 kg"
+            android:id="@+id/quantity"
             />
 
 

@@ -11,6 +11,7 @@
         android:layout_height="150dp"
         android:src="@drawable/splash"
         android:scaleType="centerCrop"
+        android:id="@+id/image"
         />
 
 
@@ -26,7 +27,8 @@
         android:layout_height="wrap_content"
         android:textColor="#fff"
         android:layout_margin="10dp"
-        android:text="CATEGORY NAME"
+        android:text="CATEGORY"
+        android:id="@+id/name"
         android:layout_alignParentBottom="true"
         android:layout_alignParentStart="true"
         />
