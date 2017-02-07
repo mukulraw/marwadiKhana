@@ -8,6 +8,7 @@ import POJO.loginBean;
 import POJO.productBean;
 import POJO.subCatBean;
 import ProdPOJO.singleProdBean;
+import RatePOJO.rateBean;
 import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Multipart;
@@ -38,5 +39,9 @@ public interface allAPIs {
     @Multipart
     @POST("marwadi/marwadi_app/product_detail.php")
     Call<singleProdBean> getProductDetails(@Part("proid") String productId);
+
+    @Multipart
+    @POST("marwadi/marwadi_app/pro_review.php")
+    Call<rateBean> getProductRatings(@Part("proid") String productId);
 
 }

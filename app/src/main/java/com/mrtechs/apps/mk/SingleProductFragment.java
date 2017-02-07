@@ -1,17 +1,20 @@
 package com.mrtechs.apps.mk;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
@@ -33,13 +36,18 @@ import retrofit2.converter.scalars.ScalarsConverterFactory;
 public class SingleProductFragment extends Fragment {
 
 
-    String id = "";
+    //String id = "";
     ImageView image;
     TextView price;
     TextView category;
     TextView description;
     TextView name;
     RecyclerView grid;
+    List<POJO.Product> list;
+    LinearLayoutManager manager;
+    String prodName = "";
+    LinearLayout rate;
+    String id = "";
 
     @Nullable
     @Override
@@ -52,10 +60,41 @@ public class SingleProductFragment extends Fragment {
         description = (TextView)view.findViewById(R.id.description);
         grid = (RecyclerView)view.findViewById(R.id.grid);
         name = (TextView)view.findViewById(R.id.name);
+        rate = (LinearLayout)view.findViewById(R.id.rate);
+
+
+
+        rate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent intent = new Intent(getContext() , Rate.class);
+
+                Bundle b = new Bundle();
+
+                //b.putString("id" , );
+
+                intent.putExtra("name" , prodName);
+
+                startActivity(intent);
+
+            }
+        });
+
+
+
+        list = new ArrayList<>();
+
+        manager = new LinearLayoutManager(getContext() , LinearLayoutManager.HORIZONTAL , false);
 
 
         id = getArguments().getString("id");
 
+
+        final CategoryAdapter adapter = new CategoryAdapter(getContext() , list);
+
+        grid.setAdapter(adapter);
+        grid.setLayoutManager(manager);
 
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("http://nationproducts.in/")
@@ -76,7 +115,11 @@ public class SingleProductFragment extends Fragment {
 
                 name.setText(item.getProductName());
 
+                prodName = item.getProductName();
+
                 ImageLoader loader = ImageLoader.getInstance();
+
+                id = response.body().getProduct().get(0).getProId();
 
                 loader.displayImage(item.getProductImg() , image);
 
@@ -100,6 +143,9 @@ public class SingleProductFragment extends Fragment {
             public void onResponse(Call<productBean> call, Response<productBean> response) {
 
 
+                list = response.body().getProduct();
+
+                adapter.setGridData(list);
 
             }
 
@@ -137,7 +183,7 @@ public class SingleProductFragment extends Fragment {
         public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
             LayoutInflater inflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-            View view = inflater.inflate(R.layout.prod_model , parent , false);
+            View view = inflater.inflate(R.layout.single_grid_model , parent , false);
 
             return new ViewHolder(view);
         }
@@ -155,9 +201,11 @@ public class SingleProductFragment extends Fragment {
 
             holder.name.setText(item.getProductName());
 
-            holder.price.setText(item.getProductPrice());
+            holder.price.setText("Rs. " + item.getProductPrice());
 
-            holder.quantity.setText("SKU: "+item.getProductSku());
+            holder.size.setText("SKU: "+item.getProductQty());
+
+
 
         }
 
@@ -170,8 +218,7 @@ public class SingleProductFragment extends Fragment {
 
 
             ImageView image;
-            TextView name , price , quantity;
-            RatingBar rating;
+            TextView name , price , size;
 
 
             public ViewHolder(View itemView)
@@ -181,8 +228,8 @@ public class SingleProductFragment extends Fragment {
                 image = (ImageView)itemView.findViewById(R.id.image);
                 name = (TextView)itemView.findViewById(R.id.name);
                 price = (TextView)itemView.findViewById(R.id.price);
-                quantity = (TextView)itemView.findViewById(R.id.quantity);
-                rating = (RatingBar)itemView.findViewById(R.id.rating);
+                size = (TextView)itemView.findViewById(R.id.size);
+
 
                 itemView.setOnClickListener(new View.OnClickListener() {
                     @Override

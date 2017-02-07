@@ -46,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
         layoutToReplace = (LinearLayout)findViewById(R.id.layout_to_replace);
 
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+
         setSupportActionBar(toolbar);
 
         try {
