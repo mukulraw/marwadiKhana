@@ -24,7 +24,8 @@
         <activity android:name=".Order" />
         <activity android:name=".Login" />
         <activity android:name=".Register" />
-        <activity android:name=".Rate"></activity>
+        <activity android:name=".Rate" />
+        <activity android:name=".Wishlist"></activity>
     </application>
 
 </manifest>

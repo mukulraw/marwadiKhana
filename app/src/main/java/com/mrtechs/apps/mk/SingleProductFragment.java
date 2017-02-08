@@ -6,7 +6,9 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.view.ViewPager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
@@ -15,6 +17,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
@@ -22,22 +25,27 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
+import POJO.Banner;
 import POJO.productBean;
 import ProdPOJO.Product;
+import ProdPOJO.Productimg;
 import ProdPOJO.singleProdBean;
+import me.relex.circleindicator.CircleIndicator;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.converter.scalars.ScalarsConverterFactory;
+import wishPOJO.wishBean;
 
 public class SingleProductFragment extends Fragment {
 
 
     //String id = "";
-    ImageView image;
+    ViewPager image;
     TextView price;
     TextView category;
     TextView description;
@@ -46,21 +54,27 @@ public class SingleProductFragment extends Fragment {
     List<POJO.Product> list;
     LinearLayoutManager manager;
     String prodName = "";
+    ProgressBar progress;
     LinearLayout rate;
     String id = "";
+    TextView wishlist;
+    CircleIndicator indicator;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.single_prod_layout , container , false);
 
-        image = (ImageView)view.findViewById(R.id.image);
+        image = (ViewPager) view.findViewById(R.id.image);
         price = (TextView)view.findViewById(R.id.price);
         category = (TextView)view.findViewById(R.id.category);
         description = (TextView)view.findViewById(R.id.description);
         grid = (RecyclerView)view.findViewById(R.id.grid);
         name = (TextView)view.findViewById(R.id.name);
         rate = (LinearLayout)view.findViewById(R.id.rate);
+        indicator = (CircleIndicator)view.findViewById(R.id.indicator);
+        wishlist = (TextView)view.findViewById(R.id.wishlist);
+        progress = (ProgressBar)view.findViewById(R.id.progress);
 
 
 
@@ -72,9 +86,10 @@ public class SingleProductFragment extends Fragment {
 
                 Bundle b = new Bundle();
 
-                //b.putString("id" , );
+                b.putString("id" , id);
+                b.putString("name" , prodName);
 
-                intent.putExtra("name" , prodName);
+                intent.putExtras(b);
 
                 startActivity(intent);
 
@@ -117,11 +132,20 @@ public class SingleProductFragment extends Fragment {
 
                 prodName = item.getProductName();
 
-                ImageLoader loader = ImageLoader.getInstance();
+                category.setText(item.getCatname());
+
+                description.setText(item.getProductDescription());
 
                 id = response.body().getProduct().get(0).getProId();
 
-                loader.displayImage(item.getProductImg() , image);
+                PagerAdapter adapter = new PagerAdapter(getChildFragmentManager() , item.getProductMultiimg().getProductimg());
+
+                image.setOffscreenPageLimit(item.getProductMultiimg().getProductimg().size() - 1);
+
+                image.setAdapter(adapter);
+                indicator.setViewPager(image);
+
+                //loader.displayImage(item.getProductImg() , image);
 
                 price.setText(item.getProductPrice());
 
@@ -133,6 +157,48 @@ public class SingleProductFragment extends Fragment {
             }
         });
 
+
+
+        wishlist.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+
+                progress.setVisibility(View.VISIBLE);
+
+
+                Retrofit retrofit = new Retrofit.Builder()
+                        .baseUrl("http://nationproducts.in/")
+                        .addConverterFactory(ScalarsConverterFactory.create())
+                        .addConverterFactory(GsonConverterFactory.create())
+                        .build();
+
+                bean b = (bean)getContext().getApplicationContext();
+
+                allAPIs cr = retrofit.create(allAPIs.class);
+
+                Call<wishBean> call = cr.addWishlist(id , b.id);
+
+
+                call.enqueue(new Callback<wishBean>() {
+                    @Override
+                    public void onResponse(Call<wishBean> call, Response<wishBean> response) {
+                        if (Objects.equals(response.body().getProductWishlist().get(0).getSuccess(), "1"))
+                        {
+                            progress.setVisibility(View.GONE);
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<wishBean> call, Throwable t) {
+
+                    }
+                });
+
+
+
+            }
+        });
 
 
 
@@ -159,6 +225,59 @@ public class SingleProductFragment extends Fragment {
 
         return view;
     }
+
+
+    private class PagerAdapter extends FragmentStatePagerAdapter
+    {
+
+        List<Productimg> list = new ArrayList<>();
+
+
+        PagerAdapter(FragmentManager fm , List<Productimg> list) {
+            super(fm);
+            this.list = list;
+        }
+
+        @Override
+        public Fragment getItem(int position) {
+
+            pages p = new pages();
+            Bundle b = new Bundle();
+            b.putString("image" , list.get(position).getImgUrl());
+            p.setArguments(b);
+            return p;
+
+        }
+
+        @Override
+        public int getCount() {
+            return list.size();
+        }
+    }
+
+
+    public static class pages extends Fragment
+    {
+
+        String url = "";
+        ImageView image;
+
+        @Nullable
+        @Override
+        public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+            View view = inflater.inflate(R.layout.pager_images , container , false);
+            url = getArguments().getString("image");
+
+            image = (ImageView)view.findViewById(R.id.image);
+
+            ImageLoader loader = ImageLoader.getInstance();
+
+            loader.displayImage(url , image);
+
+            return view;
+        }
+    }
+
 
     private class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHolder>
     {

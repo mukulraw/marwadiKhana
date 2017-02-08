@@ -18,15 +18,20 @@ public class RateAdapter extends RecyclerView.Adapter<RateAdapter.ViewHolder>{
 
 
 
-    List<Detail> list = new ArrayList<>();
-    Context context;
+    private List<Detail> list = new ArrayList<>();
+    private Context context;
 
-    public RateAdapter(Context context , List<Detail> list)
+    RateAdapter(Context context, List<Detail> list)
     {
         this.list = list;
         this.context = context;
     }
 
+    void setGridData(List<Detail> list)
+    {
+        this.list = list;
+        notifyDataSetChanged();
+    }
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {

@@ -89,6 +89,11 @@ public class Login extends AppCompatActivity {
 
                                 if (Objects.equals(response.body().getStatus(), "Login Successfull"))
                                 {
+                                    bean b = (bean)getApplicationContext();
+
+                                    b.id = response.body().getUserid();
+                                    b.username = response.body().getFullname();
+
                                     Intent intent = new Intent(Login.this , GetStarted.class);
                                     startActivity(intent);
                                     finish();

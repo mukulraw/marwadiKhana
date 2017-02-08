@@ -28,4 +28,5 @@ public class Ratedatum {
         this.percant = percant;
     }
 
+
 }

@@ -8,6 +8,9 @@ import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 public class bean extends Application {
 
 
+    String id = "";
+    String username = "";
+
     @Override
     public void onCreate() {
         super.onCreate();

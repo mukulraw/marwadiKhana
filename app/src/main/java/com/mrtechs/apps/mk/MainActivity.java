@@ -26,6 +26,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.TextView;
+
+import org.w3c.dom.Text;
 
 import me.relex.circleindicator.CircleIndicator;
 
@@ -36,6 +39,9 @@ public class MainActivity extends AppCompatActivity {
     static LinearLayout layoutToReplace;
     DrawerLayout drawer;
 
+    TextView name;
+    TextView home , wish , cart , logout;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +50,22 @@ public class MainActivity extends AppCompatActivity {
 
         toolbar = (Toolbar)findViewById(R.id.toolbar);
         layoutToReplace = (LinearLayout)findViewById(R.id.layout_to_replace);
+
+
+        name = (TextView)findViewById(R.id.name);
+        home = (TextView)findViewById(R.id.home);
+        wish = (TextView)findViewById(R.id.wishlist);
+        cart = (TextView)findViewById(R.id.cart);
+        logout = (TextView)findViewById(R.id.log_out);
+
+
+        wish.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext() , Wishlist.class);
+                startActivity(intent);
+            }
+        });
 
 
 
