@@ -4,8 +4,7 @@ package wishlistPOJO;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Wishlistt {
-
+public class Wishlist {
 
     @SerializedName("wishlistpro_id")
     @Expose
@@ -106,6 +105,4 @@ public class Wishlistt {
     public void setProductImg(String productImg) {
         this.productImg = productImg;
     }
-
-
 }

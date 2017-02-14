@@ -31,7 +31,7 @@
                 <ImageView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:src="@drawable/splash"
+                    android:id="@+id/banner"
                     android:scaleType="centerCrop"
                     />
 
@@ -51,9 +51,9 @@
                     android:layout_alignParentStart="true"
                     android:padding="10dp"
                     android:gravity="center"
+                    android:id="@+id/name"
                     android:textColor="#fff"
                     android:textAllCaps="true"
-                    android:text="category name"
                     />
 
 

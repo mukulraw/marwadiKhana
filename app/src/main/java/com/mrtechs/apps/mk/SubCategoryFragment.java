@@ -22,6 +22,7 @@ import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.util.ArrayList;
@@ -45,7 +46,13 @@ public class SubCategoryFragment extends Fragment {
     ViewPager pager;
     List<Subcategory> list;
 
+
+
     String id = "";
+    String image = "";
+    ImageView banner;
+    TextView name;
+    ImageLoader loader;
 
     @Nullable
     @Override
@@ -56,9 +63,19 @@ public class SubCategoryFragment extends Fragment {
         pager = (ViewPager)view.findViewById(R.id.pager);
 
         id = getArguments().getString("id");
+        image = getArguments().getString("image");
+
+        banner = (ImageView)view.findViewById(R.id.banner);
+
+        name = (TextView)view.findViewById(R.id.name);
+
+        name.setText(getArguments().getString("name"));
 
         list = new ArrayList<>();
 
+        loader = ImageLoader.getInstance();
+
+        loader.displayImage(image , banner);
 
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("http://nationproducts.in/")
@@ -71,7 +88,7 @@ public class SubCategoryFragment extends Fragment {
 
         Call<subCatBean> call = cr.getSubCategories(id);
 
-        //tabs.setupWithViewPager(pager);
+
 
         call.enqueue(new Callback<subCatBean>() {
             @Override
@@ -90,6 +107,21 @@ public class SubCategoryFragment extends Fragment {
 
                 pager.setAdapter(adapter);
 
+                tabs.setupWithViewPager(pager);
+
+                for (int i = 0 ; i < list.size() ; i++)
+                {
+                    try {
+                        tabs.getTabAt(i).setText(list.get(i).getSubcatName());
+                    }catch (NullPointerException e)
+                    {
+                        e.printStackTrace();
+                    }
+                }
+
+                pager.setOffscreenPageLimit(list.size()-1);
+
+
             }
 
             @Override
@@ -97,6 +129,8 @@ public class SubCategoryFragment extends Fragment {
 
             }
         });
+
+
 
 
 
@@ -122,6 +156,7 @@ public class SubCategoryFragment extends Fragment {
 
             }
         });
+
 
 
 
@@ -277,12 +312,16 @@ public class SubCategoryFragment extends Fragment {
 
                 Product item = list.get(position);
 
-                String htmlText = "<html><body><font color=\"#808080\"> %s </font></body></Html>";
+                holder.rating.setRating(Float.parseFloat(item.getProRating())/20);
 
+                //String htmlText = "<html><body><font color=\"#808080\"> %s </font></body></Html>";
+
+                DisplayImageOptions options = new DisplayImageOptions.Builder().cacheInMemory(true)
+                        .cacheOnDisc(true).resetViewBeforeLoading(true).build();
 
                 ImageLoader loader = ImageLoader.getInstance();
 
-                loader.displayImage(item.getProductImg() , holder.image);
+                loader.displayImage(item.getProductImg() , holder.image , options);
 
                 holder.name.setText(item.getProductName());
 

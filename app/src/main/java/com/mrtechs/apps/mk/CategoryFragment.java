@@ -113,6 +113,8 @@ public class CategoryFragment extends Fragment {
                 PagerAdapter adapter = new PagerAdapter(getChildFragmentManager() , blist);
 
                 pager.setAdapter(adapter);
+                pager.setOffscreenPageLimit(blist.size()-5);
+
                 indicator.setViewPager(pager);
 
 
@@ -152,7 +154,7 @@ public class CategoryFragment extends Fragment {
 
         @Override
         public int getCount() {
-            return list.size();
+            return list.size()-4;
         }
     }
 
@@ -256,6 +258,8 @@ public class CategoryFragment extends Fragment {
 
                         Bundle b = new Bundle();
                         b.putString("id" , list.get(getAdapterPosition()).getCatId());
+                        b.putString("image" , list.get(getAdapterPosition()).getCatImage());
+                        b.putString("name" , list.get(getAdapterPosition()).getCatName());
 
                         frag.setArguments(b);
 

@@ -95,6 +95,9 @@ public class GetStarted extends AppCompatActivity {
                 PagerAdapter adapter = new PagerAdapter(getSupportFragmentManager() , blist);
 
                 pager.setAdapter(adapter);
+
+                pager.setOffscreenPageLimit(blist.size()-5);
+
                 indicator.setViewPager(pager);
 
 
@@ -134,7 +137,7 @@ public class GetStarted extends AppCompatActivity {
 
         @Override
         public int getCount() {
-            return list.size();
+            return list.size()-4;
         }
     }
 

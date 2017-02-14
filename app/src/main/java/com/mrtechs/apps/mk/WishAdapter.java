@@ -2,6 +2,8 @@ package com.mrtechs.apps.mk;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.FloatProperty;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,22 +17,29 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import java.util.ArrayList;
 import java.util.List;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
+import retrofit2.converter.scalars.ScalarsConverterFactory;
+import wishPOJO.wishBean;
 import wishlistPOJO.*;
 
-public class WishAdapter extends RecyclerView.Adapter<WishAdapter.ViewHolder> {
+class WishAdapter extends RecyclerView.Adapter<WishAdapter.ViewHolder> {
 
-    private List<Wishlistt> list = new ArrayList<>();
+    private List<Wishlist> list = new ArrayList<>();
     private Context context;
 
 
-    public WishAdapter(Context context , List<Wishlistt> list)
+    WishAdapter(Context context, List<Wishlist> list)
     {
         this.context = context;
         this.list = list;
     }
 
 
-    public void setGridData(List<Wishlistt> list)
+    void setGridData(List<Wishlist> list)
     {
         this.list = list;
         notifyDataSetChanged();
@@ -47,7 +56,7 @@ public class WishAdapter extends RecyclerView.Adapter<WishAdapter.ViewHolder> {
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
 
-        Wishlistt item = list.get(position);
+        final Wishlist item = list.get(position);
 
         ImageLoader loader = ImageLoader.getInstance();
         loader.displayImage(item.getProductImg() , holder.image);
@@ -55,6 +64,49 @@ public class WishAdapter extends RecyclerView.Adapter<WishAdapter.ViewHolder> {
         holder.name.setText(item.getProName());
         holder.price.setText(item.getProductPrice());
         holder.description.setText(item.getProductShortdescription());
+
+        Float quan = Float.parseFloat(item.getProQty());
+
+        int q = Float.floatToIntBits(quan);
+
+        Log.d("asdasdasd" , String.valueOf(q));
+
+        holder.quantity.setText(String.valueOf(q));
+
+        holder.delete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Retrofit retrofit = new Retrofit.Builder()
+                        .baseUrl("http://nationproducts.in/")
+                        .addConverterFactory(ScalarsConverterFactory.create())
+                        .addConverterFactory(GsonConverterFactory.create())
+                        .build();
+
+                bean b = (bean)context.getApplicationContext();
+
+                allAPIs cr = retrofit.create(allAPIs.class);
+
+                Call<wishBean> call = cr.deleteWishlist(item.getProId() , b.id);
+
+                call.enqueue(new Callback<wishBean>() {
+                    @Override
+                    public void onResponse(Call<wishBean> call, Response<wishBean> response) {
+
+
+
+                    }
+
+                    @Override
+                    public void onFailure(Call<wishBean> call, Throwable t) {
+
+                    }
+                });
+
+            }
+        });
+
+
     }
 
     @Override
@@ -68,7 +120,7 @@ public class WishAdapter extends RecyclerView.Adapter<WishAdapter.ViewHolder> {
         TextView description , quantity , price , name;
         ImageView image;
 
-        public ViewHolder(View itemView) {
+        ViewHolder(View itemView) {
             super(itemView);
 
             delete = (ImageButton)itemView.findViewById(R.id.delete);

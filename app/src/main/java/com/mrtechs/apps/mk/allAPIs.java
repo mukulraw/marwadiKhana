@@ -1,7 +1,5 @@
 package com.mrtechs.apps.mk;
 
-import java.util.ArrayList;
-
 import POJO.bannerBean;
 import POJO.categoryBean;
 import POJO.loginBean;
@@ -55,10 +53,12 @@ public interface allAPIs {
     @POST("marwadi/marwadi_app/add_wishlist.php")
     Call<wishBean> addWishlist(@Part("proid") String productId , @Part("userid") String userId);
 
-
     @Multipart
     @POST("marwadi/marwadi_app/wishlist.php")
     Call<wishlistBean> wishlist(@Part("userid") String userId);
 
+    @Multipart
+    @POST("marwadi/marwadi_app/wishlist_delete.php")
+    Call<wishBean> deleteWishlist(@Part("proid") String productId , @Part("userid") String userId);
 
 }
