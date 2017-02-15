@@ -15,9 +15,11 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
 import android.util.Log;
+import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
@@ -302,6 +304,8 @@ public class SubCategoryFragment extends Fragment {
 
                 View view = inflater.inflate(R.layout.prod_model , parent , false);
 
+
+
                 return new ViewHolder(view);
             }
 
@@ -325,7 +329,7 @@ public class SubCategoryFragment extends Fragment {
 
                 holder.name.setText(item.getProductName());
 
-                holder.price.setText(Html.fromHtml("<html><body><font color=\"#808080\">" + item.getProductPrice() + " " + "</font></body></Html>" + " " +"<html><body><font color=\"#FF0000\">" + item.getProductSaleprice() + "</font></body></Html>"));
+                holder.price.setText("Rs " + Html.fromHtml("<html><body><font color=\"#808080\">" + item.getProductPrice() + " " + "</font></body></Html>" + " " +"<html><body><font color=\"#FF0000\">" + item.getProductSaleprice() + "</font></body></Html>"));
 
                 holder.quantity.setText("SKU: "+item.getProductSku());
 

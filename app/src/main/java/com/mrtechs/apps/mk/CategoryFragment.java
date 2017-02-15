@@ -212,6 +212,8 @@ public class CategoryFragment extends Fragment {
         @Override
         public void onBindViewHolder(ViewHolder holder, int position) {
 
+            holder.setIsRecyclable(false);
+
             Category item = list.get(position);
 
             holder.name.setText(item.getCatName());

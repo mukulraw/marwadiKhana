@@ -31,7 +31,10 @@ public class Product {
     private String productPrice;
     @SerializedName("product_tag")
     @Expose
-    private ProductTagg productTag;
+    private Producttag productTag;
+    @SerializedName("product_attribute")
+    @Expose
+    private ProductAttribute productAttribute;
     @SerializedName("product_saleprice")
     @Expose
     private String productSaleprice;
@@ -118,12 +121,20 @@ public class Product {
         this.productPrice = productPrice;
     }
 
-    public ProductTagg getProductTag() {
+    public Producttag getProductTag() {
         return productTag;
     }
 
-    public void setProductTag(ProductTagg productTag) {
+    public void setProductTag(Producttag productTag) {
         this.productTag = productTag;
+    }
+
+    public ProductAttribute getProductAttribute() {
+        return productAttribute;
+    }
+
+    public void setProductAttribute(ProductAttribute productAttribute) {
+        this.productAttribute = productAttribute;
     }
 
     public String getProductSaleprice() {
@@ -181,7 +192,6 @@ public class Product {
     public void setProRating(String proRating) {
         this.proRating = proRating;
     }
-
 
 
 }

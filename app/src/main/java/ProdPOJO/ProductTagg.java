@@ -18,5 +18,4 @@ public class ProductTagg {
     public void setProducttag(List<Producttag> producttag) {
         this.producttag = producttag;
     }
-
 }

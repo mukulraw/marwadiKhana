@@ -18,5 +18,4 @@ public class ProductMultiimg {
     public void setProductimg(List<Productimg> productimg) {
         this.productimg = productimg;
     }
-
 }

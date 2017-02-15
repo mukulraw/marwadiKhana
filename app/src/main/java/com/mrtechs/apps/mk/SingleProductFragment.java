@@ -12,13 +12,18 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
+import android.util.Log;
+import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
+import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RatingBar;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -31,6 +36,7 @@ import POJO.Banner;
 import POJO.productBean;
 import ProdPOJO.Product;
 import ProdPOJO.Productimg;
+import ProdPOJO.attribute;
 import ProdPOJO.singleProdBean;
 import me.relex.circleindicator.CircleIndicator;
 import retrofit2.Call;
@@ -50,6 +56,7 @@ public class SingleProductFragment extends Fragment {
     TextView category;
     TextView description;
     TextView name;
+    Spinner spinner;
     RecyclerView grid;
     List<POJO.Product> list;
     LinearLayoutManager manager;
@@ -75,9 +82,9 @@ public class SingleProductFragment extends Fragment {
         indicator = (CircleIndicator)view.findViewById(R.id.indicator);
         wishlist = (TextView)view.findViewById(R.id.wishlist);
         progress = (ProgressBar)view.findViewById(R.id.progress);
+        spinner = (Spinner)view.findViewById(R.id.spinner);
 
-
-
+/*
         rate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -95,7 +102,7 @@ public class SingleProductFragment extends Fragment {
 
             }
         });
-
+*/
 
 
         list = new ArrayList<>();
@@ -147,7 +154,26 @@ public class SingleProductFragment extends Fragment {
 
                 //loader.displayImage(item.getProductImg() , image);
 
-                price.setText(item.getProductPrice());
+                price.setText("Rs " + item.getProductPrice());
+
+
+                List<attribute> l = response.body().getProduct().get(0).getProductAttribute().getValueData().getProductattribute();
+
+                Log.d("asdasdasd" , item.getProId());
+
+                List<String> l2 = new ArrayList<String>();
+
+                for (int i = 0 ; i < l.size() ; i++)
+                {
+                    l2.add(l.get(i).getAttributeValue());
+                }
+
+                ArrayAdapter<String> adapter1 = new ArrayAdapter<String>(getContext() , R.layout.spinner_model , l2);
+                spinner.setAdapter(adapter1);
+
+
+
+
 
             }
 
@@ -303,6 +329,12 @@ public class SingleProductFragment extends Fragment {
             LayoutInflater inflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
             View view = inflater.inflate(R.layout.single_grid_model , parent , false);
+
+            WindowManager wm = (WindowManager)context.getSystemService(Context.WINDOW_SERVICE);
+            Display d = wm.getDefaultDisplay();
+
+            view.setMinimumWidth(d.getWidth()/3);
+
 
             return new ViewHolder(view);
         }

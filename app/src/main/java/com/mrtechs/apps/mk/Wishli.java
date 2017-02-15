@@ -188,7 +188,7 @@ public class Wishli extends AppCompatActivity {
                         @Override
                         public void onResponse(Call<wishBean> call, Response<wishBean> response) {
 
-fetch();
+                            fetch();
 
                         }
 
