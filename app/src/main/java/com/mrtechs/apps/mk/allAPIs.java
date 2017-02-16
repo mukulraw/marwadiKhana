@@ -8,6 +8,7 @@ import POJO.subCatBean;
 import ProdPOJO.singleProdBean;
 import RatePOJO.rateBean;
 import addCartPOJO.addCartBean;
+import cartDeletePOJO.deleteCartBean;
 import cartPOJO.cartBean;
 import cdeletePOJO.cdeleteBean;
 import retrofit2.Call;
@@ -76,4 +77,7 @@ public interface allAPIs {
     @POST("marwadi/marwadi_app/delete_cart.php")
     Call<cdeleteBean> clearCart(@Part("userid") String userId);
 
+    @Multipart
+    @POST("marwadi/marwadi_app/delete_cartbyId.php")
+    Call<deleteCartBean> deleteCartItem(@Part("userid") String userId , @Part("proid") String proid);
 }

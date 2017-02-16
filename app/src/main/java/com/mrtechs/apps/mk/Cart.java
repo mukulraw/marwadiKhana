@@ -107,7 +107,9 @@ public class Cart extends AppCompatActivity {
                     @Override
                     public void onResponse(Call<cdeleteBean> call, Response<cdeleteBean> response) {
                         progress.setVisibility(View.GONE);
-                        fetch();
+
+                        adapter.setGridData(new ArrayList<Cartheader>());
+
                     }
 
                     @Override
