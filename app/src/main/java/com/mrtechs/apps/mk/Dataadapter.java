@@ -17,7 +17,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.StringTokenizer;
 
+import cartDeletePOJO.deleteCartBean;
 import cartPOJO.Cartheader;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
+import retrofit2.converter.scalars.ScalarsConverterFactory;
 
 import static android.media.CamcorderProfile.get;
 
@@ -50,9 +57,9 @@ public class Dataadapter extends RecyclerView.Adapter<Dataadapter.MyviewHolder>{
     }
 
     @Override
-    public void onBindViewHolder(final MyviewHolder holder, int position) {
+    public void onBindViewHolder(final MyviewHolder holder, final int position) {
 
-        Cartheader item = list.get(position);
+        final Cartheader item = list.get(position);
 
         holder.plus.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -97,6 +104,41 @@ public class Dataadapter extends RecyclerView.Adapter<Dataadapter.MyviewHolder>{
         });
 
 
+        holder.delete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Retrofit retrofit = new Retrofit.Builder()
+                        .baseUrl("http://nationproducts.in/")
+                        .addConverterFactory(ScalarsConverterFactory.create())
+                        .addConverterFactory(GsonConverterFactory.create())
+                        .build();
+
+                bean b = (bean)context.getApplicationContext();
+
+                allAPIs cr = retrofit.create(allAPIs.class);
+
+                Call<deleteCartBean> call = cr.deleteCartItem(b.id , item.getProId());
+
+                call.enqueue(new Callback<deleteCartBean>() {
+                    @Override
+                    public void onResponse(Call<deleteCartBean> call, Response<deleteCartBean> response) {
+
+                        notifyItemRemoved(position);
+
+                    }
+
+                    @Override
+                    public void onFailure(Call<deleteCartBean> call, Throwable t) {
+
+                    }
+                });
+
+
+            }
+        });
+
+
 
 
 
@@ -114,6 +156,7 @@ public class Dataadapter extends RecyclerView.Adapter<Dataadapter.MyviewHolder>{
         ImageButton plus , minus;
         TextView name , sku , price;
         ImageView image;
+        ImageButton delete;
 
 
         public MyviewHolder(View itemView) {
@@ -128,6 +171,8 @@ public class Dataadapter extends RecyclerView.Adapter<Dataadapter.MyviewHolder>{
             price = (TextView)itemView.findViewById(R.id.price);
 
             image = (ImageView)itemView.findViewById(R.id.image);
+
+            delete = (ImageButton) itemView.findViewById(R.id.delete);
 
         }
     }
