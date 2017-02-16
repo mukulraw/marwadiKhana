@@ -18,13 +18,17 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RatingBar;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
 
@@ -38,6 +42,7 @@ import ProdPOJO.Product;
 import ProdPOJO.Productimg;
 import ProdPOJO.attribute;
 import ProdPOJO.singleProdBean;
+import addCartPOJO.addCartBean;
 import me.relex.circleindicator.CircleIndicator;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -62,16 +67,30 @@ public class SingleProductFragment extends Fragment {
     LinearLayoutManager manager;
     String prodName = "";
     ProgressBar progress;
+    Button add;
     LinearLayout rate;
     String id = "";
     TextView wishlist;
     CircleIndicator indicator;
+
+    ImageButton minus , plus;
+    TextView quantity;
+
+    String size = "";
+
+    String opid = "";
+
+    boolean isDropDown = false;
+
+    List<String> l2;
+
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.single_prod_layout , container , false);
 
+        add = (Button) view.findViewById(R.id.add);
         image = (ViewPager) view.findViewById(R.id.image);
         price = (TextView)view.findViewById(R.id.price);
         category = (TextView)view.findViewById(R.id.category);
@@ -83,6 +102,47 @@ public class SingleProductFragment extends Fragment {
         wishlist = (TextView)view.findViewById(R.id.wishlist);
         progress = (ProgressBar)view.findViewById(R.id.progress);
         spinner = (Spinner)view.findViewById(R.id.spinner);
+
+        minus = (ImageButton) view.findViewById(R.id.minus);
+        plus = (ImageButton)view.findViewById(R.id.plus);
+        quantity = (TextView)view.findViewById(R.id.quantity);
+
+        l2 = new ArrayList<String>();
+
+        minus.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                String q = quantity.getText().toString();
+
+                int q1 = Integer.parseInt(q);
+
+                if (q1!=1)
+                {
+                    q1--;
+                }
+
+                quantity.setText(String.valueOf(q1));
+
+            }
+        });
+
+
+        plus.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                String q = quantity.getText().toString();
+
+                int q1 = Integer.parseInt(q);
+
+                    q1++;
+
+                quantity.setText(String.valueOf(q1));
+
+            }
+        });
+
 
 /*
         rate.setOnClickListener(new View.OnClickListener() {
@@ -149,6 +209,8 @@ public class SingleProductFragment extends Fragment {
 
                 image.setOffscreenPageLimit(item.getProductMultiimg().getProductimg().size() - 1);
 
+                opid = item.getProductAttribute().getAttributeData().getAttributeId();
+
                 image.setAdapter(adapter);
                 indicator.setViewPager(image);
 
@@ -157,19 +219,32 @@ public class SingleProductFragment extends Fragment {
                 price.setText("Rs " + item.getProductPrice());
 
 
-                List<attribute> l = response.body().getProduct().get(0).getProductAttribute().getValueData().getProductattribute();
+                List<attribute> l = item.getProductAttribute().getValueData().getProductattribute();
 
                 Log.d("asdasdasd" , item.getProId());
 
-                List<String> l2 = new ArrayList<String>();
+                l2.clear();
+
+                l2.add(item.getProductAttribute().getAttributeData().getAttributeTitle());
 
                 for (int i = 0 ; i < l.size() ; i++)
                 {
                     l2.add(l.get(i).getAttributeValue());
                 }
 
-                ArrayAdapter<String> adapter1 = new ArrayAdapter<String>(getContext() , R.layout.spinner_model , l2);
-                spinner.setAdapter(adapter1);
+                if (l2.size()>0)
+                {
+                    ArrayAdapter<String> adapter1 = new ArrayAdapter<String>(getContext() , R.layout.spinner_model , l2);
+                    spinner.setAdapter(adapter1);
+                    isDropDown = true;
+                }
+                else
+                {
+                    spinner.setVisibility(View.GONE);
+                    isDropDown = false;
+                }
+
+
 
 
 
@@ -183,6 +258,114 @@ public class SingleProductFragment extends Fragment {
             }
         });
 
+
+        add.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+
+
+                if (isDropDown)
+                {
+
+                    if (size.length()>0)
+                    {
+                        progress.setVisibility(View.VISIBLE);
+
+                        Retrofit retrofit = new Retrofit.Builder()
+                                .baseUrl("http://nationproducts.in/")
+                                .addConverterFactory(ScalarsConverterFactory.create())
+                                .addConverterFactory(GsonConverterFactory.create())
+                                .build();
+
+                        bean b = (bean)getContext().getApplicationContext();
+
+                        allAPIs cr = retrofit.create(allAPIs.class);
+
+                        Call<addCartBean> call = cr.addToCart(id , b.id , quantity.getText().toString() , size , opid);
+
+                        call.enqueue(new Callback<addCartBean>() {
+                            @Override
+                            public void onResponse(Call<addCartBean> call, Response<addCartBean> response) {
+
+                                progress.setVisibility(View.GONE);
+                                Toast.makeText(getContext() , "Added successfully" , Toast.LENGTH_SHORT).show();
+
+                            }
+
+                            @Override
+                            public void onFailure(Call<addCartBean> call, Throwable t) {
+                                progress.setVisibility(View.GONE);
+                            }
+                        });
+
+                    }
+                    else
+                    {
+                        Toast.makeText(getContext() , "Please select a size" , Toast.LENGTH_SHORT).show();
+                    }
+
+                }
+                else
+                {
+                    progress.setVisibility(View.VISIBLE);
+
+                    Retrofit retrofit = new Retrofit.Builder()
+                            .baseUrl("http://nationproducts.in/")
+                            .addConverterFactory(ScalarsConverterFactory.create())
+                            .addConverterFactory(GsonConverterFactory.create())
+                            .build();
+
+                    bean b = (bean)getContext().getApplicationContext();
+
+                    allAPIs cr = retrofit.create(allAPIs.class);
+
+                    Call<addCartBean> call = cr.addToCart(id , b.id , quantity.getText().toString() , "" , "");
+
+                    call.enqueue(new Callback<addCartBean>() {
+                        @Override
+                        public void onResponse(Call<addCartBean> call, Response<addCartBean> response) {
+
+
+                            progress.setVisibility(View.GONE);
+                            Toast.makeText(getContext() , "Added successfully" , Toast.LENGTH_SHORT).show();
+
+                        }
+
+                        @Override
+                        public void onFailure(Call<addCartBean> call, Throwable t) {
+                            progress.setVisibility(View.GONE);
+                        }
+                    });
+
+                }
+
+
+
+            }
+        });
+
+
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+                if (position>0)
+                {
+                    size = l2.get(position);
+                }
+                else
+                {
+                    size = "";
+                }
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
 
 
         wishlist.setOnClickListener(new View.OnClickListener() {

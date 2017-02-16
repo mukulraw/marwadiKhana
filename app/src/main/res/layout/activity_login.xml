@@ -44,7 +44,7 @@
             android:layout_marginStart="10dp"
             android:layout_marginEnd="18dp"
             android:padding="8dp"
-            android:text="asd"
+            android:text="developer@technobrix.com"
             android:id="@+id/email"
             android:hint="email*"
             android:inputType="textEmailAddress"
@@ -70,7 +70,7 @@
             android:padding="8dp"
             android:id="@+id/password"
             android:inputType="textPassword"
-            android:text="asd"
+            android:text="developer@123"
             android:hint="password*"
             android:background="@drawable/edit_text_back"
             />
