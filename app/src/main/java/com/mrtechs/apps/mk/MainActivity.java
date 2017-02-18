@@ -30,7 +30,14 @@ import android.widget.TextView;
 
 import org.w3c.dom.Text;
 
+import countPOJO.countBean;
 import me.relex.circleindicator.CircleIndicator;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
+import retrofit2.converter.scalars.ScalarsConverterFactory;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -38,6 +45,8 @@ public class MainActivity extends AppCompatActivity {
     Toolbar toolbar;
     static LinearLayout layoutToReplace;
     DrawerLayout drawer;
+
+    TextView countt;
 
     TextView name;
     TextView home , wish , cart , logout;
@@ -69,6 +78,10 @@ public class MainActivity extends AppCompatActivity {
 
 
 
+
+
+
+
         setSupportActionBar(toolbar);
 
         try {
@@ -97,13 +110,43 @@ public class MainActivity extends AppCompatActivity {
 
 
     @Override
-    public boolean onPrepareOptionsMenu(Menu menu) {
+    public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu_main , menu);
 
 
+        View v = (View) menu.findItem(R.id.cart).getActionView();
 
 
+        countt = ( TextView ) v.findViewById(R.id.countt);
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("http://nationproducts.in/")
+                .addConverterFactory(ScalarsConverterFactory.create())
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        bean b = (bean)getApplicationContext();
+
+        allAPIs cr = retrofit.create(allAPIs.class);
+
+        Call<countBean> call = cr.getCount(b.id);
+
+        call.enqueue(new Callback<countBean>() {
+            @Override
+            public void onResponse(Call<countBean> call, Response<countBean> response) {
+
+
+                countt.setText(response.body().getCarttotal().get(0).getTotalCount());
+
+
+            }
+
+            @Override
+            public void onFailure(Call<countBean> call, Throwable t) {
+
+            }
+        });
 
         return true;
     }

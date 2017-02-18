@@ -12,6 +12,7 @@ import addCartPOJO.addCartBean;
 import cartDeletePOJO.deleteCartBean;
 import cartPOJO.cartBean;
 import cdeletePOJO.cdeleteBean;
+import countPOJO.countBean;
 import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Multipart;
@@ -90,4 +91,9 @@ public interface allAPIs {
     @Multipart
     @POST("marwadi/marwadi_app/wishlist_update.php")
     Call<wishQtyBean> updateWishlist(@Part("userid") String userId , @Part("proid") String proid , @Part("qty") String qty);
+
+    @Multipart
+    @POST("marwadi/marwadi_app/cart_count.php")
+    Call<countBean> getCount(@Part("userid") String userId);
+
 }
