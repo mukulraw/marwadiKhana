@@ -6,6 +6,7 @@ import POJO.loginBean;
 import POJO.productBean;
 import POJO.subCatBean;
 import ProdPOJO.singleProdBean;
+import QtyPOJO.qtyBean;
 import RatePOJO.rateBean;
 import addCartPOJO.addCartBean;
 import cartDeletePOJO.deleteCartBean;
@@ -18,6 +19,7 @@ import retrofit2.http.POST;
 import retrofit2.http.Part;
 import reviewPOJO.reviewBean;
 import wishPOJO.wishBean;
+import wishQtyPOJO.wishQtyBean;
 import wishlistPOJO.wishlistBean;
 
 public interface allAPIs {
@@ -80,4 +82,12 @@ public interface allAPIs {
     @Multipart
     @POST("marwadi/marwadi_app/delete_cartbyId.php")
     Call<deleteCartBean> deleteCartItem(@Part("userid") String userId , @Part("proid") String proid);
+
+    @Multipart
+    @POST("marwadi/marwadi_app/update_qty.php")
+    Call<qtyBean> updateCart(@Part("userid") String userId , @Part("proid") String proid , @Part("qty") String qty);
+
+    @Multipart
+    @POST("marwadi/marwadi_app/wishlist_update.php")
+    Call<wishQtyBean> updateWishlist(@Part("userid") String userId , @Part("proid") String proid , @Part("qty") String qty);
 }

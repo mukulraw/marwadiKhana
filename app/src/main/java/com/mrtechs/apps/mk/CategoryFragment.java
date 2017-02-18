@@ -25,6 +25,7 @@ import POJO.Banner;
 import POJO.Category;
 import POJO.bannerBean;
 import POJO.categoryBean;
+import cn.trinea.android.view.autoscrollviewpager.AutoScrollViewPager;
 import me.relex.circleindicator.CircleIndicator;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -35,7 +36,7 @@ import retrofit2.converter.scalars.ScalarsConverterFactory;
 
 public class CategoryFragment extends Fragment {
 
-    ViewPager pager;
+    AutoScrollViewPager pager;
     CircleIndicator indicator;
     RecyclerView grid;
     GridLayoutManager manager;
@@ -48,7 +49,7 @@ public class CategoryFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.category_layout , container , false);
 
-        pager = (ViewPager)view.findViewById(R.id.pager);
+        pager = (AutoScrollViewPager) view.findViewById(R.id.pager);
         indicator = (CircleIndicator)view.findViewById(R.id.indicator);
         grid = (RecyclerView)view.findViewById(R.id.grid);
         manager = new GridLayoutManager(getContext() , 2);
@@ -117,6 +118,7 @@ public class CategoryFragment extends Fragment {
 
                 indicator.setViewPager(pager);
 
+                pager.startAutoScroll(5000);
 
             }
 

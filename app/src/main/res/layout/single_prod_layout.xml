@@ -254,7 +254,6 @@
             android:padding="10dp"
             android:id="@+id/category"
             android:layout_weight="2"
-            android:text="Category name"
             />
 
 
@@ -267,7 +266,45 @@
         android:background="#cdcdcd"
         />
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="3"
+            >
 
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="AVAILABILITY"
+                android:padding="10dp"
+                android:textStyle="bold"
+                />
+
+            <TextView
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:background="#cdcdcd"
+                />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:id="@+id/stock"
+                android:layout_weight="2"
+                />
+
+
+        </LinearLayout>
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#cdcdcd"
+            />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -297,7 +334,6 @@
             android:padding="10dp"
             android:layout_weight="2"
             android:id="@+id/description"
-            android:text="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book."
             />
 
 

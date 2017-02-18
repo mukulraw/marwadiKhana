@@ -6,6 +6,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v4.widget.AutoScrollHelper;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -21,6 +22,7 @@ import java.util.List;
 
 import POJO.Banner;
 import POJO.bannerBean;
+import cn.trinea.android.view.autoscrollviewpager.AutoScrollViewPager;
 import me.relex.circleindicator.CircleIndicator;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -31,7 +33,7 @@ import retrofit2.converter.scalars.ScalarsConverterFactory;
 
 public class GetStarted extends AppCompatActivity {
 
-    ViewPager pager;
+    AutoScrollViewPager pager;
     Button getStarted;
     CircleIndicator indicator;
     List<Banner> blist;
@@ -41,18 +43,15 @@ public class GetStarted extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_get_started);
 
-        pager = (ViewPager) findViewById(R.id.pager);
+        pager = (AutoScrollViewPager) findViewById(R.id.pager);
         getStarted = (Button) findViewById(R.id.get_started);
         indicator = (CircleIndicator) findViewById(R.id.indicator);
 
         blist = new ArrayList<>();
 
-
-
-
         indicator.setViewPager(pager);
 
-
+        pager.startAutoScroll(5000);
 
 
         getStarted.setOnClickListener(new View.OnClickListener() {

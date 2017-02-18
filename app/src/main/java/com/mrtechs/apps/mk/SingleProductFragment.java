@@ -60,6 +60,7 @@ public class SingleProductFragment extends Fragment {
     TextView price;
     TextView category;
     TextView description;
+    TextView stock;
     TextView name;
     Spinner spinner;
     RecyclerView grid;
@@ -79,6 +80,8 @@ public class SingleProductFragment extends Fragment {
     String size = "";
 
     String opid = "";
+
+    boolean sto = false;
 
     boolean isDropDown = false;
 
@@ -100,6 +103,7 @@ public class SingleProductFragment extends Fragment {
         rate = (LinearLayout)view.findViewById(R.id.rate);
         indicator = (CircleIndicator)view.findViewById(R.id.indicator);
         wishlist = (TextView)view.findViewById(R.id.wishlist);
+        stock = (TextView)view.findViewById(R.id.stock);
         progress = (ProgressBar)view.findViewById(R.id.progress);
         spinner = (Spinner)view.findViewById(R.id.spinner);
 
@@ -199,6 +203,10 @@ public class SingleProductFragment extends Fragment {
 
                 prodName = item.getProductName();
 
+                stock.setText(item.getProductStock());
+
+                sto = Objects.equals(item.getProductStock().toLowerCase(), "in stock");
+
                 category.setText(item.getCatname());
 
                 description.setText(item.getProductDescription());
@@ -221,7 +229,7 @@ public class SingleProductFragment extends Fragment {
 
                 List<attribute> l = item.getProductAttribute().getValueData().getProductattribute();
 
-                Log.d("asdasdasd" , item.getProId());
+
 
                 l2.clear();
 
@@ -263,12 +271,52 @@ public class SingleProductFragment extends Fragment {
             @Override
             public void onClick(View v) {
 
-
-
-                if (isDropDown)
+                if (sto)
                 {
+                    if (isDropDown)
+                    {
 
-                    if (size.length()>0)
+
+
+                        if (size.length()>0)
+                        {
+                            progress.setVisibility(View.VISIBLE);
+
+                            Retrofit retrofit = new Retrofit.Builder()
+                                    .baseUrl("http://nationproducts.in/")
+                                    .addConverterFactory(ScalarsConverterFactory.create())
+                                    .addConverterFactory(GsonConverterFactory.create())
+                                    .build();
+
+                            bean b = (bean)getContext().getApplicationContext();
+
+                            allAPIs cr = retrofit.create(allAPIs.class);
+
+                            Call<addCartBean> call = cr.addToCart(id , b.id , quantity.getText().toString() , size , opid);
+
+                            call.enqueue(new Callback<addCartBean>() {
+                                @Override
+                                public void onResponse(Call<addCartBean> call, Response<addCartBean> response) {
+
+                                    progress.setVisibility(View.GONE);
+                                    Toast.makeText(getContext() , "Added successfully" , Toast.LENGTH_SHORT).show();
+
+                                }
+
+                                @Override
+                                public void onFailure(Call<addCartBean> call, Throwable t) {
+                                    progress.setVisibility(View.GONE);
+                                }
+                            });
+
+                        }
+                        else
+                        {
+                            Toast.makeText(getContext() , "Please select a size" , Toast.LENGTH_SHORT).show();
+                        }
+
+                    }
+                    else
                     {
                         progress.setVisibility(View.VISIBLE);
 
@@ -282,11 +330,12 @@ public class SingleProductFragment extends Fragment {
 
                         allAPIs cr = retrofit.create(allAPIs.class);
 
-                        Call<addCartBean> call = cr.addToCart(id , b.id , quantity.getText().toString() , size , opid);
+                        Call<addCartBean> call = cr.addToCart(id , b.id , quantity.getText().toString() , "" , "");
 
                         call.enqueue(new Callback<addCartBean>() {
                             @Override
                             public void onResponse(Call<addCartBean> call, Response<addCartBean> response) {
+
 
                                 progress.setVisibility(View.GONE);
                                 Toast.makeText(getContext() , "Added successfully" , Toast.LENGTH_SHORT).show();
@@ -300,47 +349,11 @@ public class SingleProductFragment extends Fragment {
                         });
 
                     }
-                    else
-                    {
-                        Toast.makeText(getContext() , "Please select a size" , Toast.LENGTH_SHORT).show();
-                    }
-
                 }
                 else
                 {
-                    progress.setVisibility(View.VISIBLE);
-
-                    Retrofit retrofit = new Retrofit.Builder()
-                            .baseUrl("http://nationproducts.in/")
-                            .addConverterFactory(ScalarsConverterFactory.create())
-                            .addConverterFactory(GsonConverterFactory.create())
-                            .build();
-
-                    bean b = (bean)getContext().getApplicationContext();
-
-                    allAPIs cr = retrofit.create(allAPIs.class);
-
-                    Call<addCartBean> call = cr.addToCart(id , b.id , quantity.getText().toString() , "" , "");
-
-                    call.enqueue(new Callback<addCartBean>() {
-                        @Override
-                        public void onResponse(Call<addCartBean> call, Response<addCartBean> response) {
-
-
-                            progress.setVisibility(View.GONE);
-                            Toast.makeText(getContext() , "Added successfully" , Toast.LENGTH_SHORT).show();
-
-                        }
-
-                        @Override
-                        public void onFailure(Call<addCartBean> call, Throwable t) {
-                            progress.setVisibility(View.GONE);
-                        }
-                    });
-
+                    Toast.makeText(getContext() , "Sorry! this product is not available" , Toast.LENGTH_SHORT).show();
                 }
-
-
 
             }
         });
