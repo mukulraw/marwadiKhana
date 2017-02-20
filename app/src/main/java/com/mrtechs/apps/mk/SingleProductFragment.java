@@ -43,6 +43,7 @@ import ProdPOJO.Productimg;
 import ProdPOJO.attribute;
 import ProdPOJO.singleProdBean;
 import addCartPOJO.addCartBean;
+import countPOJO.countBean;
 import me.relex.circleindicator.CircleIndicator;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -288,7 +289,7 @@ public class SingleProductFragment extends Fragment {
                                     .addConverterFactory(GsonConverterFactory.create())
                                     .build();
 
-                            bean b = (bean)getContext().getApplicationContext();
+                            final bean b = (bean)getContext().getApplicationContext();
 
                             allAPIs cr = retrofit.create(allAPIs.class);
 
@@ -298,8 +299,35 @@ public class SingleProductFragment extends Fragment {
                                 @Override
                                 public void onResponse(Call<addCartBean> call, Response<addCartBean> response) {
 
-                                    progress.setVisibility(View.GONE);
-                                    Toast.makeText(getContext() , "Added successfully" , Toast.LENGTH_SHORT).show();
+
+
+                                    Retrofit retrofit = new Retrofit.Builder()
+                                            .baseUrl("http://nationproducts.in/")
+                                            .addConverterFactory(ScalarsConverterFactory.create())
+                                            .addConverterFactory(GsonConverterFactory.create())
+                                            .build();
+
+
+                                    allAPIs cr = retrofit.create(allAPIs.class);
+
+                                    Call<countBean> call2 = cr.getCount(b.id);
+
+                                    call2.enqueue(new Callback<countBean>() {
+                                        @Override
+                                        public void onResponse(Call<countBean> call, Response<countBean> response) {
+
+                                            progress.setVisibility(View.GONE);
+                                            Toast.makeText(getContext() , "Added successfully" , Toast.LENGTH_SHORT).show();
+
+                                            MainActivity.countt.setText(String.valueOf(response.body().getCarttotal().get(0).getTotalCount()));
+
+                                        }
+
+                                        @Override
+                                        public void onFailure(Call<countBean> call, Throwable t) {
+
+                                        }
+                                    });
 
                                 }
 
@@ -326,7 +354,7 @@ public class SingleProductFragment extends Fragment {
                                 .addConverterFactory(GsonConverterFactory.create())
                                 .build();
 
-                        bean b = (bean)getContext().getApplicationContext();
+                        final bean b = (bean)getContext().getApplicationContext();
 
                         allAPIs cr = retrofit.create(allAPIs.class);
 
@@ -337,9 +365,35 @@ public class SingleProductFragment extends Fragment {
                             public void onResponse(Call<addCartBean> call, Response<addCartBean> response) {
 
 
-                                progress.setVisibility(View.GONE);
-                                Toast.makeText(getContext() , "Added successfully" , Toast.LENGTH_SHORT).show();
+                                Retrofit retrofit = new Retrofit.Builder()
+                                        .baseUrl("http://nationproducts.in/")
+                                        .addConverterFactory(ScalarsConverterFactory.create())
+                                        .addConverterFactory(GsonConverterFactory.create())
+                                        .build();
 
+
+                                allAPIs cr = retrofit.create(allAPIs.class);
+
+                                Call<countBean> call2 = cr.getCount(b.id);
+
+                                call2.enqueue(new Callback<countBean>() {
+                                    @Override
+                                    public void onResponse(Call<countBean> call, Response<countBean> response) {
+
+                                        progress.setVisibility(View.GONE);
+                                        Toast.makeText(getContext() , "Added successfully" , Toast.LENGTH_SHORT).show();
+
+                                        MainActivity ma = new MainActivity();
+
+                                        ma.countt.setText(String.valueOf(response.body().getCarttotal().get(0).getTotalCount()));
+
+                                    }
+
+                                    @Override
+                                    public void onFailure(Call<countBean> call, Throwable t) {
+
+                                    }
+                                });
                             }
 
                             @Override

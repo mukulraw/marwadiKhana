@@ -11,6 +11,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -26,6 +27,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import org.w3c.dom.Text;
@@ -46,7 +48,7 @@ public class MainActivity extends AppCompatActivity {
     static LinearLayout layoutToReplace;
     DrawerLayout drawer;
 
-    TextView countt;
+    public static TextView countt;
 
     TextView name;
     TextView home , wish , cart , logout;
@@ -115,11 +117,31 @@ public class MainActivity extends AppCompatActivity {
         inflater.inflate(R.menu.menu_main , menu);
 
 
-        View v = (View) menu.findItem(R.id.cart).getActionView();
+
+        View view = (View)menu.findItem(R.id.cart).getActionView();
+
+        countt = ( TextView )view. findViewById(R.id.co);
+
+        updateCount();
+
+        view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent intent = new Intent(getApplicationContext() , Cart.class);
+                startActivity(intent);
+
+            }
+        });
+
+        //updateCount();
+
+        return true;
+    }
 
 
-        countt = ( TextView ) v.findViewById(R.id.countt);
-
+    public void updateCount()
+    {
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("http://nationproducts.in/")
                 .addConverterFactory(ScalarsConverterFactory.create())
@@ -137,7 +159,7 @@ public class MainActivity extends AppCompatActivity {
             public void onResponse(Call<countBean> call, Response<countBean> response) {
 
 
-                countt.setText(response.body().getCarttotal().get(0).getTotalCount());
+                countt.setText(String.valueOf(response.body().getCarttotal().get(0).getTotalCount()));
 
 
             }
@@ -147,8 +169,6 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
-
-        return true;
     }
 
 
@@ -156,16 +176,24 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
 
 
-        if (item.getItemId() == R.id.cart)
+      /*  if (item.getItemId() == R.id.cart)
         {
             Intent intent = new Intent(getApplicationContext() , Cart.class);
             startActivity(intent);
-        }
+        }*/
 
 
         return super.onOptionsItemSelected(item);
 
 
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        updateCount();
 
     }
 

@@ -72,10 +72,10 @@
                 android:layout_height="wrap_content"
                 android:paddingStart="18dp"
                 android:paddingEnd="18dp"
+                android:id="@+id/sub_total"
                 android:paddingTop="18dp"
                 android:paddingBottom="9dp"
-                android:layout_gravity="end"
-                android:text="Sub Total     Rs.000.00"/>
+                android:layout_gravity="end" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -84,6 +84,7 @@
                 android:paddingStart="18dp"
                 android:paddingEnd="18dp"
                 android:paddingTop="9dp"
+                android:id="@+id/grand_total"
                 android:paddingBottom="18dp"
                 android:layout_gravity="end"
                 android:textStyle="bold"/>

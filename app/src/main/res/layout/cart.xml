@@ -15,8 +15,7 @@
     android:background="@drawable/round"
     android:textSize="12sp"
     android:gravity="center"
-    android:text="2"
-    android:id="@+id/countt"
+    android:id="@+id/co"
     android:textColor="#ffffff"
     />
 

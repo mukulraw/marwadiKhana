@@ -44,8 +44,10 @@ public class Cart extends AppCompatActivity {
     TextView checkOut;
     Dataadapter adapter;
     ProgressBar progress;
+    TextView subTotal , grandTotal;
     List<Cartheader> list;
     TextView clear;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,6 +62,9 @@ public class Cart extends AppCompatActivity {
         clear = (TextView)findViewById(R.id.clear);
 
         list = new ArrayList<>();
+
+        subTotal = (TextView)findViewById(R.id.sub_total);
+        grandTotal = (TextView)findViewById(R.id.grand_total);
 
         checkOut.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -121,6 +126,8 @@ public class Cart extends AppCompatActivity {
                     public void onResponse(Call<cdeleteBean> call, Response<cdeleteBean> response) {
                         progress.setVisibility(View.GONE);
 
+                        list.clear();
+
                         adapter.setGridData(new ArrayList<Cartheader>());
 
                     }
@@ -134,6 +141,7 @@ public class Cart extends AppCompatActivity {
             }
         });
 
+        fetch();
 
     }
 
@@ -171,9 +179,13 @@ public class Cart extends AppCompatActivity {
             @Override
             public void onResponse(Call<cartBean> call, Response<cartBean> response) {
 
-                adapter.setGridData(response.body().getCartheader());
+                list = response.body().getCartheader();
+
+                adapter.setGridData(list);
 
                 progress.setVisibility(View.GONE);
+
+                subTotal.setText("Sub Total     Rs." + String.valueOf(adapter.getTotal()));
 
             }
 
@@ -190,6 +202,7 @@ public class Cart extends AppCompatActivity {
     class Dataadapter extends RecyclerView.Adapter<Dataadapter.MyviewHolder>{
         Context context;
         private List<Cartheader> list = new ArrayList<>();
+        double total = 0;
 
 
         Dataadapter(Context context, List<Cartheader> list){
@@ -197,11 +210,21 @@ public class Cart extends AppCompatActivity {
             this.list = list;
         }
 
+        public double getTotal()
+        {
+            return total;
+        }
 
         void setGridData(List<Cartheader> list)
         {
+            total = 0;
             this.list = list;
             notifyDataSetChanged();
+        }
+
+        public void clearTotal()
+        {
+            total = 0;
         }
 
 
@@ -217,7 +240,13 @@ public class Cart extends AppCompatActivity {
         @Override
         public void onBindViewHolder(final MyviewHolder holder , final int position) {
 
+            holder.setIsRecyclable(false);
+
             final Cartheader item = list.get(position);
+
+            double a = Double.parseDouble(item.getProductPrice());
+
+            total = total + a;
 
             holder.plus.setOnClickListener(new View.OnClickListener() {
                 @Override
