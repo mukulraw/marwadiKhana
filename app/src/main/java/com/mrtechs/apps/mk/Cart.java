@@ -30,12 +30,15 @@ import cartDeletePOJO.deleteCartBean;
 import cartPOJO.Cartheader;
 import cartPOJO.cartBean;
 import cdeletePOJO.cdeleteBean;
+import orderPOJO.orderBean;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.converter.scalars.ScalarsConverterFactory;
+import utility.AvenuesParams;
+import utility.ServiceUtility;
 
 public class Cart extends AppCompatActivity {
     Toolbar toolbar;
@@ -71,8 +74,50 @@ public class Cart extends AppCompatActivity {
             public void onClick(View v) {
 
 
-                Intent intent = new Intent(Cart.this , Order.class);
-                startActivity(intent);
+                Retrofit retrofit = new Retrofit.Builder()
+                        .baseUrl("http://nationproducts.in/")
+                        .addConverterFactory(ScalarsConverterFactory.create())
+                        .addConverterFactory(GsonConverterFactory.create())
+                        .build();
+
+                bean b = (bean)getApplicationContext();
+
+                allAPIs cr = retrofit.create(allAPIs.class);
+
+
+                Call<orderBean> call = cr.createOrder(b.id);
+
+                call.enqueue(new Callback<orderBean>() {
+                    @Override
+                    public void onResponse(Call<orderBean> call, Response<orderBean> response) {
+                        Intent intent = new Intent(Cart.this , WebViewActivity.class);
+
+                        intent.putExtra(AvenuesParams.ACCESS_CODE, "AVSB69EB46CH38BSHC");
+                        //intent.putExtra(AvenuesParams.ACCESS_CODE, "4YRUXLSRO20O8NIH");
+                        intent.putExtra(AvenuesParams.MERCHANT_ID, "108560");
+                        //intent.putExtra(AvenuesParams.MERCHANT_ID, "2");
+                        intent.putExtra(AvenuesParams.ORDER_ID, response.body().getCartorder().get(0).getOrderId());
+                        intent.putExtra(AvenuesParams.CURRENCY, "INR");
+                        intent.putExtra(AvenuesParams.AMOUNT, "1");
+                        intent.putExtra(AvenuesParams.REDIRECT_URL, "http://marwadikhana.com/merchant/ccavResponseHandler.php");
+                        //intent.putExtra(AvenuesParams.REDIRECT_URL, "http://122.182.6.216/merchant/ccavResponseHandler.jsp");
+                        intent.putExtra(AvenuesParams.CANCEL_URL, "http://marwadikhana.com/merchant/ccavResponseHandler.php");
+                        //intent.putExtra(AvenuesParams.CANCEL_URL, "http://122.182.6.216/merchant/ccavResponseHandler.jsp");
+                        intent.putExtra(AvenuesParams.RSA_KEY_URL, "http://marwadikhana.com/merchant/GetRSA.php");
+                        //intent.putExtra(AvenuesParams.RSA_KEY_URL, "http://122.182.6.216/merchant/GetRSA.jsp");
+
+
+                        startActivity(intent);
+                    }
+
+                    @Override
+                    public void onFailure(Call<orderBean> call, Throwable t) {
+
+                    }
+                });
+
+
+
 
 
             }
@@ -146,14 +191,6 @@ public class Cart extends AppCompatActivity {
     }
 
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-
-        fetch();
-
-    }
-
     public void fetch()
     {
 
@@ -183,6 +220,11 @@ public class Cart extends AppCompatActivity {
 
                 adapter.setGridData(list);
 
+                if (response.body().getCartheader().size() == 0)
+                {
+                    checkOut.setVisibility(View.GONE);
+                }
+
                 progress.setVisibility(View.GONE);
 
                 subTotal.setText("Sub Total     Rs." + String.valueOf(adapter.getTotal()));
@@ -202,7 +244,7 @@ public class Cart extends AppCompatActivity {
     class Dataadapter extends RecyclerView.Adapter<Dataadapter.MyviewHolder>{
         Context context;
         private List<Cartheader> list = new ArrayList<>();
-        double total = 0;
+        double total = 0.0;
 
 
         Dataadapter(Context context, List<Cartheader> list){
@@ -217,7 +259,7 @@ public class Cart extends AppCompatActivity {
 
         void setGridData(List<Cartheader> list)
         {
-            total = 0;
+            //total = 0.0;
             this.list = list;
             notifyDataSetChanged();
         }
@@ -226,6 +268,7 @@ public class Cart extends AppCompatActivity {
         {
             total = 0;
         }
+
 
 
         @Override
@@ -240,7 +283,7 @@ public class Cart extends AppCompatActivity {
         @Override
         public void onBindViewHolder(final MyviewHolder holder , final int position) {
 
-            holder.setIsRecyclable(false);
+            holder.setIsRecyclable(true);
 
             final Cartheader item = list.get(position);
 
@@ -382,7 +425,7 @@ public class Cart extends AppCompatActivity {
 
                                     fetch();
 
-                                    notifyItemRemoved(position);
+                                    //notifyItemRemoved(position);
 
                                 }
 

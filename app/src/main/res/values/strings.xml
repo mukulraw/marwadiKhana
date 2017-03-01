@@ -2,4 +2,23 @@
     <string name="app_name">MK</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string-array name="selectAction">
+        <item>Resend OTP</item>
+        <item>Enter OTP Manually</item>
+    </string-array>
+
+    <string name="ok">OK</string>
+    <string name="cancel">Cancel</string>
+    <string name="title_activity_initial">CCAvenueMobile</string>
+    <string name="title_activity_web_view">WebViewActivity</string>
+    <string name="pay_button">Pay</string>
+    <string name="merchant_id">Merchant Id</string>
+    <string name="currency">Currency</string>
+    <string name="amount">Amount</string>
+    <string name="redirect_url">Redirect Url</string>
+    <string name="cancel_url">Cancel Url</string>
+    <string name="rsa_url">RSA Key Url</string>
+    <string name="access_code">Access Code</string>
+    <string name="title_activity_status">CCAvenueMobile</string>
 </resources>

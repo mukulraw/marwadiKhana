@@ -13,6 +13,7 @@ import cartDeletePOJO.deleteCartBean;
 import cartPOJO.cartBean;
 import cdeletePOJO.cdeleteBean;
 import countPOJO.countBean;
+import orderPOJO.orderBean;
 import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Multipart;
@@ -95,5 +96,9 @@ public interface allAPIs {
     @Multipart
     @POST("marwadi/marwadi_app/cart_count.php")
     Call<countBean> getCount(@Part("userid") String userId);
+
+    @Multipart
+    @POST("marwadi/marwadi_app/create_order.php")
+    Call<orderBean> createOrder(@Part("userid") String userId);
 
 }
