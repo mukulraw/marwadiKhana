@@ -31,7 +31,7 @@ public class StatusActivity extends ActionBarActivity {
     String order;
 
     String order_id , amount , billing_name , billing_address , billing_city , billing_state , billing_zip , billing_country , billing_email , delivery_name , delivery_address ,
-    delivery_city , delivery_state , delivery_zip , delivery_country , tracking_id;
+    delivery_city , delivery_state , delivery_zip , delivery_country , tracking_id , status;
 
     ProgressBar progress;
 
@@ -68,6 +68,7 @@ public class StatusActivity extends ActionBarActivity {
         delivery_zip = trElements.get(23).getElementsByTag("td").get(1).toString();
         delivery_country = trElements.get(24).getElementsByTag("td").get(1).toString();
         tracking_id = trElements.get(1).getElementsByTag("td").get(1).toString();
+        status = trElements.get(3).getElementsByTag("td").get(1).toString();
 
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("http://nationproducts.in/")
@@ -80,7 +81,7 @@ public class StatusActivity extends ActionBarActivity {
         allAPIs cr = retrofit.create(allAPIs.class);
 
 
-        Call<statusBean> call = cr.status(entity , b.id , order_id , amount , billing_name , billing_address , billing_city , billing_state , billing_zip , billing_country , billing_email , delivery_name , delivery_address , delivery_city , delivery_state , delivery_zip , delivery_country , tracking_id);
+        Call<statusBean> call = cr.status(entity , b.id , order_id , amount , billing_name , billing_address , billing_city , billing_state , billing_zip , billing_country , billing_email , delivery_name , delivery_address , delivery_city , delivery_state , delivery_zip , delivery_country , tracking_id , status);
 
 
         call.enqueue(new Callback<statusBean>() {
