@@ -58,6 +58,10 @@ public class WebViewActivity extends ActionBarActivity implements  Communicator 
     private ProgressDialog dialog;
     Intent mainIntent;
     String html, encVal;
+
+    String entity = "";
+    String orderId = "";
+
     int MyDeviceAPI;
 
     /**
@@ -83,13 +87,13 @@ public class WebViewActivity extends ActionBarActivity implements  Communicator 
                 params.add(new BasicNameValuePair(AvenuesParams.ACCESS_CODE, mainIntent.getStringExtra(AvenuesParams.ACCESS_CODE)));
                 params.add(new BasicNameValuePair(AvenuesParams.ORDER_ID, mainIntent.getStringExtra(AvenuesParams.ORDER_ID)));
 
-                String vResponse = sh.makeServiceCall( "http://marwadikhana.com/merchant/GetRSA.php" , ServiceHandler.POST, params);
+                String vResponse = sh.makeServiceCall( mainIntent.getStringExtra(AvenuesParams.RSA_KEY_URL) , ServiceHandler.POST, params);
                 System.out.println(vResponse);
                 if (!ServiceUtility.chkNull(vResponse).equals("")
                         && ServiceUtility.chkNull(vResponse).toString().indexOf("ERROR") == -1) {
                     StringBuffer vEncVal = new StringBuffer("");
                     vEncVal.append(ServiceUtility.addToPostParams(AvenuesParams.AMOUNT, mainIntent.getStringExtra(AvenuesParams.AMOUNT)));
-                    vEncVal.append(ServiceUtility.addToPostParams(AvenuesParams.CURRENCY, "INR"));
+                    vEncVal.append(ServiceUtility.addToPostParams(AvenuesParams.CURRENCY, mainIntent.getStringExtra(AvenuesParams.CURRENCY)));
                     encVal = RSAUtility.encrypt(vEncVal.substring(0, vEncVal.length() - 1), vResponse);
                 }
             }catch (Exception e){
@@ -126,12 +130,14 @@ public class WebViewActivity extends ActionBarActivity implements  Communicator 
                         }
                         //Toast.makeText(getApplicationContext(), status, Toast.LENGTH_SHORT).show();
 
-                            Intent intent = new Intent(getApplicationContext(), StatusActivity.class);
-                            intent.putExtra("transStatus", status);
+                            Intent intent = new Intent(getApplicationContext() , StatusActivity.class);
+                            intent.putExtra("transStatus" , html);
+                            intent.putExtra("entity" , mainIntent.getStringExtra("entity"));
+                            intent.putExtra("order" , mainIntent.getStringExtra(AvenuesParams.ORDER_ID));
                             startActivity(intent);
                     }catch (Exception e){
                         e.printStackTrace();
-                        Log.v("Logs", "-------------- Error : "+e);
+                        Log.v("Logs" , "-------------- Error : " + e);
                     }
                 }
             }
@@ -150,7 +156,7 @@ public class WebViewActivity extends ActionBarActivity implements  Communicator 
                 public void onPageFinished(WebView view, String url) {
                     super.onPageFinished(myBrowser, url);
 
-                    if(url.indexOf("/ccavResponseHandler.jsp")!=-1){
+                    if(url.indexOf("/ccavResponseHandler.php")!=-1){
                         myBrowser.loadUrl("javascript:window.HTMLOUT.processHTML('<head>'+document.getElementsByTagName('html')[0].innerHTML+'</head>');");
                     }
 
@@ -545,32 +551,14 @@ public class WebViewActivity extends ActionBarActivity implements  Communicator 
         this.unregisterReceiver(this.mIntentReceiver);
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
+
 
     @Override
     public void onConfigurationChanged(Configuration newConfig){
         super.onConfigurationChanged(newConfig);
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
 
 
     // On click of Approve button
