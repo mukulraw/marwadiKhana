@@ -95,7 +95,7 @@ public class Wishli extends AppCompatActivity {
 
 
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://nationproducts.in/")
+                .baseUrl("http://marwadikhana.com/")
                 .addConverterFactory(ScalarsConverterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
@@ -184,7 +184,7 @@ public class Wishli extends AppCompatActivity {
                     progress.setVisibility(View.VISIBLE);
 
                     Retrofit retrofit = new Retrofit.Builder()
-                            .baseUrl("http://nationproducts.in/")
+                            .baseUrl("http://marwadikhana.com/")
                             .addConverterFactory(ScalarsConverterFactory.create())
                             .addConverterFactory(GsonConverterFactory.create())
                             .build();
@@ -227,7 +227,7 @@ public class Wishli extends AppCompatActivity {
                     progress.setVisibility(View.VISIBLE);
 
                     Retrofit retrofit = new Retrofit.Builder()
-                            .baseUrl("http://nationproducts.in/")
+                            .baseUrl("http://marwadikhana.com/")
                             .addConverterFactory(ScalarsConverterFactory.create())
                             .addConverterFactory(GsonConverterFactory.create())
                             .build();
@@ -291,7 +291,7 @@ public class Wishli extends AppCompatActivity {
                             progress.setVisibility(View.VISIBLE);
 
                             Retrofit retrofit = new Retrofit.Builder()
-                                    .baseUrl("http://nationproducts.in/")
+                                    .baseUrl("http://marwadikhana.com/")
                                     .addConverterFactory(ScalarsConverterFactory.create())
                                     .addConverterFactory(GsonConverterFactory.create())
                                     .build();

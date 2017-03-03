@@ -50,6 +50,7 @@ public class Cart extends AppCompatActivity {
     TextView subTotal , grandTotal;
     List<Cartheader> list;
     TextView clear;
+    String amount;
 
 
     @Override
@@ -75,7 +76,7 @@ public class Cart extends AppCompatActivity {
 
 
                 Retrofit retrofit = new Retrofit.Builder()
-                        .baseUrl("http://nationproducts.in/")
+                        .baseUrl("http://marwadikhana.com/")
                         .addConverterFactory(ScalarsConverterFactory.create())
                         .addConverterFactory(GsonConverterFactory.create())
                         .build();
@@ -92,18 +93,18 @@ public class Cart extends AppCompatActivity {
                     public void onResponse(Call<orderBean> call, Response<orderBean> response) {
                         Intent intent = new Intent(Cart.this , WebViewActivity.class);
 
-                        intent.putExtra(AvenuesParams.ACCESS_CODE, "AVSB69EB46CH38BSHC");
+                        intent.putExtra(AvenuesParams.ACCESS_CODE , "AVSB69EB46CH38BSHC");
                         //intent.putExtra(AvenuesParams.ACCESS_CODE, "4YRUXLSRO20O8NIH");
-                        intent.putExtra(AvenuesParams.MERCHANT_ID, "108560");
+                        intent.putExtra(AvenuesParams.MERCHANT_ID , "108560");
                         //intent.putExtra(AvenuesParams.MERCHANT_ID, "2");
-                        intent.putExtra(AvenuesParams.ORDER_ID, response.body().getCartorder().get(0).getOrderId());
-                        intent.putExtra(AvenuesParams.CURRENCY, "INR");
-                        intent.putExtra(AvenuesParams.AMOUNT, "1");
-                        intent.putExtra(AvenuesParams.REDIRECT_URL, "http://marwadikhana.com/merchant/ccavResponseHandler.php");
+                        intent.putExtra(AvenuesParams.ORDER_ID , response.body().getCartorder().get(0).getOrderId());
+                        intent.putExtra(AvenuesParams.CURRENCY , "INR");
+                        intent.putExtra(AvenuesParams.AMOUNT , amount);
+                        intent.putExtra(AvenuesParams.REDIRECT_URL , "http://marwadikhana.com/merchant/ccavResponseHandler.php");
                         //intent.putExtra(AvenuesParams.REDIRECT_URL, "http://122.182.6.216/merchant/ccavResponseHandler.jsp");
-                        intent.putExtra(AvenuesParams.CANCEL_URL, "http://marwadikhana.com/merchant/ccavResponseHandler.php");
+                        intent.putExtra(AvenuesParams.CANCEL_URL , "http://marwadikhana.com/merchant/ccavResponseHandler.php");
                         //intent.putExtra(AvenuesParams.CANCEL_URL, "http://122.182.6.216/merchant/ccavResponseHandler.jsp");
-                        intent.putExtra(AvenuesParams.RSA_KEY_URL, "http://marwadikhana.com/merchant/GetRSA.php");
+                        intent.putExtra(AvenuesParams.RSA_KEY_URL , "http://marwadikhana.com/merchant/GetRSA.php");
                         intent.putExtra("entity" , response.body().getCartorder().get(0).getEntityId());
                         //intent.putExtra(AvenuesParams.RSA_KEY_URL, "http://122.182.6.216/merchant/GetRSA.jsp");
 
@@ -156,7 +157,7 @@ public class Cart extends AppCompatActivity {
                 progress.setVisibility(View.VISIBLE);
 
                 Retrofit retrofit = new Retrofit.Builder()
-                        .baseUrl("http://nationproducts.in/")
+                        .baseUrl("http://marwadikhana.com/")
                         .addConverterFactory(ScalarsConverterFactory.create())
                         .addConverterFactory(GsonConverterFactory.create())
                         .build();
@@ -169,7 +170,7 @@ public class Cart extends AppCompatActivity {
 
                 call.enqueue(new Callback<cdeleteBean>() {
                     @Override
-                    public void onResponse(Call<cdeleteBean> call, Response<cdeleteBean> response) {
+                    public void onResponse(Call<cdeleteBean> call , Response<cdeleteBean> response) {
                         progress.setVisibility(View.GONE);
 
                         list.clear();
@@ -202,7 +203,7 @@ public class Cart extends AppCompatActivity {
 
 
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://nationproducts.in/")
+                .baseUrl("http://marwadikhana.com/")
                 .addConverterFactory(ScalarsConverterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
@@ -226,9 +227,11 @@ public class Cart extends AppCompatActivity {
                     checkOut.setVisibility(View.GONE);
                 }
 
+                amount = response.body().getTotal();
+
                 progress.setVisibility(View.GONE);
 
-                subTotal.setText("Sub Total     Rs." + String.valueOf(adapter.getTotal()));
+                subTotal.setText("Sub Total     Rs." + amount);
 
             }
 
@@ -305,7 +308,7 @@ public class Cart extends AppCompatActivity {
                     progress.setVisibility(View.VISIBLE);
 
                     Retrofit retrofit = new Retrofit.Builder()
-                            .baseUrl("http://nationproducts.in/")
+                            .baseUrl("http://marwadikhana.com/")
                             .addConverterFactory(ScalarsConverterFactory.create())
                             .addConverterFactory(GsonConverterFactory.create())
                             .build();
@@ -360,7 +363,7 @@ public class Cart extends AppCompatActivity {
                     progress.setVisibility(View.VISIBLE);
 
                     Retrofit retrofit = new Retrofit.Builder()
-                            .baseUrl("http://nationproducts.in/")
+                            .baseUrl("http://marwadikhana.com/")
                             .addConverterFactory(ScalarsConverterFactory.create())
                             .addConverterFactory(GsonConverterFactory.create())
                             .build();
@@ -409,7 +412,7 @@ public class Cart extends AppCompatActivity {
                             progress.setVisibility(View.VISIBLE);
 
                             Retrofit retrofit = new Retrofit.Builder()
-                                    .baseUrl("http://nationproducts.in/")
+                                    .baseUrl("http://marwadikhana.com/")
                                     .addConverterFactory(ScalarsConverterFactory.create())
                                     .addConverterFactory(GsonConverterFactory.create())
                                     .build();
@@ -426,7 +429,7 @@ public class Cart extends AppCompatActivity {
 
                                     fetch();
 
-                                    //notifyItemRemoved(position);
+                                    notifyItemRemoved(position);
 
                                 }
 

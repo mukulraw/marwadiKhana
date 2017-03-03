@@ -52,6 +52,16 @@ public class Login extends AppCompatActivity {
 
         create = (TextView)findViewById(R.id.create);
 
+        create.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent intent = new Intent(Login.this , Register.class);
+                startActivity(intent);
+
+            }
+        });
+
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -74,7 +84,7 @@ public class Login extends AppCompatActivity {
                         mOverlayDialog.show();
 
                         Retrofit retrofit = new Retrofit.Builder()
-                                .baseUrl("http://nationproducts.in/")
+                                .baseUrl("http://marwadikhana.com/")
                                 .addConverterFactory(ScalarsConverterFactory.create())
                                 .addConverterFactory(GsonConverterFactory.create())
                                 .build();

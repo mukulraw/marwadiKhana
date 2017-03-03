@@ -11,6 +11,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.view.GravityCompat;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
@@ -43,7 +44,6 @@ import retrofit2.converter.scalars.ScalarsConverterFactory;
 
 public class MainActivity extends AppCompatActivity {
 
-
     Toolbar toolbar;
     static LinearLayout layoutToReplace;
     DrawerLayout drawer;
@@ -52,7 +52,6 @@ public class MainActivity extends AppCompatActivity {
 
     TextView name;
     TextView home , wish , cart , logout;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,13 +69,7 @@ public class MainActivity extends AppCompatActivity {
         logout = (TextView)findViewById(R.id.log_out);
 
 
-        wish.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext() , Wishli.class);
-                startActivity(intent);
-            }
-        });
+
 
 
 
@@ -99,6 +92,43 @@ public class MainActivity extends AppCompatActivity {
                 this, drawer, toolbar, R.string.navigation_drawer_open , R.string.navigation_drawer_close);
         drawer.setDrawerListener(toggle);
         toggle.syncState();
+
+
+        cart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent intent = new Intent(MainActivity.this , Cart.class);
+                startActivity(intent);
+                drawer.closeDrawer(GravityCompat.START);
+
+            }
+        });
+
+        wish.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent intent = new Intent(getApplicationContext() , Wishli.class);
+                startActivity(intent);
+                drawer.closeDrawer(GravityCompat.START);
+
+            }
+        });
+
+
+        logout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent i = new Intent(MainActivity.this , Login.class);
+                i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(i);
+                finish();
+
+            }
+        });
+
 
 
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
@@ -143,7 +173,7 @@ public class MainActivity extends AppCompatActivity {
     public void updateCount()
     {
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://nationproducts.in/")
+                .baseUrl("http://marwadikhana.com/")
                 .addConverterFactory(ScalarsConverterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();

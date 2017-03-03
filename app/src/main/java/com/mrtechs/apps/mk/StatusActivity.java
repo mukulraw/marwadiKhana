@@ -71,7 +71,7 @@ public class StatusActivity extends ActionBarActivity {
         status = trElements.get(3).getElementsByTag("td").get(1).toString();
 
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://nationproducts.in/")
+                .baseUrl("http://marwadikhana.com/")
                 .addConverterFactory(ScalarsConverterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();

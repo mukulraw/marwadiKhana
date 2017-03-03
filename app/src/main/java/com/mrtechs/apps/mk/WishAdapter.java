@@ -78,7 +78,7 @@ class WishAdapter extends RecyclerView.Adapter<WishAdapter.ViewHolder> {
             public void onClick(View v) {
 
                 Retrofit retrofit = new Retrofit.Builder()
-                        .baseUrl("http://nationproducts.in/")
+                        .baseUrl("http://marwadikhana.com/")
                         .addConverterFactory(ScalarsConverterFactory.create())
                         .addConverterFactory(GsonConverterFactory.create())
                         .build();

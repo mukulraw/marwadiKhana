@@ -7,10 +7,10 @@
     <application
         android:name=".bean"
         android:allowBackup="true"
+        android:configChanges="orientation|screenSize"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:configChanges="orientation|screenSize"
         android:theme="@style/AppTheme">
         <activity android:name=".Splash">
             <intent-filter>
@@ -26,14 +26,13 @@
         <activity android:name=".Login" />
         <activity android:name=".Register" />
         <activity android:name=".Rate" />
-        <activity android:name=".Wishli"/>
+        <activity android:name=".Wishli" />
         <activity
             android:name=".WebViewActivity"
             android:configChanges="orientation|screenSize"
-            android:label="@string/app_name" >
-        </activity>
+            android:label="@string/app_name"></activity>
 
-        <receiver android:name=".SmsReceiver" >
+        <receiver android:name=".SmsReceiver">
             <intent-filter>
                 <action android:name="android.provider.Telephony.SMS_RECEIVED" />
             </intent-filter>
@@ -41,8 +40,8 @@
 
         <activity
             android:name=".StatusActivity"
-            android:label="@string/title_activity_status" >
-        </activity>
+            android:label="@string/title_activity_status"></activity>
+        <activity android:name=".OTP"></activity>
     </application>
 
 </manifest>

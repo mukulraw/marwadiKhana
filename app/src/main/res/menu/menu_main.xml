@@ -2,6 +2,8 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
+    <!--
+
     <item
         android:id="@+id/search"
         android:title="Search"
@@ -9,6 +11,8 @@
         app:showAsAction="always"
         android:orderInCategory="2"
         />
+
+-->
 
     <item
         app:actionLayout="@layout/cart"

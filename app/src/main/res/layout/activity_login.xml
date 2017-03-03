@@ -44,9 +44,8 @@
             android:layout_marginStart="10dp"
             android:layout_marginEnd="18dp"
             android:padding="8dp"
-            android:text="developer@technobrix.com"
             android:id="@+id/email"
-            android:hint="email*"
+            android:hint="Email*"
             android:inputType="textEmailAddress"
             android:background="@drawable/edit_text_back"
             />
@@ -70,8 +69,7 @@
             android:padding="8dp"
             android:id="@+id/password"
             android:inputType="textPassword"
-            android:text="developer@123"
-            android:hint="password*"
+            android:hint="Password*"
             android:background="@drawable/edit_text_back"
             />
 
@@ -96,6 +94,7 @@
             android:paddingStart="10dp"
             android:paddingEnd="10dp"
             android:paddingTop="5dp"
+            android:visibility="gone"
             android:id="@+id/forgot"
             android:paddingBottom="5dp"
             />

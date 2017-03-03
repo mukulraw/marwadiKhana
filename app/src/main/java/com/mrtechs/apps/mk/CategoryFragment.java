@@ -75,7 +75,7 @@ public class CategoryFragment extends Fragment {
         super.onResume();
 
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://nationproducts.in/")
+                .baseUrl("http://marwadikhana.com/")
                 .addConverterFactory(ScalarsConverterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();

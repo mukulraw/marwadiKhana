@@ -109,7 +109,7 @@ public class Dataadapter extends RecyclerView.Adapter<Dataadapter.MyviewHolder>{
             public void onClick(View v) {
 
                 Retrofit retrofit = new Retrofit.Builder()
-                        .baseUrl("http://nationproducts.in/")
+                        .baseUrl("http://marwadikhana.com/")
                         .addConverterFactory(ScalarsConverterFactory.create())
                         .addConverterFactory(GsonConverterFactory.create())
                         .build();

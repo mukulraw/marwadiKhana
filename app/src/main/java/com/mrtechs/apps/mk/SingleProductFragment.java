@@ -184,7 +184,7 @@ public class SingleProductFragment extends Fragment {
         grid.setLayoutManager(manager);
 
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://nationproducts.in/")
+                .baseUrl("http://marwadikhana.com/")
                 .addConverterFactory(ScalarsConverterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
@@ -284,7 +284,7 @@ public class SingleProductFragment extends Fragment {
                             progress.setVisibility(View.VISIBLE);
 
                             Retrofit retrofit = new Retrofit.Builder()
-                                    .baseUrl("http://nationproducts.in/")
+                                    .baseUrl("http://marwadikhana.com/")
                                     .addConverterFactory(ScalarsConverterFactory.create())
                                     .addConverterFactory(GsonConverterFactory.create())
                                     .build();
@@ -302,7 +302,7 @@ public class SingleProductFragment extends Fragment {
 
 
                                     Retrofit retrofit = new Retrofit.Builder()
-                                            .baseUrl("http://nationproducts.in/")
+                                            .baseUrl("http://marwadikhana.com/")
                                             .addConverterFactory(ScalarsConverterFactory.create())
                                             .addConverterFactory(GsonConverterFactory.create())
                                             .build();
@@ -349,7 +349,7 @@ public class SingleProductFragment extends Fragment {
                         progress.setVisibility(View.VISIBLE);
 
                         Retrofit retrofit = new Retrofit.Builder()
-                                .baseUrl("http://nationproducts.in/")
+                                .baseUrl("http://marwadikhana.com/")
                                 .addConverterFactory(ScalarsConverterFactory.create())
                                 .addConverterFactory(GsonConverterFactory.create())
                                 .build();
@@ -366,7 +366,7 @@ public class SingleProductFragment extends Fragment {
 
 
                                 Retrofit retrofit = new Retrofit.Builder()
-                                        .baseUrl("http://nationproducts.in/")
+                                        .baseUrl("http://marwadikhana.com/")
                                         .addConverterFactory(ScalarsConverterFactory.create())
                                         .addConverterFactory(GsonConverterFactory.create())
                                         .build();
@@ -444,7 +444,7 @@ public class SingleProductFragment extends Fragment {
 
 
                 Retrofit retrofit = new Retrofit.Builder()
-                        .baseUrl("http://nationproducts.in/")
+                        .baseUrl("http://marwadikhana.com/")
                         .addConverterFactory(ScalarsConverterFactory.create())
                         .addConverterFactory(GsonConverterFactory.create())
                         .build();

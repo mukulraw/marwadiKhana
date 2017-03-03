@@ -80,7 +80,7 @@ public class SubCategoryFragment extends Fragment {
         loader.displayImage(image , banner);
 
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://nationproducts.in/")
+                .baseUrl("http://marwadikhana.com/")
                 .addConverterFactory(ScalarsConverterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
@@ -244,7 +244,7 @@ public class SubCategoryFragment extends Fragment {
 
 
             Retrofit retrofit = new Retrofit.Builder()
-                    .baseUrl("http://nationproducts.in/")
+                    .baseUrl("http://marwadikhana.com/")
                     .addConverterFactory(ScalarsConverterFactory.create())
                     .addConverterFactory(GsonConverterFactory.create())
                     .build();
