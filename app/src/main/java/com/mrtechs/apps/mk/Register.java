@@ -106,7 +106,7 @@ public class Register extends AppCompatActivity {
                                         public void onResponse(Call<OTPbEAN> call, Response<OTPbEAN> response) {
 
                                             Intent intent = new Intent(Register.this , OTP.class);
-                                            intent.putExtra("otp" , response.body().getOtp());
+                                            intent.putExtra("otp" , String.valueOf(response.body().getOtp()));
                                             intent.putExtra("first" , response.body().getFirstname());
                                             intent.putExtra("last" , response.body().getLastname());
                                             intent.putExtra("email" , response.body().getEmail());
