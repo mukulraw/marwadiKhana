@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.provider.DocumentsContract;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -81,7 +82,7 @@ public class StatusActivity extends ActionBarActivity {
         allAPIs cr = retrofit.create(allAPIs.class);
 
 
-        Call<statusBean> call = cr.status(entity , b.id , order_id , amount , billing_name , billing_address , billing_city , billing_state , billing_zip , billing_country , billing_email , delivery_name , delivery_address , delivery_city , delivery_state , delivery_zip , delivery_country , tracking_id , status);
+        Call<statusBean> call = cr.status(entity , b.id , Jsoup.parse(order_id).text() , Jsoup.parse(amount).text() , Jsoup.parse(billing_name).text() , Jsoup.parse(billing_address).text() , Jsoup.parse(billing_city).text() , Jsoup.parse(billing_state).text() , Jsoup.parse(billing_zip).text() , Jsoup.parse(billing_country).text() , Jsoup.parse(billing_email).text() , Jsoup.parse(delivery_name).text() , Jsoup.parse(delivery_address).text() , Jsoup.parse(delivery_city).text() , Jsoup.parse(delivery_state).text() , Jsoup.parse(delivery_zip).text() , Jsoup.parse(delivery_country).text() , Jsoup.parse(tracking_id).text() , Jsoup.parse(status).text());
 
 
         call.enqueue(new Callback<statusBean>() {

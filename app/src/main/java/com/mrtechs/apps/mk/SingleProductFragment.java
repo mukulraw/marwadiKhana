@@ -1,7 +1,9 @@
 package com.mrtechs.apps.mk;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -17,6 +19,7 @@ import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -30,7 +33,10 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.jsibbold.zoomage.ZoomageView;
 import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.assist.FailReason;
+import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -87,6 +93,7 @@ public class SingleProductFragment extends Fragment {
     boolean isDropDown = false;
 
     List<String> l2;
+    List<String> l3;
 
 
     @Nullable
@@ -113,6 +120,7 @@ public class SingleProductFragment extends Fragment {
         quantity = (TextView)view.findViewById(R.id.quantity);
 
         l2 = new ArrayList<String>();
+        l3 = new ArrayList<String>();
 
         minus.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -178,6 +186,8 @@ public class SingleProductFragment extends Fragment {
         id = getArguments().getString("id");
 
 
+        Log.d("asdid" , id);
+
         final CategoryAdapter adapter = new CategoryAdapter(getContext() , list);
 
         grid.setAdapter(adapter);
@@ -204,6 +214,8 @@ public class SingleProductFragment extends Fragment {
 
                 prodName = item.getProductName();
 
+                Log.d("asdSKUasd" , item.getProductSku());
+
                 stock.setText(item.getProductStock());
 
                 sto = Objects.equals(item.getProductStock().toLowerCase(), "in stock");
@@ -225,7 +237,10 @@ public class SingleProductFragment extends Fragment {
 
                 //loader.displayImage(item.getProductImg() , image);
 
-                price.setText("Rs " + item.getProductPrice());
+                Double p1 = Double.parseDouble(item.getProductPrice());
+
+
+                price.setText("Rs " + String.format("%.2f", p1));
 
 
                 List<attribute> l = item.getProductAttribute().getValueData().getProductattribute();
@@ -233,12 +248,15 @@ public class SingleProductFragment extends Fragment {
 
 
                 l2.clear();
+                l3.clear();
 
                 l2.add(item.getProductAttribute().getAttributeData().getAttributeTitle());
+                //l3.add(item.getProductAttribute().getAttributeData().getAttributeTitle());
 
                 for (int i = 0 ; i < l.size() ; i++)
                 {
                     l2.add(l.get(i).getAttributeValue());
+                    l3.add(l.get(i).getAttributeValueId());
                 }
 
                 if (l2.size()>0)
@@ -295,10 +313,15 @@ public class SingleProductFragment extends Fragment {
 
                             Call<addCartBean> call = cr.addToCart(id , b.id , quantity.getText().toString() , size , opid);
 
+                            Log.d("asdAttribute" , opid);
+                            Log.d("size" , size);
+
                             call.enqueue(new Callback<addCartBean>() {
                                 @Override
                                 public void onResponse(Call<addCartBean> call, Response<addCartBean> response) {
 
+
+                                    Log.d("asdsadCarttt" , response.body().getProductcart().get(0).getSuccess());
 
 
                                     Retrofit retrofit = new Retrofit.Builder()
@@ -419,7 +442,7 @@ public class SingleProductFragment extends Fragment {
 
                 if (position>0)
                 {
-                    size = l2.get(position);
+                    size = l3.get(position - 1);
                 }
                 else
                 {
@@ -538,6 +561,8 @@ public class SingleProductFragment extends Fragment {
         String url = "";
         ImageView image;
 
+        Bitmap bmp;
+
         @Nullable
         @Override
         public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -548,7 +573,51 @@ public class SingleProductFragment extends Fragment {
 
             ImageLoader loader = ImageLoader.getInstance();
 
-            loader.displayImage(url , image);
+            loader.loadImage(url, new ImageLoadingListener() {
+                @Override
+                public void onLoadingStarted(String imageUri, View view) {
+
+                }
+
+                @Override
+                public void onLoadingFailed(String imageUri, View view, FailReason failReason) {
+
+                }
+
+                @Override
+                public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
+                    bmp = loadedImage;
+                    image.setImageBitmap(bmp);
+                }
+
+                @Override
+                public void onLoadingCancelled(String imageUri, View view) {
+
+                }
+            });
+
+            //loader.displayImage(url , image);
+
+
+
+
+            image.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    Dialog dialog = new Dialog(getActivity());
+                    dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                    dialog.setContentView(R.layout.image_dialog);
+                    dialog.setCancelable(true);
+                    dialog.show();
+
+                    ZoomageView zoomage = (ZoomageView)dialog.findViewById(R.id.image);
+
+                    zoomage.setImageBitmap(bmp);
+
+                }
+            });
+
 
             return view;
         }

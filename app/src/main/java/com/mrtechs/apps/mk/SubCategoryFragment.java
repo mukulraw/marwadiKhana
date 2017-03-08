@@ -316,7 +316,7 @@ public class SubCategoryFragment extends Fragment {
 
                 Product item = list.get(position);
 
-                holder.rating.setRating(Float.parseFloat(item.getProRating())/20);
+                holder.rating.setRating(Float.parseFloat(item.getProRating()) / 20);
 
                 //String htmlText = "<html><body><font color=\"#808080\"> %s </font></body></Html>";
 
@@ -325,13 +325,18 @@ public class SubCategoryFragment extends Fragment {
 
                 ImageLoader loader = ImageLoader.getInstance();
 
-                loader.displayImage(item.getProductImg() , holder.image , options);
+                loader.displayImage(item.getProductImg(), holder.image, options);
 
                 holder.name.setText(item.getProductName());
 
-                holder.price.setText("Rs " + Html.fromHtml("<html><body><font color=\"#808080\">" + item.getProductPrice() + " " + "</font></body></Html>" + " " +"<html><body><font color=\"#FF0000\">" + item.getProductSaleprice() + "</font></body></Html>"));
+                Double p1 = Double.parseDouble(item.getProductPrice());
 
-                holder.quantity.setText("SKU: "+item.getProductSku());
+
+
+
+                holder.price.setText("Rs " + String.format("%.2f", p1));
+
+                holder.quantity.setText("SKU: " + item.getProductSku());
 
             }
 

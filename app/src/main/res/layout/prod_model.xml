@@ -35,15 +35,7 @@
             android:textStyle="bold"
             />
 
-        <RatingBar
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            style="@style/Base.Widget.AppCompat.RatingBar.Small"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentEnd="true"
-            android:layout_margin="10dp"
-            android:id="@+id/rating"
-            />
+
 
         <TextView
             android:layout_width="wrap_content"
@@ -66,21 +58,18 @@
 
 
 
-        <TextView
+        <RatingBar
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="10dp"
             android:layout_alignParentEnd="true"
+            android:id="@+id/rating"
+            style="@style/Base.Widget.AppCompat.RatingBar.Small"
             android:layout_marginStart="10dp"
             android:layout_alignParentBottom="true"
-            android:background="@drawable/cart_back"
             android:layout_marginBottom="10dp"
             android:layout_marginTop="10dp"
             android:focusable="false"
-            android:padding="10dp"
-            android:textAllCaps="true"
-            android:text="add to cart"
-            android:textColor="#ffffff"
             />
 
 

@@ -3,6 +3,7 @@ package com.mrtechs.apps.mk;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.support.v7.app.ActionBar;
@@ -32,6 +33,9 @@ public class Login extends AppCompatActivity {
 
     EditText email , password;
 
+    SharedPreferences pref;
+    SharedPreferences.Editor edit;
+
     Button login;
 
     TextView create;
@@ -42,6 +46,9 @@ public class Login extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+        pref = getSharedPreferences("pree" , MODE_PRIVATE);
+        edit = pref.edit();
 
         toast = Toast.makeText(this , null , Toast.LENGTH_SHORT);
 
@@ -67,8 +74,8 @@ public class Login extends AppCompatActivity {
             public void onClick(View v) {
 
 
-                String e = email.getText().toString();
-                String p = password.getText().toString();
+                final String e = email.getText().toString();
+                final String p = password.getText().toString();
 
                 if (e.length()>0)
                 {
@@ -103,6 +110,10 @@ public class Login extends AppCompatActivity {
 
                                     b.id = response.body().getUserid();
                                     b.username = response.body().getFullname();
+
+                                    edit.putString("username" , e);
+                                    edit.putString("password" , p);
+                                    edit.apply();
 
                                     Intent intent = new Intent(Login.this , GetStarted.class);
                                     startActivity(intent);

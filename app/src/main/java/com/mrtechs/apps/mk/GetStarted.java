@@ -33,37 +33,33 @@ import retrofit2.converter.scalars.ScalarsConverterFactory;
 
 public class GetStarted extends AppCompatActivity {
 
-    AutoScrollViewPager pager;
+    //AutoScrollViewPager pager;
     Button getStarted;
-    CircleIndicator indicator;
-    List<Banner> blist;
+    //CircleIndicator indicator;
+    //List<Banner> blist;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_get_started);
 
-        pager = (AutoScrollViewPager) findViewById(R.id.pager);
+        //pager = (AutoScrollViewPager) findViewById(R.id.pager);
         getStarted = (Button) findViewById(R.id.get_started);
-        indicator = (CircleIndicator) findViewById(R.id.indicator);
+        //indicator = (CircleIndicator) findViewById(R.id.indicator);
 
-        blist = new ArrayList<>();
+        //blist = new ArrayList<>();
 
-        indicator.setViewPager(pager);
+        //indicator.setViewPager(pager);
 
-        pager.startAutoScroll(5000);
+        //pager.startAutoScroll(5000);
 
 
-        getStarted.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+
 
                 Intent intent = new Intent(getApplicationContext() , MainActivity.class);
                 startActivity(intent);
                 finish();
 
-            }
-        });
 
 
     }
@@ -74,7 +70,7 @@ public class GetStarted extends AppCompatActivity {
         super.onResume();
 
 
-        Retrofit retrofit = new Retrofit.Builder()
+        /*Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("http://marwadikhana.com/")
                 .addConverterFactory(ScalarsConverterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create())
@@ -107,7 +103,7 @@ public class GetStarted extends AppCompatActivity {
 
             }
         });
-
+*/
 
 
     }

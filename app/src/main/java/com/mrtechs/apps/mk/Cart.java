@@ -99,6 +99,7 @@ public class Cart extends AppCompatActivity {
                         //intent.putExtra(AvenuesParams.MERCHANT_ID, "2");
                         intent.putExtra(AvenuesParams.ORDER_ID , response.body().getCartorder().get(0).getOrderId());
                         intent.putExtra(AvenuesParams.CURRENCY , "INR");
+                        //intent.putExtra(AvenuesParams.AMOUNT , "1");
                         intent.putExtra(AvenuesParams.AMOUNT , amount);
                         intent.putExtra(AvenuesParams.REDIRECT_URL , "http://marwadikhana.com/merchant/ccavResponseHandler.php");
                         //intent.putExtra(AvenuesParams.REDIRECT_URL, "http://122.182.6.216/merchant/ccavResponseHandler.jsp");
@@ -106,6 +107,8 @@ public class Cart extends AppCompatActivity {
                         //intent.putExtra(AvenuesParams.CANCEL_URL, "http://122.182.6.216/merchant/ccavResponseHandler.jsp");
                         intent.putExtra(AvenuesParams.RSA_KEY_URL , "http://marwadikhana.com/merchant/GetRSA.php");
                         intent.putExtra("entity" , response.body().getCartorder().get(0).getEntityId());
+
+
                         //intent.putExtra(AvenuesParams.RSA_KEY_URL, "http://122.182.6.216/merchant/GetRSA.jsp");
 
 
@@ -248,32 +251,17 @@ public class Cart extends AppCompatActivity {
     class Dataadapter extends RecyclerView.Adapter<Dataadapter.MyviewHolder>{
         Context context;
         private List<Cartheader> list = new ArrayList<>();
-        double total = 0.0;
-
 
         Dataadapter(Context context, List<Cartheader> list){
             this.context = context;
             this.list = list;
         }
 
-        public double getTotal()
-        {
-            return total;
-        }
-
         void setGridData(List<Cartheader> list)
         {
-            //total = 0.0;
             this.list = list;
             notifyDataSetChanged();
         }
-
-        public void clearTotal()
-        {
-            total = 0;
-        }
-
-
 
         @Override
         public MyviewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -292,8 +280,6 @@ public class Cart extends AppCompatActivity {
             final Cartheader item = list.get(position);
 
             double a = Double.parseDouble(item.getProductPrice());
-
-            total = total + a;
 
             holder.plus.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -345,7 +331,9 @@ public class Cart extends AppCompatActivity {
 
             loader.displayImage(item.getProductImg() , holder.image);
 
-            holder.price.setText("Rs " + item.getProductPrice());
+            Double p1 = Double.parseDouble(item.getProductPrice());
+
+            holder.price.setText("Rs " + String.format("%.2f", p1));
             holder.sku.setText("SKU: " + item.getProductSku());
             holder.name.setText(item.getProductName());
 
@@ -427,7 +415,7 @@ public class Cart extends AppCompatActivity {
                                 @Override
                                 public void onResponse(Call<deleteCartBean> call, Response<deleteCartBean> response) {
 
-                                    fetch();
+                                    //fetch();
 
                                     notifyItemRemoved(position);
 

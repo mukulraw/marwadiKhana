@@ -2,6 +2,7 @@ package com.mrtechs.apps.mk;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.support.annotation.Nullable;
@@ -53,10 +54,16 @@ public class MainActivity extends AppCompatActivity {
     TextView name;
     TextView home , wish , cart , logout;
 
+    SharedPreferences pref;
+    SharedPreferences.Editor edit;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        pref = getSharedPreferences("pree" , MODE_PRIVATE);
+        edit = pref.edit();
 
         toolbar = (Toolbar)findViewById(R.id.toolbar);
         layoutToReplace = (LinearLayout)findViewById(R.id.layout_to_replace);
@@ -72,10 +79,9 @@ public class MainActivity extends AppCompatActivity {
 
 
 
+        bean b = (bean)getApplicationContext();
 
-
-
-
+        name.setText("Hello, " + b.username);
 
         setSupportActionBar(toolbar);
 
@@ -123,6 +129,11 @@ public class MainActivity extends AppCompatActivity {
 
                 Intent i = new Intent(MainActivity.this , Login.class);
                 i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
+
+                edit.remove("username");
+                edit.remove("password");
+                edit.apply();
+
                 startActivity(i);
                 finish();
 

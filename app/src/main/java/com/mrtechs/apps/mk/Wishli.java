@@ -258,7 +258,11 @@ public class Wishli extends AppCompatActivity {
 
 
             holder.name.setText(item.getProName());
-            holder.price.setText(item.getProductPrice());
+
+            Double p1 = Double.parseDouble(item.getProductPrice());
+
+            holder.price.setText(String.format("%.2f", p1));
+
             holder.description.setText(item.getProductShortdescription());
 
             holder.delete.setOnClickListener(new View.OnClickListener() {
