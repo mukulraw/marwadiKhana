@@ -75,9 +75,11 @@ public class SubCategoryFragment extends Fragment {
 
         list = new ArrayList<>();
 
+        DisplayImageOptions options = new DisplayImageOptions.Builder().resetViewBeforeLoading(false).cacheOnDisk(true).cacheInMemory(true).build();
+
         loader = ImageLoader.getInstance();
 
-        loader.displayImage(image , banner);
+        loader.displayImage(image , banner , options);
 
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("http://marwadikhana.com/")
@@ -320,12 +322,11 @@ public class SubCategoryFragment extends Fragment {
 
                 //String htmlText = "<html><body><font color=\"#808080\"> %s </font></body></Html>";
 
-                DisplayImageOptions options = new DisplayImageOptions.Builder().cacheInMemory(true)
-                        .cacheOnDisc(true).resetViewBeforeLoading(true).build();
+                DisplayImageOptions options = new DisplayImageOptions.Builder().resetViewBeforeLoading(false).cacheOnDisk(true).cacheInMemory(true).build();
 
                 ImageLoader loader = ImageLoader.getInstance();
 
-                loader.displayImage(item.getProductImg(), holder.image, options);
+                loader.displayImage(item.getProductImg() , holder.image , options);
 
                 holder.name.setText(item.getProductName());
 

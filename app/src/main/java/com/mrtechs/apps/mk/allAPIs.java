@@ -13,6 +13,7 @@ import cartDeletePOJO.deleteCartBean;
 import cartPOJO.cartBean;
 import cdeletePOJO.cdeleteBean;
 import countPOJO.countBean;
+import getRatePOJO.getRateBean;
 import orderPOJO.orderBean;
 import retrofit2.Call;
 import retrofit2.http.GET;
@@ -113,5 +114,8 @@ public interface allAPIs {
     @Multipart
     @POST("marwadi_app/register.php")
     Call<otpConfirmBean> confirmotp(@Part("firstname") String firstName , @Part("middlename") String middleName , @Part("lastname") String lastName , @Part("email") String email , @Part("password") String password , @Part("phone") String phone , @Part("real_otp") String realOTP , @Part("user_otp") String userOTP);
+
+    @GET("marwadi_app/table_rates.php")
+    Call<getRateBean> getRate();
 
 }

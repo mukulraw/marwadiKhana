@@ -18,6 +18,7 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 import org.w3c.dom.Text;
@@ -74,56 +75,9 @@ public class Cart extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-
-                Retrofit retrofit = new Retrofit.Builder()
-                        .baseUrl("http://marwadikhana.com/")
-                        .addConverterFactory(ScalarsConverterFactory.create())
-                        .addConverterFactory(GsonConverterFactory.create())
-                        .build();
-
-                bean b = (bean)getApplicationContext();
-
-                allAPIs cr = retrofit.create(allAPIs.class);
-
-
-                Call<orderBean> call = cr.createOrder(b.id);
-
-                call.enqueue(new Callback<orderBean>() {
-                    @Override
-                    public void onResponse(Call<orderBean> call, Response<orderBean> response) {
-                        Intent intent = new Intent(Cart.this , WebViewActivity.class);
-
-                        intent.putExtra(AvenuesParams.ACCESS_CODE , "AVSB69EB46CH38BSHC");
-                        //intent.putExtra(AvenuesParams.ACCESS_CODE, "4YRUXLSRO20O8NIH");
-                        intent.putExtra(AvenuesParams.MERCHANT_ID , "108560");
-                        //intent.putExtra(AvenuesParams.MERCHANT_ID, "2");
-                        intent.putExtra(AvenuesParams.ORDER_ID , response.body().getCartorder().get(0).getOrderId());
-                        intent.putExtra(AvenuesParams.CURRENCY , "INR");
-                        //intent.putExtra(AvenuesParams.AMOUNT , "1");
-                        intent.putExtra(AvenuesParams.AMOUNT , amount);
-                        intent.putExtra(AvenuesParams.REDIRECT_URL , "http://marwadikhana.com/merchant/ccavResponseHandler.php");
-                        //intent.putExtra(AvenuesParams.REDIRECT_URL, "http://122.182.6.216/merchant/ccavResponseHandler.jsp");
-                        intent.putExtra(AvenuesParams.CANCEL_URL , "http://marwadikhana.com/merchant/ccavResponseHandler.php");
-                        //intent.putExtra(AvenuesParams.CANCEL_URL, "http://122.182.6.216/merchant/ccavResponseHandler.jsp");
-                        intent.putExtra(AvenuesParams.RSA_KEY_URL , "http://marwadikhana.com/merchant/GetRSA.php");
-                        intent.putExtra("entity" , response.body().getCartorder().get(0).getEntityId());
-
-
-                        //intent.putExtra(AvenuesParams.RSA_KEY_URL, "http://122.182.6.216/merchant/GetRSA.jsp");
-
-
-                        startActivity(intent);
-                    }
-
-                    @Override
-                    public void onFailure(Call<orderBean> call, Throwable t) {
-
-                    }
-                });
-
-
-
-
+                Intent intent = new Intent(Cart.this , CreateOrder.class);
+                intent.putExtra("amount" , amount);
+                startActivity(intent);
 
             }
         });
@@ -191,10 +145,18 @@ public class Cart extends AppCompatActivity {
             }
         });
 
-        fetch();
+
 
     }
 
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        fetch();
+
+    }
 
     public void fetch()
     {
@@ -203,6 +165,7 @@ public class Cart extends AppCompatActivity {
         {
             progress.setVisibility(View.VISIBLE);
         }
+
 
 
         Retrofit retrofit = new Retrofit.Builder()
@@ -221,16 +184,23 @@ public class Cart extends AppCompatActivity {
             @Override
             public void onResponse(Call<cartBean> call, Response<cartBean> response) {
 
+
+
+                list = new ArrayList<Cartheader>();
+
                 list = response.body().getCartheader();
 
                 adapter.setGridData(list);
 
-                if (response.body().getCartheader().size() == 0)
+                Log.d("asdasdSize1" , String.valueOf(list.size()));
+
+                if (list.size() == 0)
                 {
+                    Log.d("asdasdSize2" , String.valueOf(list.size()));
                     checkOut.setVisibility(View.GONE);
                 }
 
-                amount = response.body().getTotal();
+                amount = String.valueOf(response.body().getTotal());
 
                 progress.setVisibility(View.GONE);
 
@@ -241,6 +211,7 @@ public class Cart extends AppCompatActivity {
             @Override
             public void onFailure(Call<cartBean> call, Throwable t) {
                 progress.setVisibility(View.GONE);
+                Log.d("asderrorasd" , t.toString());
             }
         });
 
@@ -275,7 +246,7 @@ public class Cart extends AppCompatActivity {
         @Override
         public void onBindViewHolder(final MyviewHolder holder , final int position) {
 
-            holder.setIsRecyclable(true);
+            holder.setIsRecyclable(false);
 
             final Cartheader item = list.get(position);
 
@@ -329,7 +300,9 @@ public class Cart extends AppCompatActivity {
 
             ImageLoader loader = ImageLoader.getInstance();
 
-            loader.displayImage(item.getProductImg() , holder.image);
+            DisplayImageOptions options = new DisplayImageOptions.Builder().resetViewBeforeLoading(false).cacheOnDisk(true).cacheInMemory(true).build();
+
+            loader.displayImage(item.getProductImg() , holder.image , options);
 
             Double p1 = Double.parseDouble(item.getProductPrice());
 
@@ -415,9 +388,7 @@ public class Cart extends AppCompatActivity {
                                 @Override
                                 public void onResponse(Call<deleteCartBean> call, Response<deleteCartBean> response) {
 
-                                    //fetch();
-
-                                    notifyItemRemoved(position);
+                                    fetch();
 
                                 }
 

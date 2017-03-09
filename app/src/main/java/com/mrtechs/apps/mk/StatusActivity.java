@@ -34,6 +34,8 @@ public class StatusActivity extends ActionBarActivity {
     String order_id , amount , billing_name , billing_address , billing_city , billing_state , billing_zip , billing_country , billing_email , delivery_name , delivery_address ,
     delivery_city , delivery_state , delivery_zip , delivery_country , tracking_id , status;
 
+    TextView statu;
+
     ProgressBar progress;
 
     @Override
@@ -43,7 +45,11 @@ public class StatusActivity extends ActionBarActivity {
 
         progress = (ProgressBar)findViewById(R.id.progress);
 
+        statu = (TextView)findViewById(R.id.status);
+
         Intent mainIntent = getIntent();
+
+        progress.setVisibility(View.VISIBLE);
 
         html = mainIntent.getStringExtra("transStatus");
         order = mainIntent.getStringExtra("order");
@@ -90,6 +96,8 @@ public class StatusActivity extends ActionBarActivity {
             public void onResponse(Call<statusBean> call, Response<statusBean> response) {
                 progress.setVisibility(View.GONE);
                 Toast.makeText(StatusActivity.this , response.body().getOrderStatus().get(0).getStatus() , Toast.LENGTH_SHORT).show();
+
+                statu.setText(response.body().getOrderStatus().get(0).getStatus());
             }
 
             @Override

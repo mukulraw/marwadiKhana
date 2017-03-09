@@ -28,7 +28,6 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
-import android.widget.RatingBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -42,7 +41,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-import POJO.Banner;
 import POJO.productBean;
 import ProdPOJO.Product;
 import ProdPOJO.Productimg;
@@ -313,50 +311,65 @@ public class SingleProductFragment extends Fragment {
 
                             Call<addCartBean> call = cr.addToCart(id , b.id , quantity.getText().toString() , size , opid);
 
-                            Log.d("asdAttribute" , opid);
+
+                            Log.d("id" , id);
+                            Log.d("userid" , b.id);
+                            Log.d("quantity" , quantity.getText().toString());
                             Log.d("size" , size);
+                            Log.d("opid" , opid);
+                            Log.d("asdAttribute" , opid);
 
                             call.enqueue(new Callback<addCartBean>() {
                                 @Override
                                 public void onResponse(Call<addCartBean> call, Response<addCartBean> response) {
 
-
-                                    Log.d("asdsadCarttt" , response.body().getProductcart().get(0).getSuccess());
-
-
-                                    Retrofit retrofit = new Retrofit.Builder()
-                                            .baseUrl("http://marwadikhana.com/")
-                                            .addConverterFactory(ScalarsConverterFactory.create())
-                                            .addConverterFactory(GsonConverterFactory.create())
-                                            .build();
+                                    Log.d("asdinfoasd" , response.toString());
 
 
-                                    allAPIs cr = retrofit.create(allAPIs.class);
+                                        Log.d("asdsadCarttt" , response.body().getProductcart().get(0).getSuccess());
 
-                                    Call<countBean> call2 = cr.getCount(b.id);
 
-                                    call2.enqueue(new Callback<countBean>() {
-                                        @Override
-                                        public void onResponse(Call<countBean> call, Response<countBean> response) {
+                                        Retrofit retrofit = new Retrofit.Builder()
+                                                .baseUrl("http://marwadikhana.com/")
+                                                .addConverterFactory(ScalarsConverterFactory.create())
+                                                .addConverterFactory(GsonConverterFactory.create())
+                                                .build();
 
-                                            progress.setVisibility(View.GONE);
-                                            Toast.makeText(getContext() , "Added successfully" , Toast.LENGTH_SHORT).show();
 
-                                            MainActivity.countt.setText(String.valueOf(response.body().getCarttotal().get(0).getTotalCount()));
+                                        allAPIs cr = retrofit.create(allAPIs.class);
 
-                                        }
+                                        Call<countBean> call2 = cr.getCount(b.id);
 
-                                        @Override
-                                        public void onFailure(Call<countBean> call, Throwable t) {
+                                        call2.enqueue(new Callback<countBean>() {
+                                            @Override
+                                            public void onResponse(Call<countBean> call, Response<countBean> response) {
 
-                                        }
-                                    });
+                                                progress.setVisibility(View.GONE);
+                                                Toast.makeText(getContext() , "Added successfully" , Toast.LENGTH_SHORT).show();
+
+                                                MainActivity.countt.setText(String.valueOf(response.body().getCarttotal().get(0).getTotalCount()));
+
+                                            }
+
+                                            @Override
+                                            public void onFailure(Call<countBean> call, Throwable t) {
+
+                                            }
+                                        });
+
+
+
+
+
+
+
 
                                 }
 
                                 @Override
                                 public void onFailure(Call<addCartBean> call, Throwable t) {
                                     progress.setVisibility(View.GONE);
+                                    Log.d("asdasderrorccart" , t.toString());
                                 }
                             });
 

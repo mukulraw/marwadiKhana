@@ -16,6 +16,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.util.ArrayList;
@@ -220,11 +221,13 @@ public class CategoryFragment extends Fragment {
 
             holder.name.setText(item.getCatName());
 
+            DisplayImageOptions options = new DisplayImageOptions.Builder().resetViewBeforeLoading(false).cacheOnDisk(true).cacheInMemory(true).build();
+
             ImageLoader loader = ImageLoader.getInstance();
 
             if (item.getCatImage().length()>0)
             {
-                loader.displayImage(item.getCatImage() , holder.image);
+                loader.displayImage(item.getCatImage() , holder.image , options);
             }
 
 
