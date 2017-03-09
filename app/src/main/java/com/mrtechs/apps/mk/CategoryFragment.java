@@ -71,6 +71,7 @@ public class CategoryFragment extends Fragment {
     }
 
 
+
     @Override
     public void onResume() {
         super.onResume();
@@ -110,16 +111,25 @@ public class CategoryFragment extends Fragment {
             @Override
             public void onResponse(Call<bannerBean> call, Response<bannerBean> response) {
 
-                blist = response.body().getBanner();
+                try
+                {
+                    blist = response.body().getBanner();
 
-                PagerAdapter adapter = new PagerAdapter(getChildFragmentManager() , blist);
+                    PagerAdapter adapter = new PagerAdapter(getChildFragmentManager() , blist);
 
-                pager.setAdapter(adapter);
-                pager.setOffscreenPageLimit(blist.size()-5);
+                    pager.setAdapter(adapter);
+                    pager.setOffscreenPageLimit(blist.size()-5);
 
-                indicator.setViewPager(pager);
+                    indicator.setViewPager(pager);
 
-                pager.startAutoScroll(5000);
+                    pager.startAutoScroll(5000);
+                }
+                catch (NullPointerException e)
+                {
+                    e.printStackTrace();
+                }
+
+
 
             }
 

@@ -123,6 +123,30 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
+        home.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+
+
+
+                while (getSupportFragmentManager().getBackStackEntryCount() > 0) {
+                    getSupportFragmentManager().popBackStackImmediate();
+                }
+
+
+                CategoryFragment frag1 = new CategoryFragment();
+
+                ft.replace(R.id.layout_to_replace , frag1);
+                ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE);
+                ft.commit();
+
+                drawer.closeDrawer(GravityCompat.START);
+            }
+        });
+
+
         logout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

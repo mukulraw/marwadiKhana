@@ -99,31 +99,41 @@ public class SubCategoryFragment extends Fragment {
             public void onResponse(Call<subCatBean> call, Response<subCatBean> response) {
 
 
-                list = response.body().getSubcategory();
-
-                for (int i = 0 ; i < list.size() ; i++)
+                try
                 {
-                    tabs.addTab(tabs.newTab().setText(list.get(i).getSubcatName()));
-                }
+                    list = response.body().getSubcategory();
 
-
-                PagerAdapterr adapter = new PagerAdapterr(getChildFragmentManager() , list);
-
-                pager.setAdapter(adapter);
-
-                tabs.setupWithViewPager(pager);
-
-                for (int i = 0 ; i < list.size() ; i++)
-                {
-                    try {
-                        tabs.getTabAt(i).setText(list.get(i).getSubcatName());
-                    }catch (NullPointerException e)
+                    for (int i = 0 ; i < list.size() ; i++)
                     {
-                        e.printStackTrace();
+                        tabs.addTab(tabs.newTab().setText(list.get(i).getSubcatName()));
                     }
+
+
+                    PagerAdapterr adapter = new PagerAdapterr(getChildFragmentManager() , list);
+
+                    pager.setAdapter(adapter);
+
+                    tabs.setupWithViewPager(pager);
+
+                    for (int i = 0 ; i < list.size() ; i++)
+                    {
+                        try {
+                            tabs.getTabAt(i).setText(list.get(i).getSubcatName());
+                        }catch (NullPointerException e)
+                        {
+                            e.printStackTrace();
+                        }
+                    }
+
+                    pager.setOffscreenPageLimit(list.size()-1);
+                }
+                catch (NullPointerException e)
+                {
+                    e.printStackTrace();
                 }
 
-                pager.setOffscreenPageLimit(list.size()-1);
+
+
 
 
             }
