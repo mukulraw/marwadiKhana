@@ -88,11 +88,14 @@ public class SingleProductFragment extends Fragment {
 
     boolean sto = false;
 
+    String cid = "";
+
     boolean isDropDown = false;
 
     List<String> l2;
     List<String> l3;
 
+    TextView consider;
 
     @Nullable
     @Override
@@ -112,6 +115,8 @@ public class SingleProductFragment extends Fragment {
         stock = (TextView)view.findViewById(R.id.stock);
         progress = (ProgressBar)view.findViewById(R.id.progress);
         spinner = (Spinner)view.findViewById(R.id.spinner);
+
+        consider = (TextView)view.findViewById(R.id.consider);
 
         minus = (ImageButton) view.findViewById(R.id.minus);
         plus = (ImageButton)view.findViewById(R.id.plus);
@@ -210,9 +215,11 @@ public class SingleProductFragment extends Fragment {
 
                 name.setText(item.getProductName());
 
+                cid = item.getCatid();
+
                 prodName = item.getProductName();
 
-                Log.d("asdSKUasd" , item.getProductSku());
+                Log.d("asdSKUasd", item.getProductSku());
 
                 stock.setText(item.getProductStock());
 
@@ -224,7 +231,7 @@ public class SingleProductFragment extends Fragment {
 
                 id = response.body().getProduct().get(0).getProId();
 
-                PagerAdapter adapter = new PagerAdapter(getChildFragmentManager() , item.getProductMultiimg().getProductimg());
+                PagerAdapter adapter = new PagerAdapter(getChildFragmentManager(), item.getProductMultiimg().getProductimg());
 
                 image.setOffscreenPageLimit(item.getProductMultiimg().getProductimg().size() - 1);
 
@@ -235,7 +242,12 @@ public class SingleProductFragment extends Fragment {
 
                 //loader.displayImage(item.getProductImg() , image);
 
-                Double p1 = Double.parseDouble(item.getProductPrice());
+                Double p1;
+                if (item.getProductSaleprice().length() > 0) {
+                    p1 = Double.parseDouble(item.getProductSaleprice());
+                } else {
+                    p1 = Double.parseDouble(item.getProductPrice());
+                }
 
 
                 price.setText("Rs " + String.format("%.2f", p1));
@@ -244,35 +256,25 @@ public class SingleProductFragment extends Fragment {
                 List<attribute> l = item.getProductAttribute().getValueData().getProductattribute();
 
 
-
                 l2.clear();
                 l3.clear();
 
                 l2.add(item.getProductAttribute().getAttributeData().getAttributeTitle());
                 //l3.add(item.getProductAttribute().getAttributeData().getAttributeTitle());
 
-                for (int i = 0 ; i < l.size() ; i++)
-                {
+                for (int i = 0; i < l.size(); i++) {
                     l2.add(l.get(i).getAttributeValue());
                     l3.add(l.get(i).getAttributeValueId());
                 }
 
-                if (l2.size()>0)
-                {
-                    ArrayAdapter<String> adapter1 = new ArrayAdapter<String>(getContext() , R.layout.spinner_model , l2);
+                if (l2.size() > 0) {
+                    ArrayAdapter<String> adapter1 = new ArrayAdapter<String>(getContext(), R.layout.spinner_model, l2);
                     spinner.setAdapter(adapter1);
                     isDropDown = true;
-                }
-                else
-                {
+                } else {
                     spinner.setVisibility(View.GONE);
                     isDropDown = false;
                 }
-
-
-
-
-
 
 
             }
@@ -319,6 +321,7 @@ public class SingleProductFragment extends Fragment {
                             Log.d("opid" , opid);
                             Log.d("asdAttribute" , opid);
 
+
                             call.enqueue(new Callback<addCartBean>() {
                                 @Override
                                 public void onResponse(Call<addCartBean> call, Response<addCartBean> response) {
@@ -345,7 +348,36 @@ public class SingleProductFragment extends Fragment {
                                             public void onResponse(Call<countBean> call, Response<countBean> response) {
 
                                                 progress.setVisibility(View.GONE);
+
                                                 Toast.makeText(getContext() , "Added successfully" , Toast.LENGTH_SHORT).show();
+
+                                                final Dialog dialog = new Dialog(getActivity());
+                                                dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                                                dialog.setCancelable(true);
+                                                dialog.setContentView(R.layout.continue_check);
+
+                                                TextView c = (TextView)dialog.findViewById(R.id.cart);
+                                                TextView s = (TextView)dialog.findViewById(R.id.shopping);
+
+                                                dialog.show();
+
+                                                s.setOnClickListener(new View.OnClickListener() {
+                                                    @Override
+                                                    public void onClick(View v) {
+                                                        dialog.dismiss();
+                                                    }
+                                                });
+
+                                                c.setOnClickListener(new View.OnClickListener() {
+                                                    @Override
+                                                    public void onClick(View v) {
+
+                                                        Intent intent = new Intent(getContext() , Cart.class);
+                                                        startActivity(intent);
+
+                                                        dialog.dismiss();
+                                                    }
+                                                });
 
                                                 MainActivity.countt.setText(String.valueOf(response.body().getCarttotal().get(0).getTotalCount()));
 
@@ -417,11 +449,40 @@ public class SingleProductFragment extends Fragment {
                                     public void onResponse(Call<countBean> call, Response<countBean> response) {
 
                                         progress.setVisibility(View.GONE);
+
                                         Toast.makeText(getContext() , "Added successfully" , Toast.LENGTH_SHORT).show();
 
-                                        MainActivity ma = new MainActivity();
+                                        final Dialog dialog = new Dialog(getActivity());
+                                        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                                        dialog.setCancelable(true);
+                                        dialog.setContentView(R.layout.continue_check);
 
-                                        ma.countt.setText(String.valueOf(response.body().getCarttotal().get(0).getTotalCount()));
+                                        TextView c = (TextView)dialog.findViewById(R.id.cart);
+                                        TextView s = (TextView)dialog.findViewById(R.id.shopping);
+
+                                        dialog.show();
+
+                                        c.setOnClickListener(new View.OnClickListener() {
+                                            @Override
+                                            public void onClick(View v) {
+                                                dialog.dismiss();
+                                            }
+                                        });
+
+                                        s.setOnClickListener(new View.OnClickListener() {
+                                            @Override
+                                            public void onClick(View v) {
+
+                                                Intent intent = new Intent(getContext() , Cart.class);
+                                                startActivity(intent);
+
+                                                dialog.dismiss();
+                                            }
+                                        });
+
+
+
+                                        MainActivity.countt.setText(String.valueOf(response.body().getCarttotal().get(0).getTotalCount()));
 
                                     }
 
@@ -498,6 +559,7 @@ public class SingleProductFragment extends Fragment {
                         if (Objects.equals(response.body().getProductWishlist().get(0).getSuccess(), "1"))
                         {
                             progress.setVisibility(View.GONE);
+                            Toast.makeText(getContext() , "Added successfully" , Toast.LENGTH_SHORT).show();
                         }
                     }
 
@@ -514,7 +576,7 @@ public class SingleProductFragment extends Fragment {
 
 
 
-        Call<productBean> call2 = cr.getProducts(id);
+        Call<productBean> call2 = cr.getProducts(cid);
 
         call2.enqueue(new Callback<productBean>() {
             @Override
@@ -522,6 +584,15 @@ public class SingleProductFragment extends Fragment {
 
 
                 list = response.body().getProduct();
+
+                if (list.size() == 0)
+                {
+                    consider.setVisibility(View.GONE);
+                }
+                else if (list.size()>0)
+                {
+                    consider.setVisibility(View.VISIBLE);
+                }
 
                 adapter.setGridData(list);
 
@@ -562,7 +633,8 @@ public class SingleProductFragment extends Fragment {
         }
 
         @Override
-        public int getCount() {
+        public int getCount()
+        {
             return list.size();
         }
     }

@@ -336,13 +336,17 @@ public class SubCategoryFragment extends Fragment {
 
                 ImageLoader loader = ImageLoader.getInstance();
 
-                loader.displayImage(item.getProductImg() , holder.image , options);
+                loader.displayImage(item.getProductImg(), holder.image, options);
 
                 holder.name.setText(item.getProductName());
 
-                Double p1 = Double.parseDouble(item.getProductPrice());
 
-
+                Double p1;
+                if (item.getProductSaleprice().length() > 0) {
+                    p1 = Double.parseDouble(item.getProductSaleprice());
+                } else {
+                    p1 = Double.parseDouble(item.getProductPrice());
+                }
 
 
                 holder.price.setText("Rs " + String.format("%.2f", p1));

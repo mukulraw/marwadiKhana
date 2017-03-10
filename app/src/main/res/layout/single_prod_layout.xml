@@ -353,7 +353,9 @@
         android:layout_height="wrap_content"
         android:textColor="@color/colorAccent"
         android:text="You may also consider"
+        android:visibility="gone"
         android:padding="10dp"
+        android:id="@+id/consider"
         />
 
     <TextView

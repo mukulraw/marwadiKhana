@@ -132,7 +132,7 @@ public class Cart extends AppCompatActivity {
 
                         list.clear();
 
-                        adapter.setGridData(new ArrayList<Cartheader>());
+                        fetch();
 
                     }
 
