@@ -9,7 +9,7 @@ public class bean extends Application {
 
 
     String id = "";
-    String username = "";
+    String username = "" , first = "" , last = "" , email = "";
 
     @Override
     public void onCreate() {

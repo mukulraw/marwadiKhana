@@ -118,4 +118,8 @@ public interface allAPIs {
     @GET("marwadi_app/table_rates.php")
     Call<getRateBean> getRate();
 
+    @Multipart
+    @POST("marwadi_app/slaes_update.php")
+    Call<String> updateSale(@Part("userid") String userId , @Part("firstname") String first , @Part("lastname") String last , @Part("email") String email);
+
 }

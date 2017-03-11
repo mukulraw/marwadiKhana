@@ -110,6 +110,9 @@ public class Login extends AppCompatActivity {
 
                                     b.id = response.body().getUserid();
                                     b.username = response.body().getFullname();
+                                    b.first = response.body().getFirstname();
+                                    b.last = response.body().getLastname();
+                                    b.email = response.body().getEmail();
 
                                     edit.putString("username" , e);
                                     edit.putString("password" , p);

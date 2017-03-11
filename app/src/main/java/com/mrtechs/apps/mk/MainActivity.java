@@ -76,10 +76,33 @@ public class MainActivity extends AppCompatActivity {
         logout = (TextView)findViewById(R.id.log_out);
 
 
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("http://marwadikhana.com/")
+                .addConverterFactory(ScalarsConverterFactory.create())
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        final bean b = (bean)getApplicationContext();
+
+        allAPIs cr = retrofit.create(allAPIs.class);
+
+
+        Call<String> call = cr.updateSale(b.id , b.first , b.last , b.email);
+
+        call.enqueue(new Callback<String>() {
+            @Override
+            public void onResponse(Call<String> call, Response<String> response) {
 
 
 
-        bean b = (bean)getApplicationContext();
+            }
+
+            @Override
+            public void onFailure(Call<String> call, Throwable t) {
+
+            }
+        });
+
 
         name.setText("Hello, " + b.username);
 
@@ -157,6 +180,12 @@ public class MainActivity extends AppCompatActivity {
                 edit.remove("username");
                 edit.remove("password");
                 edit.apply();
+
+                b.id = "";
+                b.email = "";
+                b.username = "";
+                b.first = "";
+                b.last = "";
 
                 startActivity(i);
                 finish();
