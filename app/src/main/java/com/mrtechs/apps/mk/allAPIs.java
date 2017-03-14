@@ -108,8 +108,8 @@ public interface allAPIs {
     Call<statusBean> status(@Part("entityid") String entityId , @Part("userid") String userId , @Part("order_id") String orderId , @Part("amount") String amount , @Part("billing_name") String billingName , @Part("billing_address") String billingAddress , @Part("billing_city") String billingCity , @Part("billing_state") String billingState , @Part("billing_zip") String billingZip , @Part("billing_country") String billingCountry , @Part("billing_email") String billingEmail , @Part("dilivery_name") String deliveryName , @Part("dilivery_address") String deliveryAddress , @Part("dilivery_city") String deliveryCity , @Part("dilivery_state") String deliveryState , @Part("dilivery_zip") String deliveryZip ,@Part("dilivery_country") String deliveryCountry , @Part("tracking_id") String trackingId , @Part("order_status") String orderStatus);
 
     @Multipart
-    @POST("marwadi_app/otp_confirm.php")
-    Call<OTPbEAN> otp(@Part("firstname") String firstName , @Part("middlename") String middleName , @Part("lastname") String lastName , @Part("email") String email , @Part("password") String password , @Part("phone") String phone);
+    @POST("marwadi_app/register.php")
+    Call<otpConfirmBean> otp(@Part("firstname") String firstName , @Part("middlename") String middleName , @Part("lastname") String lastName , @Part("email") String email , @Part("password") String password , @Part("phone") String phone);
 
     @Multipart
     @POST("marwadi_app/register.php")

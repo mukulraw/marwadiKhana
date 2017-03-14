@@ -99,39 +99,23 @@ public class Register extends AppCompatActivity {
 
                                     allAPIs cr = retrofit.create(allAPIs.class);
 
-                                    Call<OTPbEAN> call = cr.otp(f , "" , l , e , pa , p);
+                                    Call<otpConfirmBean> call = cr.otp(f , "" , l , e , pa , p);
 
-                                    call.enqueue(new Callback<OTPbEAN>() {
+                                    call.enqueue(new Callback<otpConfirmBean>() {
                                         @Override
-                                        public void onResponse(Call<OTPbEAN> call, Response<OTPbEAN> response) {
+                                        public void onResponse(Call<otpConfirmBean> call, Response<otpConfirmBean> response) {
 
-                                            Intent intent = new Intent(Register.this , OTP.class);
-                                            intent.putExtra("otp" , String.valueOf(response.body().getOtp()));
-                                            intent.putExtra("first" , response.body().getFirstname());
-                                            intent.putExtra("last" , response.body().getLastname());
-                                            intent.putExtra("email" , response.body().getEmail());
-                                            intent.putExtra("phone" , response.body().getPhone());
-                                            intent.putExtra("password" , response.body().getPassword());
-
-                                            mOverlayDialog.dismiss();
-
-                                            startActivity(intent);
+                                            Toast.makeText(Register.this , response.body().getStatus() , Toast.LENGTH_SHORT).show();
 
                                             finish();
 
-                                            Toast.makeText(Register.this , "An OTP has been sent to your Mobile number" , Toast.LENGTH_SHORT).show();
-
                                         }
 
                                         @Override
-                                        public void onFailure(Call<OTPbEAN> call, Throwable t) {
+                                        public void onFailure(Call<otpConfirmBean> call, Throwable t) {
 
                                         }
                                     });
-
-
-
-
 
                                 }
                                 else

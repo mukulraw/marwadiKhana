@@ -24,9 +24,6 @@ public class otpConfirmBean {
     @SerializedName("phone")
     @Expose
     private String phone;
-    @SerializedName("otp")
-    @Expose
-    private String otp;
     @SerializedName("status")
     @Expose
     private String status;
@@ -77,14 +74,6 @@ public class otpConfirmBean {
 
     public void setPhone(String phone) {
         this.phone = phone;
-    }
-
-    public String getOtp() {
-        return otp;
-    }
-
-    public void setOtp(String otp) {
-        this.otp = otp;
     }
 
     public String getStatus() {
