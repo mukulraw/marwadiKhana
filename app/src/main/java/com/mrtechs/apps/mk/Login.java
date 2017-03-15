@@ -16,8 +16,11 @@ import android.view.View;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import org.w3c.dom.Text;
 
 import java.util.Objects;
 
@@ -38,6 +41,8 @@ public class Login extends AppCompatActivity {
 
     Button login;
 
+    TextView forgot;
+
     TextView create;
 
     Toast toast;
@@ -51,6 +56,8 @@ public class Login extends AppCompatActivity {
         edit = pref.edit();
 
         toast = Toast.makeText(this , null , Toast.LENGTH_SHORT);
+
+        forgot = (TextView)findViewById(R.id.forgot);
 
         email = (EditText)findViewById(R.id.email);
         password = (EditText)findViewById(R.id.password);
@@ -68,6 +75,62 @@ public class Login extends AppCompatActivity {
 
             }
         });
+
+
+        forgot.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                final Dialog dialog = new Dialog(Login.this);
+                dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                dialog.setCancelable(true);
+                dialog.setContentView(R.layout.forgot_dialog);
+                dialog.show();
+
+                final EditText em = (EditText)dialog.findViewById(R.id.email);
+                TextView ok = (TextView)dialog.findViewById(R.id.ok);
+                final ProgressBar prog = (ProgressBar)dialog.findViewById(R.id.progress);
+
+                ok.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                        prog.setVisibility(View.VISIBLE);
+
+                        Retrofit retrofit = new Retrofit.Builder()
+                                .baseUrl("http://marwadikhana.com/")
+                                .addConverterFactory(ScalarsConverterFactory.create())
+                                .addConverterFactory(GsonConverterFactory.create())
+                                .build();
+
+
+                        allAPIs cr = retrofit.create(allAPIs.class);
+
+                        Call<forgotBean> call = cr.forgotPass(em.getText().toString());
+
+                        call.enqueue(new Callback<forgotBean>() {
+                            @Override
+                            public void onResponse(Call<forgotBean> call, Response<forgotBean> response) {
+
+                                Toast.makeText(Login.this , response.body().getStatus() , Toast.LENGTH_SHORT).show();
+                                prog.setVisibility(View.GONE);
+
+                                dialog.dismiss();
+                            }
+
+                            @Override
+                            public void onFailure(Call<forgotBean> call, Throwable t) {
+                                prog.setVisibility(View.GONE);
+                                dialog.dismiss();
+                            }
+                        });
+
+                    }
+                });
+
+            }
+        });
+
 
         login.setOnClickListener(new View.OnClickListener() {
             @Override

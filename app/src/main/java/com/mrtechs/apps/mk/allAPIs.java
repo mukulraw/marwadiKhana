@@ -133,4 +133,8 @@ public interface allAPIs {
     @Multipart
     @POST("marwadi_app/change_password.php")
     Call<passwordBean> changePassword(@Part("userid") String userId , @Part("oldpass") String oldPass , @Part("newpass") String newPass);
+
+    @Multipart
+    @POST("marwadi_app/forgot_password.php")
+    Call<forgotBean> forgotPass(@Part("email") String email);
 }
