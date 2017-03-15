@@ -122,4 +122,15 @@ public interface allAPIs {
     @POST("marwadi_app/slaes_update.php")
     Call<String> updateSale(@Part("userid") String userId , @Part("firstname") String first , @Part("lastname") String last , @Part("email") String email);
 
+    @Multipart
+    @POST("marwadi_app/customer_info.php")
+    Call<profileBean> viewProfile(@Part("userid") String userId);
+
+    @Multipart
+    @POST("marwadi_app/update_customerinfo.php")
+    Call<updateProfileBean> updateProfile(@Part("userid") String userId , @Part("firstname") String first , @Part("lastname") String last , @Part("email") String email);
+
+    @Multipart
+    @POST("marwadi_app/change_password.php")
+    Call<passwordBean> changePassword(@Part("userid") String userId , @Part("oldpass") String oldPass , @Part("newpass") String newPass);
 }

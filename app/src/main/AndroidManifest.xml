@@ -42,7 +42,10 @@
             android:name=".StatusActivity"
             android:label="@string/title_activity_status" />
         <activity android:name=".OTP" />
-        <activity android:name=".CreateOrder"></activity>
+        <activity android:name=".CreateOrder" />
+        <activity android:name=".ProfileActivity" />
+        <activity android:name=".EditProfile" />
+        <activity android:name=".ChangePassword"></activity>
     </application>
 
 </manifest>

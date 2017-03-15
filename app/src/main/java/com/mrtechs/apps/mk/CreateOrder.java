@@ -6,6 +6,7 @@ import android.renderscript.Double2;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
@@ -164,6 +165,8 @@ public class CreateOrder extends AppCompatActivity {
 
                     Call<orderBean> call = cr.createOrder(b.id);
 
+                    Log.d("asdID" , b.id);
+
                     call.enqueue(new Callback<orderBean>() {
                         @Override
                         public void onResponse(Call<orderBean> call, Response<orderBean> response) {
@@ -218,6 +221,7 @@ public class CreateOrder extends AppCompatActivity {
                         @Override
                         public void onFailure(Call<orderBean> call, Throwable t) {
                             progress.setVisibility(View.GONE);
+                            Log.d("asdasdasd" , t.toString());
                         }
                     });
 
