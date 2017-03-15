@@ -52,7 +52,7 @@ public class MainActivity extends AppCompatActivity {
     public static TextView countt;
 
     TextView name;
-    TextView home , wish , cart , logout;
+    TextView home , wish , cart , profile , logout;
 
     SharedPreferences pref;
     SharedPreferences.Editor edit;
@@ -73,6 +73,7 @@ public class MainActivity extends AppCompatActivity {
         home = (TextView)findViewById(R.id.home);
         wish = (TextView)findViewById(R.id.wishlist);
         cart = (TextView)findViewById(R.id.cart);
+        profile = (TextView)findViewById(R.id.profile);
         logout = (TextView)findViewById(R.id.log_out);
 
 
@@ -104,7 +105,6 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
-        name.setText("Hello, " + b.username);
 
         setSupportActionBar(toolbar);
 
@@ -168,6 +168,19 @@ public class MainActivity extends AppCompatActivity {
                 drawer.closeDrawer(GravityCompat.START);
             }
         });
+
+
+
+        profile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent intent = new Intent(MainActivity.this , ProfileActivity.class);
+                startActivity(intent);
+
+            }
+        });
+
 
 
         logout.setOnClickListener(new View.OnClickListener() {
@@ -286,6 +299,10 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+
+        bean b = (bean)getApplicationContext();
+
+        name.setText("Hello, " + b.username);
 
         updateCount();
 

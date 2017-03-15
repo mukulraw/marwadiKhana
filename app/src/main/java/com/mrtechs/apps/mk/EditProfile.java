@@ -86,6 +86,9 @@ public class EditProfile extends AppCompatActivity {
 
                         edit.remove("username");
                         edit.remove("password");
+
+                        b.username = response.body().getFirstname() + " " +response.body().getLastname();
+
                         edit.apply();
 
                         progress.setVisibility(View.GONE);
