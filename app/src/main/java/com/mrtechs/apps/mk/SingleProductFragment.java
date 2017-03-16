@@ -28,6 +28,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.RatingBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -97,6 +98,8 @@ public class SingleProductFragment extends Fragment {
 
     TextView consider;
 
+    RatingBar rating;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -115,7 +118,7 @@ public class SingleProductFragment extends Fragment {
         stock = (TextView)view.findViewById(R.id.stock);
         progress = (ProgressBar)view.findViewById(R.id.progress);
         spinner = (Spinner)view.findViewById(R.id.spinner);
-
+        rating = (RatingBar)view.findViewById(R.id.rating);
         consider = (TextView)view.findViewById(R.id.consider);
 
         minus = (ImageButton) view.findViewById(R.id.minus);
@@ -196,6 +199,8 @@ public class SingleProductFragment extends Fragment {
         grid.setAdapter(adapter);
         grid.setLayoutManager(manager);
 
+        progress.setVisibility(View.VISIBLE);
+
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("http://marwadikhana.com/")
                 .addConverterFactory(ScalarsConverterFactory.create())
@@ -203,7 +208,7 @@ public class SingleProductFragment extends Fragment {
                 .build();
 
 
-        allAPIs cr = retrofit.create(allAPIs.class);
+        final allAPIs cr = retrofit.create(allAPIs.class);
 
         Call<singleProdBean> call = cr.getProductDetails(id);
 
@@ -211,77 +216,116 @@ public class SingleProductFragment extends Fragment {
             @Override
             public void onResponse(Call<singleProdBean> call, Response<singleProdBean> response) {
 
-                Product item = response.body().getProduct().get(0);
+                try{
+                    Product item = response.body().getProduct().get(0);
 
-                name.setText(item.getProductName());
+                    name.setText(item.getProductName());
 
-                cid = item.getCatid();
+                    cid = item.getCatid();
 
-                prodName = item.getProductName();
 
-                Log.d("asdSKUasd", item.getProductSku());
+                    Call<productBean> call2 = cr.getProducts(cid);
 
-                stock.setText(item.getProductStock());
+                    call2.enqueue(new Callback<productBean>() {
+                        @Override
+                        public void onResponse(Call<productBean> call, Response<productBean> response) {
 
-                sto = Objects.equals(item.getProductStock().toLowerCase(), "in stock");
 
-                category.setText(item.getCatname());
+                            list = response.body().getProduct();
 
-                description.setText(item.getProductDescription());
+                            if (list.size() == 0)
+                            {
+                                consider.setVisibility(View.GONE);
+                            }
+                            else if (list.size()>0)
+                            {
+                                consider.setVisibility(View.VISIBLE);
+                            }
 
-                id = response.body().getProduct().get(0).getProId();
+                            adapter.setGridData(list);
 
-                PagerAdapter adapter = new PagerAdapter(getChildFragmentManager(), item.getProductMultiimg().getProductimg());
+                        }
 
-                image.setOffscreenPageLimit(item.getProductMultiimg().getProductimg().size() - 1);
+                        @Override
+                        public void onFailure(Call<productBean> call, Throwable t) {
 
-                opid = item.getProductAttribute().getAttributeData().getAttributeId();
+                        }
+                    });
 
-                image.setAdapter(adapter);
-                indicator.setViewPager(image);
 
-                //loader.displayImage(item.getProductImg() , image);
+                    prodName = item.getProductName();
 
-                Double p1;
-                if (item.getProductSaleprice().length() > 0) {
-                    p1 = Double.parseDouble(item.getProductSaleprice());
-                } else {
-                    p1 = Double.parseDouble(item.getProductPrice());
+                    Log.d("asdSKUasd", item.getProductSku());
+
+                    stock.setText(item.getProductStock());
+
+                    sto = Objects.equals(item.getProductStock().toLowerCase(), "in stock");
+
+                    category.setText(item.getCatname());
+
+                    description.setText(item.getProductDescription());
+
+                    id = response.body().getProduct().get(0).getProId();
+
+                    PagerAdapter adapter = new PagerAdapter(getChildFragmentManager(), item.getProductMultiimg().getProductimg());
+
+                    image.setOffscreenPageLimit(item.getProductMultiimg().getProductimg().size() - 1);
+
+                    opid = item.getProductAttribute().getAttributeData().getAttributeId();
+
+                    image.setAdapter(adapter);
+                    indicator.setViewPager(image);
+
+                    //loader.displayImage(item.getProductImg() , image);
+
+                    Double p1;
+                    if (item.getProductSaleprice().length() > 0) {
+                        p1 = Double.parseDouble(item.getProductSaleprice());
+                    } else {
+                        p1 = Double.parseDouble(item.getProductPrice());
+                    }
+
+                    rating.setRating(Float.parseFloat(item.getProRating()) / 20);
+
+                    price.setText("Rs " + String.format("%.2f", p1));
+
+
+                    List<attribute> l = item.getProductAttribute().getValueData().getProductattribute();
+
+
+                    l2.clear();
+                    l3.clear();
+
+                    l2.add(item.getProductAttribute().getAttributeData().getAttributeTitle());
+                    //l3.add(item.getProductAttribute().getAttributeData().getAttributeTitle());
+
+                    for (int i = 0; i < l.size(); i++) {
+                        l2.add(l.get(i).getAttributeValue());
+                        l3.add(l.get(i).getAttributeValueId());
+                    }
+
+                    if (l.size() > 0) {
+                        ArrayAdapter<String> adapter1 = new ArrayAdapter<String>(getContext(), R.layout.spinner_model, l2);
+                        spinner.setAdapter(adapter1);
+                        isDropDown = true;
+                    } else {
+                        spinner.setVisibility(View.GONE);
+                        isDropDown = false;
+                    }
+
+
+                }catch (NullPointerException e)
+                {
+                    e.printStackTrace();
                 }
 
-
-                price.setText("Rs " + String.format("%.2f", p1));
-
-
-                List<attribute> l = item.getProductAttribute().getValueData().getProductattribute();
-
-
-                l2.clear();
-                l3.clear();
-
-                l2.add(item.getProductAttribute().getAttributeData().getAttributeTitle());
-                //l3.add(item.getProductAttribute().getAttributeData().getAttributeTitle());
-
-                for (int i = 0; i < l.size(); i++) {
-                    l2.add(l.get(i).getAttributeValue());
-                    l3.add(l.get(i).getAttributeValueId());
-                }
-
-                if (l2.size() > 0) {
-                    ArrayAdapter<String> adapter1 = new ArrayAdapter<String>(getContext(), R.layout.spinner_model, l2);
-                    spinner.setAdapter(adapter1);
-                    isDropDown = true;
-                } else {
-                    spinner.setVisibility(View.GONE);
-                    isDropDown = false;
-                }
-
+                progress.setVisibility(View.GONE);
 
             }
 
             @Override
             public void onFailure(Call<singleProdBean> call, Throwable t) {
-
+                progress.setVisibility(View.GONE);
             }
         });
 
@@ -462,14 +506,14 @@ public class SingleProductFragment extends Fragment {
 
                                         dialog.show();
 
-                                        c.setOnClickListener(new View.OnClickListener() {
+                                        s.setOnClickListener(new View.OnClickListener() {
                                             @Override
                                             public void onClick(View v) {
                                                 dialog.dismiss();
                                             }
                                         });
 
-                                        s.setOnClickListener(new View.OnClickListener() {
+                                        c.setOnClickListener(new View.OnClickListener() {
                                             @Override
                                             public void onClick(View v) {
 
@@ -576,33 +620,7 @@ public class SingleProductFragment extends Fragment {
 
 
 
-        Call<productBean> call2 = cr.getProducts(cid);
 
-        call2.enqueue(new Callback<productBean>() {
-            @Override
-            public void onResponse(Call<productBean> call, Response<productBean> response) {
-
-
-                list = response.body().getProduct();
-
-                if (list.size() == 0)
-                {
-                    consider.setVisibility(View.GONE);
-                }
-                else if (list.size()>0)
-                {
-                    consider.setVisibility(View.VISIBLE);
-                }
-
-                adapter.setGridData(list);
-
-            }
-
-            @Override
-            public void onFailure(Call<productBean> call, Throwable t) {
-
-            }
-        });
 
 
 
@@ -756,9 +774,13 @@ public class SingleProductFragment extends Fragment {
 
             holder.name.setText(item.getProductName());
 
-            holder.price.setText("Rs. " + item.getProductPrice());
+            Double p1 = Double.parseDouble(item.getProductPrice());
 
-            holder.size.setText("SKU: "+item.getProductQty());
+            holder.price.setText("Rs " + String.format("%.2f", p1));
+
+            //holder.price.setText("Rs. " + item.getProductPrice());
+
+            holder.size.setText("SKU: "+item.getProductSku());
 
 
 
