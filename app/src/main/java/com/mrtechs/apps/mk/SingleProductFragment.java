@@ -277,15 +277,18 @@ public class SingleProductFragment extends Fragment {
                     indicator.setViewPager(image);
 
                     //loader.displayImage(item.getProductImg() , image);
-
+                    rating.setRating(Float.parseFloat(item.getProRating()) / 20);
                     Double p1;
-                    if (item.getProductSaleprice().length() > 0) {
+                    if (item.getProductSaleprice().length() > 0)
+                    {
                         p1 = Double.parseDouble(item.getProductSaleprice());
-                    } else {
+                    }
+                    else
+                    {
                         p1 = Double.parseDouble(item.getProductPrice());
                     }
 
-                    rating.setRating(Float.parseFloat(item.getProRating()) / 20);
+
 
                     price.setText("Rs " + String.format("%.2f", p1));
 
@@ -774,7 +777,20 @@ public class SingleProductFragment extends Fragment {
 
             holder.name.setText(item.getProductName());
 
-            Double p1 = Double.parseDouble(item.getProductPrice());
+
+
+
+
+            Double p1;
+            if (item.getProductSaleprice().length() > 0)
+            {
+                p1 = Double.parseDouble(item.getProductSaleprice());
+            }
+            else
+            {
+                p1 = Double.parseDouble(item.getProductPrice());
+            }
+
 
             holder.price.setText("Rs " + String.format("%.2f", p1));
 
