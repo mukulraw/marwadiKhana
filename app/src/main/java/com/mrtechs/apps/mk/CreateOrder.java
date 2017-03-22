@@ -290,6 +290,44 @@ public class CreateOrder extends AppCompatActivity {
 
 
                 }
+                else if (id == R.id.cod)
+                {
+                    progress.setVisibility(View.VISIBLE);
+
+                    Retrofit retrofit = new Retrofit.Builder()
+                            .baseUrl("http://marwadikhana.com/")
+                            .addConverterFactory(ScalarsConverterFactory.create())
+                            .addConverterFactory(GsonConverterFactory.create())
+                            .build();
+
+                    bean b = (bean)getApplicationContext();
+
+                    allAPIs cr = retrofit.create(allAPIs.class);
+
+
+                    Call<orderBean> call = cr.createOrder(b.id);
+
+                    call.enqueue(new Callback<orderBean>() {
+                        @Override
+                        public void onResponse(Call<orderBean> call, Response<orderBean> response) {
+                            Intent intent = new Intent(CreateOrder.this , CODClass.class);
+
+                            intent.putExtra(AvenuesParams.ORDER_ID , response.body().getCartorder().get(0).getOrderId());
+
+                            intent.putExtra("entity" , response.body().getCartorder().get(0).getEntityId());
+
+                            progress.setVisibility(View.GONE);
+
+                            startActivity(intent);
+                            finish();
+                        }
+
+                        @Override
+                        public void onFailure(Call<orderBean> call, Throwable t) {
+                            progress.setVisibility(View.GONE);
+                        }
+                    });
+                }
 
             }
         });

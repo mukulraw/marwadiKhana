@@ -82,6 +82,20 @@
             android:paddingEnd="10dp"
             />
 
+            <RadioButton
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="18dp"
+                android:layout_marginEnd="18dp"
+                android:layout_marginTop="9dp"
+                android:id="@+id/cod"
+                android:layout_marginBottom="18dp"
+                android:text="COD"
+                android:gravity="center_vertical"
+                android:paddingStart="10dp"
+                android:paddingEnd="10dp"
+                />
+
         </RadioGroup>
 
     </LinearLayout>

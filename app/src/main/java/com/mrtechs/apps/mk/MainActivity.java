@@ -22,6 +22,7 @@ import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -87,6 +88,7 @@ public class MainActivity extends AppCompatActivity {
 
         allAPIs cr = retrofit.create(allAPIs.class);
 
+        Log.d("asdId" , b.id);
 
         Call<String> call = cr.updateSale(b.id , b.first , b.last , b.email);
 
