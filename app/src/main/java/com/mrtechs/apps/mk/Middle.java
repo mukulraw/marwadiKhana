@@ -35,12 +35,16 @@ public class Middle extends AppCompatActivity {
 
     RadioGroup radio;
 
+    String type;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_middle);
 
         progress = (ProgressBar)findViewById(R.id.progress);
+
+        type = getIntent().getStringExtra("type");
 
         access_code = getIntent().getStringExtra(AvenuesParams.ACCESS_CODE);
         merchant_id = getIntent().getStringExtra(AvenuesParams.MERCHANT_ID);
@@ -149,6 +153,8 @@ public class Middle extends AppCompatActivity {
                             intent.putExtra(AvenuesParams.ORDER_ID , response.body().getCartorder().get(0).getOrderId());
 
                             intent.putExtra("entity" , response.body().getCartorder().get(0).getEntityId());
+                            intent.putExtra("type" , type);
+                            intent.putExtra("amount" , amount);
 
                             progress.setVisibility(View.GONE);
 

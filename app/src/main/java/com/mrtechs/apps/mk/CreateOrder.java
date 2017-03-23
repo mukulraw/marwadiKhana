@@ -207,7 +207,7 @@ public class CreateOrder extends AppCompatActivity {
                             //intent.putExtra(AvenuesParams.CANCEL_URL, "http://122.182.6.216/merchant/ccavResponseHandler.jsp");
                             intent.putExtra(AvenuesParams.RSA_KEY_URL , "http://marwadikhana.com/merchant/GetRSA.php");
                             intent.putExtra("entity" , response.body().getCartorder().get(0).getEntityId());
-
+                            intent.putExtra("type" , "standard");
 
                             //intent.putExtra(AvenuesParams.RSA_KEY_URL, "http://122.182.6.216/merchant/GetRSA.jsp");
 
@@ -271,7 +271,7 @@ public class CreateOrder extends AppCompatActivity {
                             //intent.putExtra(AvenuesParams.CANCEL_URL, "http://122.182.6.216/merchant/ccavResponseHandler.jsp");
                             intent.putExtra(AvenuesParams.RSA_KEY_URL , "http://marwadikhana.com/merchant/GetRSA.php");
                             intent.putExtra("entity" , response.body().getCartorder().get(0).getEntityId());
-
+                            intent.putExtra("type" , "express");
 
                             //intent.putExtra(AvenuesParams.RSA_KEY_URL, "http://122.182.6.216/merchant/GetRSA.jsp");
 

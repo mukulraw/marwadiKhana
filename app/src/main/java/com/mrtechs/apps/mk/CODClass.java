@@ -43,6 +43,11 @@ public class CODClass extends AppCompatActivity {
 
     Toolbar toolbar;
 
+    String type;
+
+    String amount;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,6 +55,8 @@ public class CODClass extends AppCompatActivity {
 
         orderId = getIntent().getStringExtra("AvenuesParams.ORDER_ID");
         entityId = getIntent().getStringExtra("entity");
+        type = getIntent().getStringExtra("type");
+        amount = getIntent().getStringExtra("amount");
 
         bFname = (EditText)findViewById(R.id.bname);
         bLname = (EditText)findViewById(R.id.blname);
@@ -164,7 +171,7 @@ public class CODClass extends AppCompatActivity {
                                                     allAPIs cr = retrofit.create(allAPIs.class);
 
 
-                                                    Call<codBean> call = cr.cod(entityId , b.id , orderId , bfname , blname , baddress , bcity , bstate , bzip , bcountry , bemail , bfname , baddress , bcity , bstate , bzip , bcountry);
+                                                    Call<codBean> call = cr.cod(entityId , b.id , orderId , bfname , blname , baddress , bcity , bstate , bzip , bcountry , bemail , bfname , baddress , bcity , bstate , bzip , bcountry , type , amount);
 
                                                     call.enqueue(new Callback<codBean>() {
                                                         @Override
@@ -295,7 +302,7 @@ public class CODClass extends AppCompatActivity {
                                                                             allAPIs cr = retrofit.create(allAPIs.class);
 
 
-                                                                            Call<codBean> call = cr.cod(entityId , b.id , orderId , bfname , blname , baddress , bcity , bstate , bzip , bcountry , bemail , sname , saddress , scity , sstate , szip , scountry);
+                                                                            Call<codBean> call = cr.cod(entityId , b.id , orderId , bfname , blname , baddress , bcity , bstate , bzip , bcountry , bemail , sname , saddress , scity , sstate , szip , scountry , type , amount);
 
                                                                             call.enqueue(new Callback<codBean>() {
                                                                                 @Override
