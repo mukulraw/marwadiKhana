@@ -12,6 +12,7 @@ import addCartPOJO.addCartBean;
 import cartDeletePOJO.deleteCartBean;
 import cartPOJO.cartBean;
 import cdeletePOJO.cdeleteBean;
+import codPOJO.codBean;
 import countPOJO.countBean;
 import getRatePOJO.getRateBean;
 import orderPOJO.orderBean;
@@ -137,4 +138,8 @@ public interface allAPIs {
     @Multipart
     @POST("marwadi_app/forgot_password.php")
     Call<forgotBean> forgotPass(@Part("email") String email);
+
+    @Multipart
+    @POST("marwadi_app/cashdelivery_status.php")
+    Call<codBean> cod(@Part("entityid") String entityId , @Part("userid") String userId , @Part("order_id") String orderId , @Part("billing_name") String billingName , @Part("billing_lastname") String billingLastName , @Part("billing_address") String billingAddress , @Part("billing_city") String billingCity , @Part("billing_state") String billingState , @Part("billing_zip") String billingZip , @Part("billing_country") String billingCountry , @Part("billing_email") String billingEmail , @Part("dilivery_name") String deliveryName , @Part("dilivery_address") String deliveryAddress , @Part("dilivery_city") String deliveryCity , @Part("dilivery_state") String deliveryState , @Part("dilivery_zip") String deliveryZip , @Part("dilivery_country") String deliveryCountry);
 }
