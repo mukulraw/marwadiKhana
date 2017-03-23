@@ -170,7 +170,7 @@ public class CreateOrder extends AppCompatActivity {
                     call.enqueue(new Callback<orderBean>() {
                         @Override
                         public void onResponse(Call<orderBean> call, Response<orderBean> response) {
-                            Intent intent = new Intent(CreateOrder.this , WebViewActivity.class);
+                            Intent intent = new Intent(CreateOrder.this , Middle.class);
 
                             intent.putExtra(AvenuesParams.ACCESS_CODE , "AVSB69EB46CH38BSHC");
                             //intent.putExtra(AvenuesParams.ACCESS_CODE, "4YRUXLSRO20O8NIH");
@@ -249,7 +249,7 @@ public class CreateOrder extends AppCompatActivity {
                     call.enqueue(new Callback<orderBean>() {
                         @Override
                         public void onResponse(Call<orderBean> call, Response<orderBean> response) {
-                            Intent intent = new Intent(CreateOrder.this , WebViewActivity.class);
+                            Intent intent = new Intent(CreateOrder.this , Middle.class);
 
                             intent.putExtra(AvenuesParams.ACCESS_CODE , "AVSB69EB46CH38BSHC");
                             //intent.putExtra(AvenuesParams.ACCESS_CODE, "4YRUXLSRO20O8NIH");
@@ -290,7 +290,7 @@ public class CreateOrder extends AppCompatActivity {
 
 
                 }
-                else if (id == R.id.cod)
+                /*else if (id == R.id.cod)
                 {
                     progress.setVisibility(View.VISIBLE);
 
@@ -327,7 +327,7 @@ public class CreateOrder extends AppCompatActivity {
                             progress.setVisibility(View.GONE);
                         }
                     });
-                }
+                }*/
 
             }
         });

@@ -47,7 +47,10 @@
         <activity android:name=".EditProfile" />
         <activity android:name=".ChangePassword" />
         <activity android:name=".CODClass" />
-        <activity android:name=".CodStatus"></activity>
+        <activity android:name=".CodStatus" />
+        <activity android:name=".Refer" />
+        <activity android:name=".Track" />
+        <activity android:name=".Middle"></activity>
     </application>
 
 </manifest>

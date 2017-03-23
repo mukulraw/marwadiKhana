@@ -63,6 +63,34 @@
         android:layout_height="wrap_content"
         android:gravity="center_vertical"
         android:padding="18dp"
+        android:text="Refer a friend"
+        android:id="@+id/refer"
+        android:drawableStart="@drawable/refer"
+        android:drawablePadding="18dp"
+        android:textAllCaps="true"
+        android:textColor="#ababab"
+        />
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:padding="18dp"
+        android:text="Track your order"
+        android:id="@+id/track"
+        android:drawableStart="@drawable/track"
+        android:drawablePadding="18dp"
+        android:textAllCaps="true"
+        android:textColor="#ababab"
+        />
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:padding="18dp"
         android:text="profile"
         android:id="@+id/profile"
         android:drawableStart="@drawable/profile"

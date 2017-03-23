@@ -53,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
     public static TextView countt;
 
     TextView name;
-    TextView home , wish , cart , profile , logout;
+    TextView home , wish , cart , profile , refer , track , logout;
 
     SharedPreferences pref;
     SharedPreferences.Editor edit;
@@ -74,6 +74,8 @@ public class MainActivity extends AppCompatActivity {
         home = (TextView)findViewById(R.id.home);
         wish = (TextView)findViewById(R.id.wishlist);
         cart = (TextView)findViewById(R.id.cart);
+        refer = (TextView)findViewById(R.id.refer);
+        track = (TextView)findViewById(R.id.track);
         profile = (TextView)findViewById(R.id.profile);
         logout = (TextView)findViewById(R.id.log_out);
 
@@ -171,6 +173,26 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+
+        refer.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent intent = new Intent(MainActivity.this , Refer.class);
+                startActivity(intent);
+
+            }
+        });
+
+        track.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent intent = new Intent(MainActivity.this , Track.class);
+                startActivity(intent);
+
+            }
+        });
 
 
         profile.setOnClickListener(new View.OnClickListener() {
