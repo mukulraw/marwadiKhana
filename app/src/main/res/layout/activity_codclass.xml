@@ -89,6 +89,25 @@
             android:hint="Last Name"
             android:id="@+id/blname"
             />
+
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:paddingStart="8dp"
+            android:paddingEnd="8dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:paddingBottom="10dp"
+            android:paddingTop="10dp"
+            android:background="@drawable/edit_text_back"
+            android:hint="Phone"
+            android:id="@+id/bphone"
+            />
+
+
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -226,6 +245,22 @@
                 android:background="@drawable/edit_text_back"
                 android:hint="Name"
                 android:id="@+id/sname"
+                />
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                android:paddingStart="8dp"
+                android:paddingEnd="8dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                android:paddingBottom="10dp"
+                android:paddingTop="10dp"
+                android:background="@drawable/edit_text_back"
+                android:hint="Phone"
+                android:id="@+id/sphone"
                 />
 
             <EditText

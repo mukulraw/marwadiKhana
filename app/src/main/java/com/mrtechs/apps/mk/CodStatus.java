@@ -15,6 +15,7 @@ public class CodStatus extends AppCompatActivity {
     String message;
 
 
+    String order_id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,10 +25,11 @@ public class CodStatus extends AppCompatActivity {
         statu = (TextView)findViewById(R.id.status);
 
         message = getIntent().getStringExtra("status");
+        order_id = getIntent().getStringExtra("order");
 
         Toast.makeText(CodStatus.this , message , Toast.LENGTH_SHORT).show();
 
-        statu.setText(message);
+        statu.setText(message + "\n" + "Your order id: " + order_id);
 
 
     }

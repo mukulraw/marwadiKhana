@@ -53,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
     public static TextView countt;
 
     TextView name;
-    TextView home , wish , cart , profile , refer , track , logout;
+    TextView home , wish , cart , profile , refer , track , logout , history;
 
     SharedPreferences pref;
     SharedPreferences.Editor edit;
@@ -78,6 +78,7 @@ public class MainActivity extends AppCompatActivity {
         track = (TextView)findViewById(R.id.track);
         profile = (TextView)findViewById(R.id.profile);
         logout = (TextView)findViewById(R.id.log_out);
+        history = (TextView)findViewById(R.id.history);
 
 
         Retrofit retrofit = new Retrofit.Builder()
@@ -146,6 +147,16 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
                 drawer.closeDrawer(GravityCompat.START);
 
+            }
+        });
+
+
+        history.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext() , OrderHistory.class);
+                startActivity(intent);
+                drawer.closeDrawer(GravityCompat.START);
             }
         });
 

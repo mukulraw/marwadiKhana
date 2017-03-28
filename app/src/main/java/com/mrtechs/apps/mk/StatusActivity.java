@@ -97,7 +97,7 @@ public class StatusActivity extends ActionBarActivity {
                 progress.setVisibility(View.GONE);
                 Toast.makeText(StatusActivity.this , response.body().getOrderStatus().get(0).getStatus() , Toast.LENGTH_SHORT).show();
 
-                statu.setText(response.body().getOrderStatus().get(0).getStatus());
+                statu.setText(response.body().getOrderStatus().get(0).getStatus() + "\n" + "Your order id: " + order_id);
             }
 
             @Override

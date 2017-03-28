@@ -48,28 +48,24 @@ public class CategoryFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.category_layout , container , false);
+        View view = inflater.inflate(R.layout.category_layout, container, false);
 
         pager = (AutoScrollViewPager) view.findViewById(R.id.pager);
-        indicator = (CircleIndicator)view.findViewById(R.id.indicator);
-        grid = (RecyclerView)view.findViewById(R.id.grid);
-        manager = new GridLayoutManager(getContext() , 2);
-
-
-
+        indicator = (CircleIndicator) view.findViewById(R.id.indicator);
+        grid = (RecyclerView) view.findViewById(R.id.grid);
+        manager = new GridLayoutManager(getContext(), 2);
 
 
         blist = new ArrayList<>();
         list = new ArrayList<>();
 
-        adapter1 = new CategoryAdapter(getContext() , list);
+        adapter1 = new CategoryAdapter(getContext(), list);
         grid.setAdapter(adapter1);
         grid.setLayoutManager(manager);
 
 
         return view;
     }
-
 
 
     @Override
@@ -106,29 +102,24 @@ public class CategoryFragment extends Fragment {
         });
 
 
-
         call2.enqueue(new Callback<bannerBean>() {
             @Override
             public void onResponse(Call<bannerBean> call, Response<bannerBean> response) {
 
-                try
-                {
+                try {
                     blist = response.body().getBanner();
 
-                    PagerAdapter adapter = new PagerAdapter(getChildFragmentManager() , blist);
+                    PagerAdapter adapter = new PagerAdapter(getChildFragmentManager(), blist);
 
                     pager.setAdapter(adapter);
-                    pager.setOffscreenPageLimit(blist.size()-5);
+                    pager.setOffscreenPageLimit(blist.size() - 5);
 
                     indicator.setViewPager(pager);
 
                     pager.startAutoScroll(5000);
-                }
-                catch (NullPointerException e)
-                {
+                } catch (NullPointerException e) {
                     e.printStackTrace();
                 }
-
 
 
             }
@@ -140,16 +131,14 @@ public class CategoryFragment extends Fragment {
         });
 
 
-
     }
 
-    private class PagerAdapter extends FragmentStatePagerAdapter
-    {
+    private class PagerAdapter extends FragmentStatePagerAdapter {
 
         List<Banner> list = new ArrayList<>();
 
 
-        PagerAdapter(FragmentManager fm , List<Banner> list) {
+        PagerAdapter(FragmentManager fm, List<Banner> list) {
             super(fm);
             this.list = list;
         }
@@ -159,7 +148,7 @@ public class CategoryFragment extends Fragment {
 
             pages p = new pages();
             Bundle b = new Bundle();
-            b.putString("image" , list.get(position).getImgUrl());
+            b.putString("image", list.get(position).getImgUrl());
             p.setArguments(b);
             return p;
 
@@ -167,13 +156,12 @@ public class CategoryFragment extends Fragment {
 
         @Override
         public int getCount() {
-            return list.size()-4;
+            return list.size() - 4;
         }
     }
 
 
-    public static class pages extends Fragment
-    {
+    public static class pages extends Fragment {
 
         String url = "";
         ImageView image;
@@ -181,33 +169,30 @@ public class CategoryFragment extends Fragment {
         @Nullable
         @Override
         public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-            View view = inflater.inflate(R.layout.pager_images , container , false);
+            View view = inflater.inflate(R.layout.pager_images, container, false);
             url = getArguments().getString("image");
 
-            image = (ImageView)view.findViewById(R.id.image);
+            image = (ImageView) view.findViewById(R.id.image);
 
             ImageLoader loader = ImageLoader.getInstance();
 
-            loader.displayImage("http://" + url , image);
+            loader.displayImage("http://" + url, image);
 
             return view;
         }
     }
 
 
-    private class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHolder>
-    {
+    private class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHolder> {
         Context context;
         List<Category> list = new ArrayList<>();
 
-        public CategoryAdapter(Context context , List<Category> list)
-        {
+        public CategoryAdapter(Context context, List<Category> list) {
             this.context = context;
             this.list = list;
         }
 
-        public void setGridData(List<Category> list)
-        {
+        public void setGridData(List<Category> list) {
             this.list = list;
             notifyDataSetChanged();
         }
@@ -215,9 +200,9 @@ public class CategoryFragment extends Fragment {
 
         @Override
         public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            LayoutInflater inflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-            View view = inflater.inflate(R.layout.grid_item_model , parent , false);
+            View view = inflater.inflate(R.layout.grid_item_model, parent, false);
 
             return new ViewHolder(view);
         }
@@ -235,11 +220,9 @@ public class CategoryFragment extends Fragment {
 
             ImageLoader loader = ImageLoader.getInstance();
 
-            if (item.getCatImage().length()>0)
-            {
-                loader.displayImage(item.getCatImage() , holder.image , options);
+            if (item.getCatImage().length() > 0) {
+                loader.displayImage(item.getCatImage(), holder.image, options);
             }
-
 
 
         }
@@ -249,7 +232,7 @@ public class CategoryFragment extends Fragment {
             return list.size();
         }
 
-        class ViewHolder extends RecyclerView.ViewHolder{
+        class ViewHolder extends RecyclerView.ViewHolder {
 
 
             ImageView image;
@@ -259,28 +242,28 @@ public class CategoryFragment extends Fragment {
             public ViewHolder(View itemView) {
                 super(itemView);
 
-                image = (ImageView)itemView.findViewById(R.id.image);
-                name = (TextView)itemView.findViewById(R.id.name);
+                image = (ImageView) itemView.findViewById(R.id.image);
+                name = (TextView) itemView.findViewById(R.id.name);
 
                 itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
 
 
-                        FragmentManager fm = ((MainActivity)context).getSupportFragmentManager();
+                        FragmentManager fm = ((MainActivity) context).getSupportFragmentManager();
 
                         FragmentTransaction ft = fm.beginTransaction();
 
                         SubCategoryFragment frag = new SubCategoryFragment();
 
                         Bundle b = new Bundle();
-                        b.putString("id" , list.get(getAdapterPosition()).getCatId());
-                        b.putString("image" , list.get(getAdapterPosition()).getCatImage());
-                        b.putString("name" , list.get(getAdapterPosition()).getCatName());
+                        b.putString("id", list.get(getAdapterPosition()).getCatId());
+                        b.putString("image", list.get(getAdapterPosition()).getCatImage());
+                        b.putString("name", list.get(getAdapterPosition()).getCatName());
 
                         frag.setArguments(b);
 
-                        ft.replace(R.id.layout_to_replace , frag);
+                        ft.replace(R.id.layout_to_replace, frag);
                         ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE);
                         ft.addToBackStack(null);
                         ft.commit();
@@ -292,15 +275,9 @@ public class CategoryFragment extends Fragment {
             }
 
 
-
         }
 
     }
-
-
-
-
-
 
 
 }

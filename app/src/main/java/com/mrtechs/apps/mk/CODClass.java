@@ -27,8 +27,8 @@ public class CODClass extends AppCompatActivity {
     String entityId;
 
 
-    EditText bFname , bLname , bAddress , bCity , bState , bZip , bCountry , bEmail;
-    EditText sName , sAddress , sCity , sState , sZip , sCountry;
+    EditText bFname , bLname , bAddress , bCity , bState , bZip , bCountry , bEmail , bPhone;
+    EditText sName , sAddress , sCity , sState , sZip , sCountry , sPhone;
 
     CheckBox check;
 
@@ -65,6 +65,8 @@ public class CODClass extends AppCompatActivity {
         bState = (EditText)findViewById(R.id.bstate);
         bZip = (EditText)findViewById(R.id.bzip);
         bCountry = (EditText)findViewById(R.id.bcountry);
+        bPhone = (EditText)findViewById(R.id.bphone);
+        sPhone = (EditText)findViewById(R.id.sphone);
         bEmail = (EditText)findViewById(R.id.bemail);
         sName = (EditText)findViewById(R.id.sname);
         sAddress = (EditText)findViewById(R.id.saddress);
@@ -171,7 +173,7 @@ public class CODClass extends AppCompatActivity {
                                                     allAPIs cr = retrofit.create(allAPIs.class);
 
 
-                                                    Call<codBean> call = cr.cod(entityId , b.id , orderId , bfname , blname , baddress , bcity , bstate , bzip , bcountry , bemail , bfname , baddress , bcity , bstate , bzip , bcountry , type , amount);
+                                                    Call<codBean> call = cr.cod(entityId , b.id , orderId , bfname , blname , baddress , bcity , bstate , bzip , bcountry , bemail , bfname , baddress , bcity , bstate , bzip , bcountry , type , amount , bPhone.getText().toString());
 
                                                     call.enqueue(new Callback<codBean>() {
                                                         @Override
@@ -179,6 +181,7 @@ public class CODClass extends AppCompatActivity {
 
                                                             Intent intent = new Intent(CODClass.this , CodStatus.class);
                                                             intent.putExtra("status" , response.body().getOrderStatus().get(0).getStatus());
+                                                            intent.putExtra("order" , orderId);
 
                                                             progress.setVisibility(View.GONE);
 
@@ -302,7 +305,7 @@ public class CODClass extends AppCompatActivity {
                                                                             allAPIs cr = retrofit.create(allAPIs.class);
 
 
-                                                                            Call<codBean> call = cr.cod(entityId , b.id , orderId , bfname , blname , baddress , bcity , bstate , bzip , bcountry , bemail , sname , saddress , scity , sstate , szip , scountry , type , amount);
+                                                                            Call<codBean> call = cr.cod(entityId , b.id , orderId , bfname , blname , baddress , bcity , bstate , bzip , bcountry , bemail , sname , saddress , scity , sstate , szip , scountry , type , amount , sPhone.getText().toString());
 
                                                                             call.enqueue(new Callback<codBean>() {
                                                                                 @Override
@@ -310,7 +313,7 @@ public class CODClass extends AppCompatActivity {
 
                                                                                     Intent intent = new Intent(CODClass.this , CodStatus.class);
                                                                                     intent.putExtra("status" , response.body().getOrderStatus().get(0).getStatus());
-
+                                                                                    intent.putExtra("order" , orderId);
                                                                                     progress.setVisibility(View.GONE);
 
                                                                                     startActivity(intent);
